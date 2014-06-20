@@ -1,0 +1,12 @@
+from app import db
+
+class Office(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    district_scope_id = db.Column(db.Character) 
+    name = db.Column(db.String(25))
+    number_of_positions = db.Column(db.Integer)
+    partisan = db.Column(db.Boolean)
+    notes = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Office %r>' % (self.name)
