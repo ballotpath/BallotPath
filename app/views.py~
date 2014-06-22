@@ -5,10 +5,12 @@ import json
 @app.route("/")
 @app.route("/index")
 def index():
-    return '<a href="'+url_for('get_office', office_id=1)+'">Try looking for Office with id 1</a><br /><a href="'+url_for('get_districts')+'">Try looking for all Districts</a>'
+    return '<a=href"'+url_for('get_offices', latitude=1, longitude=1)+'">Try looking for Offices for latitude 1 and longitutde 1</a><br /><a href="'+url_for('get_office', office_id=1)+'">Try looking for Office with id 1</a><br /><a href="'+url_for('get_districts')+'">Try looking for all Districts</a>'
 
-@app.route("/office/<lat>/<long>/")
-def get_offices(lat, long):
+@app.route("/office/<latitude>/<longitude>/")
+def get_offices(latitude, longitude):
+    # offices = db.engine.execute("select * from PROCEDURE()")
+    # Just query for all offices right now, don't use special code
     offices = models.Office.query.all()
     office_dicts = []
     for office in offices:
