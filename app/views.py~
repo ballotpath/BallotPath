@@ -5,7 +5,7 @@ import json
 @app.route("/")
 @app.route("/index")
 def index():
-    return '<a=href"'+url_for('get_offices', latitude=1, longitude=1)+'">Try looking for Offices for latitude 1 and longitutde 1</a><br /><a href="'+url_for('get_office', office_id=1)+'">Try looking for Office with id 1</a><br /><a href="'+url_for('get_districts')+'">Try looking for all Districts</a>'
+    return '<a href="'+url_for('get_offices', latitude=1, longitude=1)+'">Try looking for Offices for latitude 1 and longitutde 1</a><br /><a href="'+url_for('get_office', office_id=1)+'">Try looking for Office with id 1</a><br /><a href="'+url_for('get_districts')+'">Try looking for all Districts</a><br /><a href="'+url_for('get_district', district_id=1)+'">Try looking for District with id 1</a>'
 
 @app.route("/office/<latitude>/<longitude>/")
 def get_offices(latitude, longitude):
@@ -43,3 +43,13 @@ def get_districts():
     for district_dict in district_dicts:
         del district_dict['_sa_instance_state']
     return json.dumps(district_dicts)
+
+@app.route("/district/<district_id>/")
+def get_district(district_id):
+    district = models.District.query.get(district_id)
+    if district == None:
+        return json.dumps([])
+    else:
+        district_dict = dict(district.__dict__)
+        del district_dict['_sa_instance_state']
+        return json.dumps(district_dict)
