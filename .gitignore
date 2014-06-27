@@ -54,3 +54,6 @@ docs/_build/
 
 # Flask
 flask/
+
+# Vim temp files
+*~
