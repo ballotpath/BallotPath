@@ -3,8 +3,7 @@ from sqlalchemy.dialects import postgresql
 
 class Office(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
-    district_id = db.Column(db.INTEGER) 
-    title = db.Column(db.VARCHAR(35))
+    title = db.Column(db.VARCHAR(35), nullable = False)
     num_positions = db.Column(db.INTEGER)
     responsibilities = db.Column(db.TEXT)
     term_length_months = db.Column(db.INTEGER)
@@ -13,6 +12,7 @@ class Office(db.Model):
     age_requirements = db.Column(db.INTEGER)
     res_requirements = db.Column(db.TEXT)
     prof_requirements = db.Column(db.TEXT)
+    # salary should become an integer? currently is money
     salary = db.Column(db.TEXT)
     notes = db.Column(db.TEXT)
 
