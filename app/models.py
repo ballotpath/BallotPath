@@ -1,11 +1,11 @@
 from app import db
 from sqlalchemy.dialects import postgresql
 
-class Level(db.Model):
+class level(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     name = db.Column(db.VARCHAR(12))
 
-class Office(db.Model):
+class office(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     title = db.Column(db.VARCHAR(35), nullable = False)
     num_positions = db.Column(db.INTEGER)
@@ -20,7 +20,7 @@ class Office(db.Model):
     salary = db.Column(db.TEXT)
     notes = db.Column(db.TEXT)
 
-class OfficePosition(db.Model):
+class office_position(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     district_id = db.Column(db.INTEGER, db.ForeignKey('district.id'))
     office_id = db.Column(db.INTEGER, db.ForeignKey('office.id'))
@@ -32,7 +32,7 @@ class OfficePosition(db.Model):
     next_election = db.Column(db.DATE)
     notes = db.Column(db.TEXT)
 
-class OfficeHolder(db.Model):
+class office_holder(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     first_name = db.Column(db.VARCHAR(25), nullable = False)
     middle_name = db.Column(db.VARCHAR(25))
@@ -50,19 +50,19 @@ class OfficeHolder(db.Model):
     photo_link = db.Column(db.TEXT)
     notes = db.Column(db.TEXT)
 
-class OfficeDocs(db.Model):
+class office_docs(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     office_id = db.Column(db.INTEGER, db.ForeignKey('office.id'))
     name = db.Column(db.VARCHAR(35), nullable = False)
     link = db.Column(db.TEXT, nullable = False)
 
-class District(db.Model):
+class district(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     name = db.Column(db.VARCHAR(50))
     level_id = db.Column(db.CHAR)
     election_div_id = db.Column(db.INTEGER)
 
-class ElectionDivision(db.Model):
+class election_division(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     name = db.Column(db.VARCHAR(50), nullable = False)
     phys_addr_addr1 = db.Column(db.VARCHAR(25))
@@ -80,7 +80,7 @@ class ElectionDivision(db.Model):
     website = db.Column(db.TEXT)
     notes = db.Column(db.TEXT)
 
-class ElectionDivisionDocs(db.Model):
+class election_division_docs(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
     election_div_id = db.Column(db.INTEGER, db.ForeignKey('election_div.id'))
     name = db.Column(db.VARCHAR(35), nullable = False)
