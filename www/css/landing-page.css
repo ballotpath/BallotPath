@@ -151,3 +151,29 @@ footer {
 p.copyright {
 	margin: 15px 0 0;
 }
+
+#bg{
+    background:url('../img/BallotPath_logo-lg.png') no-repeat center center;
+    background-size:40% auto;
+    height:550px;
+}
+
+#addressform {
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-top:15%;
+    color:black;
+}
+
+#go {
+    width:200px;
+}
+
+.displays {
+    padding: 10px;
+    border: 3px solid #ccc;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 0 12px 4px #000 inset;
+    color:white;
+}
