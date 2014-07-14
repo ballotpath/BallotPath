@@ -1,3 +1,28 @@
+/*Andrew E.*/
+dt {
+	color: black;
+}
+dd {
+	color: grey;
+}
+a {
+	display: block;
+}
+.panel-primary {
+	color:black;
+}
+.inpCenter {
+	margin-left: auto;
+	margin-right: auto;
+	width:400px;
+}
+#loader{
+   visibility:hidden;
+}
+#f1_upload_process{
+   visibility:hidden;
+}
+
 /* This is my custom stylesheet. */
 .office-card-outside {
 	width: 200px;
@@ -129,7 +154,9 @@
 	margin-top: 20px;
 }
 
-body {background-color:#428bca;}
+body {
+	background-color:#428bca;
+}
 
 /* HOVER STYLES */
 div#pop-up {
