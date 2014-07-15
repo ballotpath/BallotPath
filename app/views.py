@@ -1,11 +1,12 @@
-from flask import render_template, flash, redirect, url_for, jsonify, Response
+from flask import render_template, flash, redirect, url_for, jsonify, Response, request
+from sqlalchemy.sql import text
 from app import app, db, models
 import json
 
 @app.route("/")
 @app.route("/index")
 def index():
-    return '<a href="'+url_for('get_offices', latitude=1, longitude=1)+'">Try looking for Offices for latitude 1 and longitutde 1</a><br /><a href="'+url_for('get_office', office_id=1)+'">Try looking for Office with id 1</a><br /><a href="'+url_for('get_districts')+'">Try looking for all Districts</a><br /><a href="'+url_for('get_district', district_id=5)+'">Try looking for District with id 5</a>'
+    return '<a href="'+url_for('get_offices', point='45.514032,-122.625468')+'">Try looking for Offices for latitude 45.514032 and longitutde -122.625468</a><br /><a href="'+url_for('get_office', office_id=1)+'">Try looking for Office with id 1</a><br /><a href="'+url_for('get_districts')+'">Try looking for all Districts</a><br /><a href="'+url_for('get_district', district_id=5)+'">Try looking for District with id 5</a>'
 
 # Utility function for get_offices to parse a single row of the
 # database and convert it a representation using Python built-ins
@@ -61,14 +62,17 @@ def parse_office_row(row):
     return office_pos
 
 # Office:
-@app.route("/office/<float:latitude>/<float:longitude>/")
-def get_offices(latitude, longitude, methods = ['GET']):
+@app.route("/office/<string:point>/")
+def get_offices( point, methods = ['GET']):
+    latitude, longitude = point.split(',')
     office_positions = []
+    cmd = "SELECT * FROM bp_get_officeids_from_point(:lon, :lat) sp JOIN office_position op ON sp.district_id = op.district_id JOIN office o ON op.office_id = o.id JOIN office_holder oh ON op.office_holder_id = oh.id"
     # Using a stored procedure
-    # result = db.engine.execute("SELECT * FROM STORED_PROCEDURE() JOIN office_position op ON sp.district_id = op.district_id JOIN office o ON op.office_id = o.id JOIN office_holder oh ON op.office_holder_id = oh.id")
+    result = db.engine.execute(text(cmd), lon=longitude, lat=latitude)
     # For now, just query all office_positions
-    result = db.engine.execute("SELECT * FROM office_position op JOIN office o ON op.office_id = o.id JOIN office_holder oh ON op.office_holder_id = oh.id")
+    #result = db.engine.execute("SELECT * FROM office_position office_pos JOIN office ON office_pos.office_id = office.id JOIN office_holder ON office_pos.office_holder_id = office_holder.id")
     for row in result:
+        print row
         office_positions.append(parse_office_row(row))
     return Response(json.dumps({ "office_positions" : office_positions }), status=200, mimetype='application/json')
 
