@@ -1,0 +1,36 @@
+{
+	"office":[
+		{
+			"title":"US President",
+			"responsibilities":"Lead the people!",
+			"termLenghtMonths":"48",
+			"filingFee":"None.",
+			"ageRequirements":"35",
+			"resRequirements":"Has to have been born in the USA.",
+			"profRequirements":"Don't know",
+			"salary":"$400,000",
+			"officeNotes":"Notes!",
+			"officeDocName":"Filling Form",
+			"officeDocLink":"www.form.gov/form.pdf",
+			"filingDeadline":"March, 2018",
+			"nextElection":"May, 2018",
+			"positionNotes":"It's a stressful job!",
+			"district":"Not sure.",
+			"electionDivision":"Also not sure.",
+			"physAddrAddr1":"365 Caufield",
+			"physAddrAddr2":"",
+			"physAddrCity":"Oregon City",
+			"physAddrState":"OR",
+			"physAddrZip":"97045",
+			"mailAddrAddr1":"365 Caufield",
+			"mailAddrAddr2":"",
+			"mailAddrCity":"Oregon City",
+			"mailAddrState":"OR",
+			"mailAddrZip":"97045",
+			"phone":"503-278-1636",
+			"website":"www.whitehouse.gov",
+			"divDocName":"Division Doc",
+			"divDocLink":"www.form.gov/Doc.pdf"
+		}
+	]
+}

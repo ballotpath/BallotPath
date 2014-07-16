@@ -14,7 +14,9 @@
 
 <!-- Remain consistent with home page theme -->    
 <link href="css/landing-page.css" rel="stylesheet">
-
+    
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="js/officeCard.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
@@ -52,107 +54,144 @@
 
 <div class="intro-header">
 	<div class="container-fluid">
-		<div class="row.fluid">
-			<div class="col-lg-12">
-				<h1>What it takes to become <span id="position-title">County Auditor</span>:</h1>
-			</div>
-		</div>
-		<div class="row row.fluid">
-			<div class="col-lg-4">
-				<div class="bg-primary" style="border:2px solid black; margin:10px;">
-					<h2>Requirements and Salary</h2>
-					<dl class="dl-horizontal">
-					  <dt>Age Requirement</dt>
-					  <dd>21 or older</dd>
-					  <dt>Residency Requirements</dt>
-					  <dd>Resident of the county for 18 months prior to taking office. Registered voter.</dd>
-					  <dt>Professional Requirements</dt>
-					  <dd>Certified Public Accountant, Certified Internal Auditor or Certified Management Accountant</dd>
-					  <dt>Duration of Office</dt>
-					  <dd>4 years</dd>
-					  <dt>Salary</dt>
-					  <dd>$91,560</dd>
-					  <dt>Next Election</dt>
-					  <dd>May, 2018</dd>
-					  <dt>Filing Window</dt>
-					  <dd>Sep. 2017- March 2018</dd>
-					</dl>
-
-					<p>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="bg-primary" style="border:2px solid black; margin:10px;">
-					<h2>Basic Duties</h2>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="bg-primary" style="border:2px solid black; margin:10px;">
-					<h2>Times and Locations</h2>
-				</div>
-			</div>
-		</div>
-		<div class="row row.fluid">
-			<div class="col-lg-4 col-lg-offset-2">
-				<div class="bg-primary" style="border:2px solid black; margin:10px;">
-					<h2>Filing Documents</h2>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="bg-primary" style="border:2px solid black; margin:10px;">
-					<h2>Where to File</h2>
-				</div>
-			</div>
-		</div>
+	
+	<div class="col-md-10 col-md-offset-1">
+				<h1 class="alert alert-info">What it takes to become <span id="position-title">title</span></h1>
 	</div>
-	<div class="row">
-<div class="row">
-	<div class="col-lg-8 col-md-8 col-sm-12" style="opacity: 1;">
-		<h3>Tabs 2</h3>
-		<!-- Tabs -->
-		<div class="tabs style2">
+	
+	<div class="panel-group col-md-10 col-md-offset-1"" id="accordion">
+	<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Requirements and Salary
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+		<div class="panel-body">
+			<dl id="reqSal">
+					  
+			</dl>
+		</div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Time Frames
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+		<dl id="timeFra">
 							
-            <div class="tab-header">
-                <ul>
-                    <li class=""><a href="#tab1"><h6>Section 1</h6></a></li>
-                    <li class="active-tab"><a href="#tab2"><h6>Section 2</h6></a></li>
-                    <li class=""><a href="#tab3"><h6>Section 3</h6></a></li>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <div id="tab1" class="tab" style="display: none;">
-                    <img class="align-left" src="img/tab-image-round.jpg" alt="">
-                    <p>Sed entum velit vel ipsum bibendum em lacus, itor et aliquam eget, iaculis id lacus. Praesent tudin. 
-                    <br><br>
-                    Aiquam eget, iaculis id lacus. Praesent tudin. Ut sem lacus, ttitor putate uam mi nec hendrerit.</p>
-                </div>
-                <div id="tab2" class="tab" style="display: block;">
-                    <p>Sed entum velit vel ipsum bibendum em lacus, itor et aliquam eget, iaculis id lacus. Praesent tudin. 
-                    <br><br>
-                    Aiquam eget, iaculis id lacus. Praesent tudin. Ut sem lacus, ttitor putate uam mi nec hendrerit.</p>
-                    <p>Sed entum velit vel ipsum bibendum em lacus, itor et aliquam eget, iaculis id lacus. Praesent tudin. 
-                    <br><br>
-                    Aiquam eget, iaculis id lacus. Praesent tudin. Ut sem lacus, ttitor putate uam mi nec hendrerit.</p>
-                </div>
-                                    
-                <div id="tab3" class="tab" style="display: none;">
-                    <p>Sed entum velit vel ipsum bibendum em lacus, itor et aliquam eget, iaculis id lacus. Praesent tudin.</p>
-                </div>
-            </div>
-        </div>
-        <!-- /Tabs -->	
+		</dl>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+          Basic Duties
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse">
+      <div class="panel-body">
+			<dl id="basDut">
+			
+			</dl>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+          Filing Documents
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse">
+      <div class="panel-body">
+			<dl id="filDoc">
+
+			</dl>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+          Where and How to File
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFive" class="panel-collapse collapse">
+      <div class="panel-body">
+		<dl id="wheHow">
+		
+		</dl>
+      </div>
+    </div>
+  </div>
+</div>
 	</div>
-</div> <!-- End Intro Header -->
-
-<script>
+</div>
+	<script>
 $(document).ready(function(){
-
+	var requestURL="http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/office.json";
+	var $resultsArea = $('#position-title');
+	$.getJSON(requestURL, function(data){
+			var out = data.office[0].title;
+			$resultsArea.html(out);
+			
+			$resultsArea = $('#reqSal');
+			out = '<dt>Age Requirement</dt><dd>' + data.office[0].ageRequirements + '</dd>';
+			out += '<dt>Residency Requirements</dt><dd>' + data.office[0].resRequirements + '</dd>';
+			out += '<dt>Professional Requirements</dt><dd>' + data.office[0].profRequirements + '</dd>';
+			out += '<dt>Salary</dt><dd>' + data.office[0].salary + '</dd>';
+			out += '<dd>' + data.office[0].officeNotes + '</dd>';
+			$resultsArea.html(out);
+			
+			$resultsArea = $('#timeFra');
+			out = '<dt>Duration of Office</dt><dd>' + data.office[0].termLenghtMonths + ' Months</dd>';
+			out += '<dt>Next Election</dt><dd>' + data.office[0].nextElection + '</dd>';
+			out += '<dt>Filing Deadline</dt><dd>' + data.office[0].filingDeadline + '</dd>';
+			$resultsArea.html(out);
+			
+			$resultsArea = $('#basDut');
+			out = '<dt>Responsibilities</dt><dd>' + data.office[0].responsibilities + ' Months</dd>';
+			out += '<dd>' + data.office[0].positionNotes + '</dd>';
+			$resultsArea.html(out);
+			
+			$resultsArea = $('#filDoc');
+			out = '<dt>'  +  data.office[0].officeDocName + '</dt><dd>' + data.office[0].officeDocLink + '</dd>';
+			out += '<dt>'  +  data.office[0].divDocName + '</dt><dd>' + data.office[0].divDocLink + '</dd>';
+			$resultsArea.html(out);
+			
+			$resultsArea = $('#wheHow');
+			out = '<dt>District</dt><dd>' + data.office[0].district + '</dd>';
+			out += '<dt>Election Division</dt><dd>' + data.office[0].electionDivision + '</dd>';
+			out += '<dt>Physical Address</dt><dd>' + data.office[0].physAddrAddr1 + '</dd>' ;
+			out += '<dd>' + data.office[0].physAddrAddr2 + '</dd><dd>' + data.office[0].physAddrCity + '</dd>';
+			out += '<dd>' + data.office[0].physAddrState + '</dd><dd>' + data.office[0].physAddrZip + '</dd>';
+			out += '<dt>Mail Address</dt><dd>' + data.office[0].mailAddrAddr1 + '</dd>';
+			out +='<dd>' + data.office[0].mailAddrAddr2 + '</dd><dd>' + data.office[0].mailAddrCity + '</dd>';
+			out += '<dd>' + data.office[0].mailAddrState + '</dd><dd>' + data.office[0].mailAddrZip + '</dd>';
+			out += '<dt>Phone Number</dt><dd>' + data.office[0].phone + '</dd>';
+			out += '<dt>Website</dt><dd>' + data.office[0].website + '</dd>';
+			out += '<dt>Filling Fee</dt><dd>' + data.office[0].filingFee + '</dd>';
+			$resultsArea.html(out);
+	});
 });
 </script>
-
-
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="js/positionDetail.js"></script>
+	
 </body>
 </html>
 
