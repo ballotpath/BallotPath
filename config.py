@@ -5,3 +5,7 @@ CSRF_ENABLED = True
 SECRET_KEY = 'randomtestkeythatwillneverbefoundever'
 
 SQLALCHEMY_DATABASE_URI = 'postgresql://BallotPath:Democracy!@localhost:5432/DevDB'
+
+UPLOAD_FOLDER = '/tmp/import/'
+
+ERROR_FOLDER = '/tmp/import/errors/'
