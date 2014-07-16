@@ -12,3 +12,12 @@ A web service to help citizens run for public office
 ###JQuery
  jQuery v1.10.2 | (c) 2005, 2013 jQuery Foundation, Inc. | jquery.org/license
 
+### Tickertype
+ Tickertype JQuery object written by Warren Harrison, August 29, 2011 and retrieved from GitHub: https://github.com/hungrymedia/JQuery-tickertype
+ 
+### jQuery 2d Transform v0.9.3
+ http://wiki.github.com/heygrady/transform/
+ Copyright 2010, Grady Kuhnline
+ Dual licensed under the MIT or GPL Version 2 licenses.
+ http://jquery.org/license
+ Date: Sat Dec 4 15:46:09 2010 -0800
