@@ -29,7 +29,7 @@ def error_file(filename=None):
 	# return to upload page
         return redirect(url_for('index'))
     # file is downloaded to client machine
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(app.config['ERROR_FOLDER'], filename)
 
 
 def allowed_file(filename):

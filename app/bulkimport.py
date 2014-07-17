@@ -1,10 +1,9 @@
 from app import app, db, models
 from flask import Response, url_for
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 import csv
 import os
-
-hhhol_pos_off_header = ['first_name', 'middle_name', 'last_name', 'holder_addr1', 'holder_addr1_city', 'holder_addr1_state', 'holder_addr1_zip', 'holder_addr2', 'holder_phone', 'holder_email', 'holder_website', 'photo_link', 'position_name', 'term_start', 'term_end', 'filing_deadline', 'next_election', 'position_notes', 'position_rank', 'title', 'number_of_positions', 'responsibilities', 'term_length_months', 'filing_fee', 'partisan', 'age_reqs', 'residency_reqs', 'professional_reqs', 'salary', 'office_notes', 'office_rank', 'office_doc_name', 'office_doc_link', 'district_name', 'district_state', 'election_div_name']
 
 
 def begin(filename):
@@ -19,25 +18,46 @@ def begin(filename):
     if headers == models.hol_pos_off_header:
         result = validate_holder_position_office(reader, filename)
     else:
-        if headers == models.el_div_dist_headers():
+        if headers == models.el_div_dist_header:
             result = validate_election_division_district(reader, filename)
         else:
             return #file headers do not match what we want
+        #remove import file from import folder
+        finish(filename)
     return result
 
 
+# Validation for the holder, postion and office csv file
 def validate_holder_position_office(reader, filename):
     
     return import_holder_position_office(filename)
 
-
+# Validation for the election division and district csv file
 def validate_election_division_district(reader, filename):
     
     return import_election_division_district(name)
     
 
 def import_holder_position_office(name):
-    result = db.engine.execute(text('SELECT bp_import_off_pos_hol_csv_to_staging_tables(:filename);'), filename=name)
+    try:
+        result = db.engine.execute(text('SELECT bp_import_off_pos_hol_csv_to_staging_tables(:filename);'), filename=name)
+        for row in result:
+            return row['bp_import_off_pos_hol_csv_to_staging_tables']
+    except SQLAlchemyError as sqle:
+        print sqle
 
 def import_election_division_district(name):
-    result = db.engine.execute(text('SELECT bp_import_dist_elec_div_csv_to_staging_tables(:filename);'), filename=name) 
+    try:
+        result = db.engine.execute(text('SELECT bp_import_dist_elec_div_csv_to_staging_tables(:filename);'), filename=name)
+        for row in result:
+            return row['bp_import_dist_elec_div_csv_to_staging_tables']  
+    except SQLAlchemyError as sqle:
+        print sqle
+
+def finish(filename):
+    rfile = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    try:
+        if os.path.exists(rfile):
+            os.remove(rfile)
+    except OSError:
+        pass
