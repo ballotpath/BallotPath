@@ -3,43 +3,33 @@ from flask_restful import request
 from werkzeug.utils import secure_filename
 from app import app, bulkimport
 import os
-
+import uuid
 
 
 @app.route('/bulkupload')
 def bulkupload():
     return render_template('upload.html') 
 
-@app.route('/upload', methods=['GET', 'POST'])
+
+@app.route('/upload', methods=['POST'])
 def upload_file():
     ifile = request.files['file']
-    print ifile.filename
-    if ifile and allowed_file(ifile.filename):
-        filename = secure_filename(ifile.filename)
+    if ifile and allowed_file(ifile.filename): 
+        filename = str(uuid.uuid4()) + '_'  + secure_filename(ifile.filename) 
         ifile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
-        result = bulkimport.begin(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        result = bulkimport.begin(filename) 
         return redirect(url_for('error_file', filename=result))
     return redirect(url_for('bulkupload'))
-    #return '''
-    #<!doctype html>
-    #<title>Upload new File</title>
-    #<h1>Upload new File</h1>
-    #<form action="" method=post enctype=multipart/form-data>
-    #  <p><input type=file name=file>
-    #     <input type=submit value=Upload>
-    #</form>
-    #'''
-   # Response("", status=400) #file was not appropriate
 
 
+@app.route('/errors/')
 @app.route('/errors/<filename>')
-def error_file(filename):
+def error_file(filename=None):
     if not filename:
 	# return to upload page
         return redirect(url_for('index'))
-    # display file TODO: make the file downloadable?
-    return send_from_directory(app.config['ERROR_FOLDER'], filename)
-
+    # file is downloaded to client machine
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 def allowed_file(filename):

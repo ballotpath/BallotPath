@@ -86,3 +86,8 @@ class election_division_docs(db.Model):
     name = db.Column(db.VARCHAR(35), nullable = False)
     link = db.Column(db.TEXT, nullable = False)
 
+hol_pos_off_header = ['first_name', 'middle_name', 'last_name', 'holder_addr1', 'holder_addr1_city', 'holder_addr1_state', 'holder_addr1_zip', 'holder_addr2', 'holder_phone', 'holder_email', 'holder_website', 'photo_link', 'position_name', 'term_start', 'term_end', 'filing_deadline', 'next_election', 'position_notes', 'position_rank', 'title', 'number_of_positions', 'responsibilities', 'term_length_months', 'filing_fee', 'partisan', 'age_reqs', 'residency_reqs', 'professional_reqs', 'salary', 'office_notes', 'office_rank', 'office_doc_name', 'office_doc_link', 'district_name', 'district_state', 'election_div_name']
+
+
+class el_div_dist_headers():
+    ['district_name', 'district_state', 'election_division_name']
