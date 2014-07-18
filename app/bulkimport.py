@@ -4,6 +4,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 import csv
 import os
+import time
 
 
 def begin(filename):
@@ -44,7 +45,8 @@ def import_holder_position_office(name):
         for row in result:
             return row['bp_import_off_pos_hol_csv_to_staging_tables']
     except SQLAlchemyError as sqle:
-        print sqle
+        return validation_error(str(sqle).split("SQL statement")[0])
+
 
 def import_election_division_district(name):
     try:
@@ -52,7 +54,8 @@ def import_election_division_district(name):
         for row in result:
             return row['bp_import_dist_elec_div_csv_to_staging_tables']  
     except SQLAlchemyError as sqle:
-        print sqle
+        return validation_error(str(sqle).split("SQL statement")[0])
+
 
 def finish(filename):
     rfile = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -61,3 +64,11 @@ def finish(filename):
             os.remove(rfile)
     except OSError:
         pass
+
+
+def validation_error(error):
+    filename = 'bad_inserts_'+ time.strftime("%Y-%m-%d-%H_%M_%S") + '.csv'
+    efile = os.path.join(app.config['ERROR_FOLDER'], filename)
+    errorfile = open(efile, 'w')
+    errorfile.write(error)
+    return filename

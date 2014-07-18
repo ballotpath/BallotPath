@@ -89,5 +89,4 @@ class election_division_docs(db.Model):
 hol_pos_off_header = ['first_name', 'middle_name', 'last_name', 'holder_addr1', 'holder_addr1_city', 'holder_addr1_state', 'holder_addr1_zip', 'holder_addr2', 'holder_phone', 'holder_email', 'holder_website', 'photo_link', 'position_name', 'term_start', 'term_end', 'filing_deadline', 'next_election', 'position_notes', 'position_rank', 'title', 'number_of_positions', 'responsibilities', 'term_length_months', 'filing_fee', 'partisan', 'age_reqs', 'residency_reqs', 'professional_reqs', 'salary', 'office_notes', 'office_rank', 'office_doc_name', 'office_doc_link', 'district_name', 'district_state', 'election_div_name']
 
 
-class el_div_dist_headers():
-    ['district_name', 'district_state', 'election_division_name']
+el_div_dist_headers = ['district_name', 'district_state', 'election_division_name', 'phys_addr1', 'phys_addr2', 'phys_addr_city', 'phys_addr_state', 'phys_addr_zip', 'mail_addr1', 'mail_addr2', 'mail_addr_city', 'mail_addr_state', 'mail_addr_zip', 'election_div_phone', 'fax', 'election_div_website', 'election_div_doc_name', 'election_div_doc_link']
