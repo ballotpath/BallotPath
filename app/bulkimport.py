@@ -14,17 +14,21 @@ def begin(filename):
             reader = csv.reader(impfile, delimiter='|', dialect=csv.excel)
             headers = reader.next()
     except IOError:
-        return Response("FILE COULD NOT BE READ", status=400) #file could not be read
+        #file could not be read
+        result = validation_erro("File could not be opened!")
 
-    if headers == models.hol_pos_off_header:
-        result = validate_holder_position_office(reader, filename)
-    else:
-        if headers == models.el_div_dist_header:
-            result = validate_election_division_district(reader, filename)
+    if headers is not None:
+        if headers == models.hol_pos_off_header:
+            result = validate_holder_position_office(reader, filename)
         else:
-            return #file headers do not match what we want
-        #remove import file from import folder
-        finish(filename)
+            if headers == models.el_div_dist_header:
+                result = validate_election_division_district(reader, filename)
+            else:
+                #file headers do not match what we want
+                result = validation_error("File headers do not match required format!\n" + headers)
+
+    #remove import file from import folder
+    cleanup(filename)
     return result
 
 
@@ -57,9 +61,9 @@ def import_election_division_district(name):
         return validation_error(str(sqle).split("SQL statement")[0])
 
 
-def finish(filename):
+def cleanup(filename):
     rfile = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    try:
+    try:  
         if os.path.exists(rfile):
             os.remove(rfile)
     except OSError:
