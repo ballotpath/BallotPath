@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html>
+
+<!--
+Uses one or more of the following third party modules
+
+Bootstrap
+ Bootstrap v3.1.0 (http://getbootstrap.com)
+ Copyright 2011-2014 Twitter, Inc.
+ Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+
+JQuery
+ jQuery v1.10.2 | (c) 2005, 2013 jQuery Foundation, Inc. | jquery.org/license
+
+Tickertype
+ Tickertype JQuery object written by Warren Harrison, August 29, 2011 and retrieved from GitHub: https://github.com/hungrymedia/JQuery-tickertype
+ 
+jQuery 2d Transform v0.9.3
+ http://wiki.github.com/heygrady/transform/
+ Copyright 2010, Grady Kuhnline
+ Dual licensed under the MIT or GPL Version 2 licenses.
+ http://jquery.org/license
+ Date: Sat Dec 4 15:46:09 2010 -0800
+-->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
-    <link href="css/custom.css" rel="stylesheet"> 
+    <link href="css/custom.css" rel="stylesheet">
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <title>Ballot Path - Office</title>
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet">
 
-<!-- Remain consistent with home page theme -->    
-<link href="css/landing-page.css" rel="stylesheet">
-    
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="js/officeCard.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->    
+    <link href="css/landing-page.css" rel="stylesheet">
+
+    <!-- JavaScript -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/officeCard.js"></script>
 </head>
 
 <body class="bgprimary">
@@ -152,41 +175,41 @@ $(document).ready(function(){
 			$resultsArea.html(out);
 			
 			$resultsArea = $('#reqSal');
-			out = '<dt>Age Requirement</dt><dd>' + data.office[0].ageRequirements + '</dd>';
-			out += '<dt>Residency Requirements</dt><dd>' + data.office[0].resRequirements + '</dd>';
-			out += '<dt>Professional Requirements</dt><dd>' + data.office[0].profRequirements + '</dd>';
+			out = '<dt>Age Requirement</dt><dd>' + data.office[0].age_requirements + '</dd>';
+			out += '<dt>Residency Requirements</dt><dd>' + data.office[0].res_requirements + '</dd>';
+			out += '<dt>Professional Requirements</dt><dd>' + data.office[0].prof_requirements + '</dd>';
 			out += '<dt>Salary</dt><dd>' + data.office[0].salary + '</dd>';
-			out += '<dd>' + data.office[0].officeNotes + '</dd>';
+			out += '<dd>' + data.office[0].office_notes + '</dd>';
 			$resultsArea.html(out);
 			
 			$resultsArea = $('#timeFra');
-			out = '<dt>Duration of Office</dt><dd>' + data.office[0].termLenghtMonths + ' Months</dd>';
-			out += '<dt>Next Election</dt><dd>' + data.office[0].nextElection + '</dd>';
-			out += '<dt>Filing Deadline</dt><dd>' + data.office[0].filingDeadline + '</dd>';
+			out = '<dt>Duration of Office</dt><dd>' + data.office[0].term_lenght_months + ' Months</dd>';
+			out += '<dt>Next Election</dt><dd>' + data.office[0].next_election + '</dd>';
+			out += '<dt>Filing Deadline</dt><dd>' + data.office[0].filing_deadline + '</dd>';
 			$resultsArea.html(out);
 			
 			$resultsArea = $('#basDut');
 			out = '<dt>Responsibilities</dt><dd>' + data.office[0].responsibilities + ' Months</dd>';
-			out += '<dd>' + data.office[0].positionNotes + '</dd>';
+			out += '<dd>' + data.office[0].position_notes + '</dd>';
 			$resultsArea.html(out);
 			
 			$resultsArea = $('#filDoc');
-			out = '<dt>'  +  data.office[0].officeDocName + '</dt><dd>' + data.office[0].officeDocLink + '</dd>';
-			out += '<dt>'  +  data.office[0].divDocName + '</dt><dd>' + data.office[0].divDocLink + '</dd>';
+			out = '<dt>'  +  data.office[0].office_doc_name + '</dt><dd>' + data.office[0].office_doc_link + '</dd>';
+			out += '<dt>'  +  data.office[0].div_doc_name + '</dt><dd>' + data.office[0].div_doc_link + '</dd>';
 			$resultsArea.html(out);
 			
 			$resultsArea = $('#wheHow');
 			out = '<dt>District</dt><dd>' + data.office[0].district + '</dd>';
-			out += '<dt>Election Division</dt><dd>' + data.office[0].electionDivision + '</dd>';
-			out += '<dt>Physical Address</dt><dd>' + data.office[0].physAddrAddr1 + '</dd>' ;
-			out += '<dd>' + data.office[0].physAddrAddr2 + '</dd><dd>' + data.office[0].physAddrCity + '</dd>';
-			out += '<dd>' + data.office[0].physAddrState + '</dd><dd>' + data.office[0].physAddrZip + '</dd>';
-			out += '<dt>Mail Address</dt><dd>' + data.office[0].mailAddrAddr1 + '</dd>';
-			out +='<dd>' + data.office[0].mailAddrAddr2 + '</dd><dd>' + data.office[0].mailAddrCity + '</dd>';
-			out += '<dd>' + data.office[0].mailAddrState + '</dd><dd>' + data.office[0].mailAddrZip + '</dd>';
+			out += '<dt>Election Division</dt><dd>' + data.office[0].election_division + '</dd>';
+			out += '<dt>Physical Address</dt><dd>' + data.office[0].phys_addr_addr1 + '</dd>' ;
+			out += '<dd>' + data.office[0].phys_addr_addr2 + '</dd><dd>' + data.office[0].phys_addr_city + '</dd>';
+			out += '<dd>' + data.office[0].phys_addr_state + '</dd><dd>' + data.office[0].phys_addr_zip + '</dd>';
+			out += '<dt>Mail Address</dt><dd>' + data.office[0].mail_addr_addr1 + '</dd>';
+			out +='<dd>' + data.office[0].mail_addr_addr2 + '</dd><dd>' + data.office[0].mail_addr_city + '</dd>';
+			out += '<dd>' + data.office[0].mail_addr_state + '</dd><dd>' + data.office[0].mail_addr_zip + '</dd>';
 			out += '<dt>Phone Number</dt><dd>' + data.office[0].phone + '</dd>';
 			out += '<dt>Website</dt><dd>' + data.office[0].website + '</dd>';
-			out += '<dt>Filling Fee</dt><dd>' + data.office[0].filingFee + '</dd>';
+			out += '<dt>Filling Fee</dt><dd>' + data.office[0].filing_fee + '</dd>';
 			$resultsArea.html(out);
 	});
 });

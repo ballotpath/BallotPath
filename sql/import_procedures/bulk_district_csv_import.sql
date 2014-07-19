@@ -21,7 +21,8 @@ CREATE OR REPLACE FUNCTION bp_import_dist_elec_div_csv_to_staging_tables(filenam
 $BODY$
   DECLARE
     input_file character varying := format(E'/tmp/import/%s', filename);
-    output_file character varying := format(E'/tmp/import/errors/bad_inserts_%s.csv', (SELECT * FROM to_char(current_timestamp, 'YYYY-MM-DD-HH24:MI:SS')));
+    outname character varying := format(E'bad_inserts_%s.csv', (SELECT * FROM to_char(current_timestamp, 'YYYY-MM-DD-HH24:MI:SS')));
+    output_file character varying := format(E'/tmp/import/errors/%s', outname);
     districts CURSOR FOR SELECT * FROM bulk_staging_districts;
     tmp integer;
     ed_id integer := NULL;
@@ -81,20 +82,11 @@ $BODY$
 -- Flag district entries that do not have enough information (might be done by api?)
 UPDATE bulk_staging_districts
 	SET bad_insert_flag = B'1'
-		, message = 'Expected non-empty string in district_state, district_name and election_div_name!'
+		, message = 'Expected non-empty string in district_state, district_name and election_div_name! and phys_addr_state'
 	WHERE district_name = ''
 		  OR district_state = ''
-		  OR election_div_name = '';
-
--- Flag districts that are already in the database
-UPDATE bulk_staging_districts
-	SET bad_insert_flag = B'1'
-		, message = 'District already exists!'
-	FROM district d, election_div ed
-	WHERE district_name = d.name
-		  and district_state = d.state
-		  and d.election_div_id = (SELECT e.id FROM election_div e WHERE e.name = election_div_name and e.phys_addr_state = d.state);
-
+		  OR election_div_name = ''
+		  OR phys_addr_state = '';
 
 FOR dist IN districts LOOP
 	-- Do not insert if flagged
@@ -118,9 +110,7 @@ FOR dist IN districts LOOP
 								  , mail_addr_zip
 								  , phone
 								  , fax
-								  , website
-								  , doc_name
-								  , doc_link)
+								  , website)
 							VALUES( dist.election_div_name
 								  , dist.phys_addr1
 								  , dist.phys_addr2
@@ -134,33 +124,42 @@ FOR dist IN districts LOOP
 								  , dist.mail_addr_zip
 								  , dist.election_div_phone
 								  , dist.fax
-								  , dist.election_div_website
-								  , dist.election_div_doc_name
-								  , dist.election_div_doc_link)
+								  , dist.election_div_website)
 								  RETURNING id)
 			SELECT * into ed_id FROM tmp LIMIT 1;
 		END IF;
 
-  		-- link districts
-  		INSERT into district (state
+		--Do not reinsert a district with this election division
+		IF NOT EXISTS (SELECT * FROM district WHERE name = dist.district_name and state = dist.district_state and election_div_id = ed_id) THEN
+			-- link districts
+			INSERT into district (state
 				  , name
 				  , level_id
 				  , election_div_id)
-  			VALUES (dist.district_state
+  			  VALUES (dist.district_state
   					, dist.district_name
   					, (SELECT l.id FROM level l WHERE l.name = dist.level_name)
   					, ed_id);
+		END IF;
 
   		-- link election div docs
 		IF (dist.election_div_doc_name <> '' or dist.election_div_doc_link <> '') THEN
-			IF(dist.doc_name <> '' and dist.doc_link <> '') THEN
+			IF(dist.election_div_doc_name <> '' and dist.election_div_doc_link <> '') THEN
+			    -- do not reinsert documents
+			    IF NOT EXISTS (SELECT * FROM election_div_docs WHERE name = dist.election_div_doc_name and link = dist.election_div_doc_link and election_div_id = ed_id) THEN
 				INSERT into election_div_docs (name, link, election_div_id)
-	    			VALUES (doc_name, doc_link, ed_id);
+	    			VALUES (dist.election_div_doc_name, dist.election_div_doc_link, ed_id);
+	    		    ELSE
+	    		       UPDATE bulk_staging_districts
+					SET bad_insert_flag = B'1'
+						, message = 'Duplicate election division document detected!'
+				WHERE CURRENT OF districts;
+			    END IF;
 	    		ELSE
 				UPDATE bulk_staging_districts
 					SET bad_insert_flag = B'1'
 						, message = 'Encountered empty value in office document fields!'
-				WHERE CURRENT OF district;
+				WHERE CURRENT OF districts;
 			END IF;
 
   		END IF;		
@@ -176,10 +175,12 @@ END LOOP;
 		    DELIMITER ''|''
 		    NULL ''''
 		    CSV HEADER', output_file);
+	RETURN outname;
   END IF;
 
-RETURN output_file;
+RETURN '';
 
 END;
 $BODY$
-  LANGUAGE plpgsql VOLATILE;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;

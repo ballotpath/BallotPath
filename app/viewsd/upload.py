@@ -1,7 +1,8 @@
 from flask import Response, url_for, send_from_directory, render_template, redirect
 from flask_restful import request
 from werkzeug.utils import secure_filename
-from app import app, bulkimport
+from app import app
+import bulkimport
 import os
 import uuid
 

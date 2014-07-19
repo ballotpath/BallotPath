@@ -21,7 +21,8 @@ CREATE OR REPLACE FUNCTION bp_import_off_pos_hol_csv_to_staging_tables(filename 
 $BODY$
   DECLARE
     input_file character varying := format(E'/tmp/import/%s', filename);
-    output_file character varying := format(E'/tmp/import/errors/bad_inserts_%s.csv', (SELECT * FROM to_char(current_timestamp, 'YYYY-MM-DD-HH24:MI:SS')));
+    outname character varying := format(E'bad_inserts_%s.csv', (SELECT * FROM to_char(current_timestamp, 'YYYY-MM-DD-HH24:MI:SS')));
+    output_file character varying := format(E'/tmp/import/errors/%s', outname);
   BEGIN
 
   CREATE TEMPORARY TABLE bulk_staging (
@@ -167,41 +168,41 @@ CREATE TEMPORARY TABLE office_staging (
 
     EXECUTE format('
   Copy bulk_staging ( first_name
-		, middle_name
-		, last_name
-		, holder_addr1
-		, holder_city
-		, holder_state
-		, holder_zip
-		, holder_addr2
-		, holder_phone
-		, holder_email
-		, holder_website
-		, photo_link
-		, position_name
-		, term_start
-		, term_end
-		, filing_deadline
-		, next_election
-		, position_notes
-		, position_rank
-		, title
-		, num_positions
-		, responsibilities
-		, term_length_months
-		, filing_fee
-		, partisan
-		, age_reqs
-		, residency_reqs
-		, professional_reqs
-		, salary
-		, office_notes
-		, office_rank
-		, office_doc_name
-		, office_doc_link
-		, district_name
-		, district_state
-		, election_div_name)
+    , middle_name
+    , last_name
+    , holder_addr1
+    , holder_city
+    , holder_state
+    , holder_zip
+    , holder_addr2
+    , holder_phone
+    , holder_email
+    , holder_website
+    , photo_link
+    , position_name
+    , term_start
+    , term_end
+    , filing_deadline
+    , next_election
+    , position_notes
+    , position_rank
+    , title
+    , num_positions
+    , responsibilities
+    , term_length_months
+    , filing_fee
+    , partisan
+    , age_reqs
+    , residency_reqs
+    , professional_reqs
+    , salary
+    , office_notes
+    , office_rank
+    , office_doc_name
+    , office_doc_link
+    , district_name
+    , district_state
+    , election_div_name)
   FROM %L
   WITH
     DELIMITER ''|''
@@ -210,132 +211,135 @@ CREATE TEMPORARY TABLE office_staging (
 
 -- Positions need to be inserted first
 INSERT into position_staging (  position_name
-				, term_start
-				, term_end
-				, filing_deadline
-				, next_election
-				, notes
-				, position_rank
+        , term_start
+        , term_end
+        , filing_deadline
+        , next_election
+        , notes
+        , position_rank
         , title
-				, district_id
-				, district_name
-				, district_state
-				, election_div_name)
-  	(SELECT   bs.position_name
-		, bs.term_start
-		, bs.term_end
-		, bs.filing_deadline
-		, bs.next_election
-		, bs.position_notes
-		, bs.position_rank
+        , district_id
+        , district_name
+        , district_state
+        , election_div_name)
+    (SELECT   bs.position_name
+    , bs.term_start
+    , bs.term_end
+    , bs.filing_deadline
+    , bs.next_election
+    , bs.position_notes
+    , bs.position_rank
     , bs.title
-		, d.id
-		, bs.district_name
-		, bs.district_state
-		, bs.election_div_name
-	FROM bulk_staging bs LEFT OUTER JOIN district d on bs.district_name = d.name and bs.district_state = d.state
-		LEFT OUTER JOIN election_div ed on bs.election_div_name = ed.name);
+    , d.id
+    , bs.district_name
+    , bs.district_state
+    , bs.election_div_name
+  FROM bulk_staging bs LEFT OUTER JOIN district d on bs.district_name = d.name and bs.district_state = d.state
+    LEFT OUTER JOIN election_div ed on bs.election_div_name = ed.name);
 
 
 PERFORM bp_insert_office_positions();
 
 
 INSERT into holder_staging (  first_name
-				, middle_name
-				, last_name
-				, holder_addr1
-				, holder_addr2
-				, holder_city
-				, holder_state
-				, holder_zip
-				, holder_phone
-				, holder_email
-				, holder_website
-				, photo_link
-				, position_name
-				, district_id
-				, district_name
-				, district_state
-				, election_div_name)
-  	(SELECT   bs.first_name
-		, bs.middle_name
-		, bs.last_name
-		, bs.holder_addr1
-		, bs.holder_addr2
-		, bs.holder_city
-		, bs.holder_state
-		, bs.holder_zip
-		, bs.holder_phone
-		, bs.holder_email
-		, bs.holder_website
-		, bs.photo_link  
-		, bs.position_name
-		, d.id
-		, bs.district_name
-		, bs.district_state
-		, bs.election_div_name
-	FROM bulk_staging bs LEFT OUTER JOIN district d on bs.district_name = d.name and bs.district_state = d.state
-		LEFT OUTER JOIN election_div ed on bs.election_div_name = ed.name);
+        , middle_name
+        , last_name
+        , holder_addr1
+        , holder_addr2
+        , holder_city
+        , holder_state
+        , holder_zip
+        , holder_phone
+        , holder_email
+        , holder_website
+        , photo_link
+        , position_name
+        , district_id
+        , district_name
+        , district_state
+        , election_div_name)
+    (SELECT   bs.first_name
+    , bs.middle_name
+    , bs.last_name
+    , bs.holder_addr1
+    , bs.holder_addr2
+    , bs.holder_city
+    , bs.holder_state
+    , bs.holder_zip
+    , bs.holder_phone
+    , bs.holder_email
+    , bs.holder_website
+    , bs.photo_link  
+    , bs.position_name
+    , d.id
+    , bs.district_name
+    , bs.district_state
+    , bs.election_div_name
+  FROM bulk_staging bs LEFT OUTER JOIN district d on bs.district_name = d.name and bs.district_state = d.state
+    LEFT OUTER JOIN election_div ed on bs.election_div_name = ed.name
+  WHERE bs.first_name IS NOT NULL and bs.last_name IS NOT NULL);
 
 PERFORM bp_insert_office_holders();
 
 INSERT into office_staging (title
-			  , num_positions
-			  , responsibilities
-			  , term_length_months
-			  , filing_fee
-			  , partisan
-			  , age_requirements
-			  , res_requirements
-			  , prof_requirements
-			  , salary
-			  , office_notes
-			  , office_rank
-			  , office_doc_name
-			  , office_doc_link
-			  , position_name
-			  , district_id
-			  , district_name
-			  , district_state
-			  , election_div_name)
-  	(SELECT DISTINCT  bs.title
-		, bs.num_positions
-		, bs.responsibilities
-		, bs.term_length_months
-		, bs.filing_fee
-		, bs.partisan
-		, bs.age_reqs
-		, bs.residency_reqs
-		, bs.professional_reqs
-		, bs.salary
-		, bs.office_notes
-		, bs.office_rank
-		, bs.office_doc_name
-		, bs.office_doc_link
-		, bs.position_name
-		, d.id
-		, bs.district_name
-		, bs.district_state
-		, bs.election_div_name
-	FROM bulk_staging bs LEFT OUTER JOIN district d on bs.district_name = d.name and bs.district_state = d.state
-		LEFT OUTER JOIN election_div ed on bs.election_div_name = ed.name);
+        , num_positions
+        , responsibilities
+        , term_length_months
+        , filing_fee
+        , partisan
+        , age_requirements
+        , res_requirements
+        , prof_requirements
+        , salary
+        , office_notes
+        , office_rank
+        , office_doc_name
+        , office_doc_link
+        , position_name
+        , district_id
+        , district_name
+        , district_state
+        , election_div_name)
+    (SELECT DISTINCT  bs.title
+    , bs.num_positions
+    , bs.responsibilities
+    , bs.term_length_months
+    , bs.filing_fee
+    , bs.partisan
+    , bs.age_reqs
+    , bs.residency_reqs
+    , bs.professional_reqs
+    , bs.salary
+    , bs.office_notes
+    , bs.office_rank
+    , bs.office_doc_name
+    , bs.office_doc_link
+    , bs.position_name
+    , d.id
+    , bs.district_name
+    , bs.district_state
+    , bs.election_div_name
+  FROM bulk_staging bs LEFT OUTER JOIN district d on bs.district_name = d.name and bs.district_state = d.state
+    LEFT OUTER JOIN election_div ed on bs.election_div_name = ed.name);
 
 
   PERFORM bp_insert_offices();
 
   -- Write errors out to csv
   IF((SELECT COUNT(*) FROM bad_inserts_offices) > 0) THEN
-  	EXECUTE format('
-  		COPY bad_inserts_offices
-  		TO %L
-  		WITH
-		    DELIMITER ''|''
-		    NULL ''''
-		    CSV HEADER', output_file);
-	RAISE NOTICE 'bad inserts detected';
+    EXECUTE format('
+      COPY bad_inserts_offices
+      TO %L
+      WITH
+        DELIMITER ''|''
+        NULL ''''
+        CSV HEADER', output_file);
+  RAISE NOTICE 'bad inserts detected';
+  RETURN outname;
   END IF;
 
-  RETURN output_file;
+  RETURN '';
 END;  
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
