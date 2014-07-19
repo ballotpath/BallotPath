@@ -15,7 +15,7 @@ def begin(filename):
             headers = reader.next()
     except IOError:
         #file could not be read
-        result = validation_erro("File could not be opened!")
+        result = validation_error("File could not be opened!")
 
     if headers is not None:
         if headers == models.hol_pos_off_header:
@@ -24,11 +24,12 @@ def begin(filename):
             if headers == models.el_div_dist_header:
                 result = validate_election_division_district(reader, filename)
             else:
+		print "headers don't match"
                 #file headers do not match what we want
-                result = validation_error("File headers do not match required format!\n" + headers)
+                result = validation_error("File headers do not match required format!\nReceived:    " + str(headers) + "Expected:   " + str(models.hol_pos_off_header) + "\nOR\n" + str(models.el_div_dist_header))
 
     #remove import file from import folder
-    cleanup(filename)
+    #cleanup(filename)
     return result
 
 
@@ -40,7 +41,7 @@ def validate_holder_position_office(reader, filename):
 # Validation for the election division and district csv file
 def validate_election_division_district(reader, filename):
     
-    return import_election_division_district(name)
+    return import_election_division_district(filename)
     
 
 def import_holder_position_office(name):
