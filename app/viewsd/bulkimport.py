@@ -5,6 +5,8 @@ from sqlalchemy.exc import SQLAlchemyError
 import csv
 import os
 import time
+import sys
+from csvvalidator import *
 
 hol_pos_off_header = ['first_name', 'middle_name', 'last_name', 'holder_addr1', 'holder_addr1_city', 'holder_addr1_state', 'holder_addr1_zip', 'holder_addr2', 'holder_phone', 'holder_email', 'holder_website', 'photo_link', 'position_name', 'term_start', 'term_end', 'filing_deadline', 'next_election', 'position_notes', 'position_rank', 'title', 'number_of_positions', 'responsibilities', 'term_length_months', 'filing_fee', 'partisan', 'age_reqs', 'residency_reqs', 'professional_reqs', 'salary', 'office_notes', 'office_rank', 'office_doc_name', 'office_doc_link', 'district_name', 'district_state', 'election_div_name']
 
@@ -14,9 +16,9 @@ el_div_dist_header = ['district_name', 'district_state', 'level_name', 'election
 def begin(filename):
     result = ''
     try:
-        with open(os.path.join(app.config['UPLOAD_FOLDER'], filename)) as impfile:
-            reader = csv.reader(impfile, delimiter='|', dialect=csv.excel)
-            headers = reader.next()
+        impfile = open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        reader = csv.reader(impfile, delimiter='|', dialect=csv.excel)
+        headers = reader.next()
     except IOError:
         #file could not be read
         result = validation_error("File could not be opened!")
@@ -33,14 +35,69 @@ def begin(filename):
                 result = validation_error("File headers do not match required format!\nReceived:    " + str(headers) + "Expected:   " + str(hol_pos_off_header) + "\nOR\n" + str(el_div_dist_header))
 
     #remove import file from import folder
-    #cleanup(filename)
+    cleanup(filename)
     return result
 
 
 # Validation for the holder, postion and office csv file
 def validate_holder_position_office(reader, filename):
-    
+    validator = CSVValidator(hol_pos_off_header)
+    validator.add_header_check('EX1', 'bad header')
+    validator.add_record_check(check_holder_addr_string_length)
+
+    validator.add_record_check(check_valid_dates_holder)
+    #datemsg = ' should be in the format: month, dd yyyy'
+    #validator.add_value_check('term_start', datetime_string('%m %d, %Y'), 'EX2', 'term_start'+datemsg)
+    #validator.add_value_check('term_end', datetime_string('%m %d, %Y'), 'EX3', 'term_end'+datemsg)
+    #validator.add_value_check('filing_deadline', datetime_string('%m %d, %Y'), 'EX4', 'filing_deadline'+datemsg)
+    #validator.add_value_check('next_election', datetime_string('%m %d, %Y'), 'EX5', 'next_election'+datemsg)
+
+    validator.add_value_check('term_length_months', int, 'EX2', 'term_length_months must be an integer')
+    validator.add_value_check('partisan', bool, 'EX3', 'partisan must be True or False')
+    validator.add_value_check('salary', int, 'EX4', 'salary must be an integer')
+
+    problems = validator.validate(reader)
+
+    if problems is not None:
+        fname = 'bad_inserts_'+ time.strftime("%Y-%m-%d-%H_%M_%S") + '.csv'
+        efile = open(os.path.join(app.config['ERROR_FOLDER'], fname), 'w')
+        write_problems(problems, efile)
+        return fname
+
     return import_holder_position_office(filename)
+
+
+def check_holder_addr_string_length(r):
+    addr1 = str(r['holder_addr1'])
+    addr2 = str(r['holder_addr2'])
+    valid = (len(addr1) <= 25 and len(addr2) <= 25)
+    if not valid:
+        raise RecordError('EX5', 'holder_addr1 or holder_addr2 length is too long, must be less than or equal to 25 characters')
+
+
+
+def check_valid_dates_holder(r):
+    start = str(r['term_start'])
+    end = str(r['term_end'])
+    f_deadline = str(r['filing_deadline'])
+    next_el = str(r['next_election'])
+
+    valid = ((try_parse_date(start, '%b %d, %Y') or try_parse_date(start, '%B %d, %Y')) 
+              and (try_parse_date(end, '%b %d, %Y') or try_parse_date(end, '%B %d, %Y'))
+              and (try_parse_date(f_deadline, '%b %d, %Y') or try_parse_date(f_deadline, '%B %d, %Y'))
+              and (try_parse_date(next_el, '%b %d, %Y') or try_parse_date(next_el, '%B %d, %Y')))
+    if not valid:
+        raise RecordError('EX6', 'Incorrect date format: ' +  start + ', ' + end + ', ' + f_deadline + ', ' + next_el)
+
+
+def try_parse_date(s, f):
+    if s is not None:
+        try: 
+            datetime.strptime(s, f)
+        except ValueError:
+            return False
+    return True
+
 
 # Validation for the election division and district csv file
 def validate_election_division_district(reader, filename):
