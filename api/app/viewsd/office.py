@@ -109,13 +109,62 @@ SELECT office_position.id as office_position_id
         office_positions.append(parse_office_row(row))
     return Response(json.dumps({ "office_positions" : office_positions }), status=200, mimetype='application/json')
 
+def get_office_docs(office_id):
+    ret = []
+    office_docs = models.office_docs.query.filter(models.office_docs.office_id == office_id).all()
+    # Add the document information to our office object
+    for office_doc in office_docs:
+        office_doc_dict = dict(office_doc.__dict__)
+        del office_doc_dict['_sa_instance_state']
+        ret.append(office_doc_dict)
+    return ret
+
+def get_election_div_docs(election_div_id):
+    ret = []
+    election_div_docs = models.election_div_docs.query.filter(models.election_div_docs.election_div_id == election_div_id).all()
+    for election_div_doc in election_div_docs:
+        election_div_doc_dict = dict(election_div_doc.__dict__)
+        del election_div_doc_dict['_sa_instance_state']
+        ret.append(election_div_doc_dict)
+    return ret
+
+def get_office_positions(office_id):
+    ret = []
+    office_positions = models.office_position.query.filter(models.office_position.office_id == office_id).all()
+    for office_position in office_positions:
+        office_position_dict = dict(office_position.__dict__)
+        del office_position_dict['_sa_instance_state']
+        # Convert the date/times to strings so they can be output
+        office_position_dict['term_start'] = str(office_position_dict['term_start'])
+        office_position_dict['term_end'] = str(office_position_dict['term_end'])
+        office_position_dict['filing_deadline'] = str(office_position_dict['filing_deadline'])
+        office_position_dict['next_election'] = str(office_position_dict['next_election'])
+        # Get the office holder for this position
+        office_holder = models.office_holder.query.get(office_position.office_holder_id)
+        office_holder_dict = dict(office_holder.__dict__)
+        del office_holder_dict['_sa_instance_state']
+        office_position_dict['office_holder'] = office_holder_dict
+        # Get the district for this position
+        #### district = models.district.query.get(office_position.district_id)
+        district = models.district.query.get(1)
+        district_dict = dict(district.__dict__)
+        del district_dict['_sa_instance_state']
+        office_position_dict['district'] = district_dict
+        # Get the election division for this position from the district info
+        election_div = models.election_div.query.get(district.election_div_id)
+        election_div_dict = dict(election_div.__dict__)
+        del election_div_dict['_sa_instance_state']
+        office_position_dict['election_div'] = election_div_dict
+        # Finally, get all the election division documents
+        office_position_dict['election_div_docs'] = get_election_div_docs(election_div.id)
+        ret.append(office_position_dict)
+    return ret
+
 @app.route("/office/<int:office_id>/", methods = ['GET'])
 def get_office(office_id):
     # Use our model to connect to the DB and get our particular office
+    ret = {}
     office = models.office.query.get(office_id)
-    result = db.session.execute("SELECT id as office_id FROM office WHERE id=1;")
-    for row in result:
-        error.text
     if office == None:
         return Response(json.dumps(None), status=404, mimetype='application/json')
     else:
@@ -123,9 +172,14 @@ def get_office(office_id):
         office_dict = dict(office.__dict__)
         # Remove the extra SQLAlchemy data
         del office_dict['_sa_instance_state']
+        ret['office'] = office_dict
+        # Get the office documents for this office
+        ret['office_docs'] = get_office_docs(office.id)
+        # Get the office positions for this office
+        ret['office_positions'] = get_office_positions(office.id)
         # Then use Flask's Response class to make an HTML response with
         # the JSON in it
-        return Response(json.dumps(office_dict), status=200, mimetype='application/json')
+        return Response(json.dumps(ret), status=200, mimetype='application/json')
 
 @app.route("/office/<int:office_id>/", methods = ['POST'])
 def post_office(office_id):
