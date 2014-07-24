@@ -145,8 +145,10 @@ def get_office_positions(office_id):
         del office_holder_dict['_sa_instance_state']
         office_position_dict['office_holder'] = office_holder_dict
         # Get the district for this position
-        #### district = models.district.query.get(office_position.district_id)
-        district = models.district.query.get(1)
+        if office_position.district_id != None:
+            district = models.district.query.get(office_position.district_id)
+        else:
+            district = models.district.query.get(1)
         district_dict = dict(district.__dict__)
         del district_dict['_sa_instance_state']
         office_position_dict['district'] = district_dict
