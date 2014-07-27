@@ -92,11 +92,11 @@ $(document).ready(function(){
         $.jsonp({
                 url: requestURL,
                 success: function(data) {
-                        console.log(data);              
-                        console.log(data.positions);    
-                        if (data.positions && data.positions.length > 0) {              
+		        console.log(data);              
+                        console.log(data.office_positions);    
+                        if (data.office_positions && data.office_positions.length > 0) {              
                                 var positionMatrix = "";
-                                $.each(data.positions, function(i, card) {
+                                $.each(data.office_positions, function(i, card) {
                                         positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell">\n';
                                         positionMatrix += officeCard(card);
                                         positionMatrix += '</div>\n';
