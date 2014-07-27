@@ -41,7 +41,7 @@ def begin(filename):
                 result = validate_election_division_district(filename)
             else:	
                 #file headers do not match what we want
-                result = validation_error("File headers do not match required format!\nReceived:    " + str(headers) + "Expected:   " + str(hol_pos_off_header) + "\nOR\n" + str(el_div_dist_header))
+                result = validation_error("File headers do not match required format!\nReceived:    " + str(headers) + "\nExpected:   " + str(hol_pos_off_header) + "\nOR\n" + str(el_div_dist_header))
 
     #remove import file from import folder
     cleanup(filename)
@@ -122,7 +122,7 @@ def check_holder_addr_string_length(r):
     """
     addr1 = str(r['holder_addr1'])
     addr2 = str(r['holder_addr2'])
-    valid = (len(addr1) <= 25 and len(addr2) <= 25)
+    valid = (len(addr1) <= 100 and len(addr2) <= 100)
     if not valid:
         raise RecordError('EX5', 'Length is too long, must be less than or equal to 25 characters\nFor holder_addr1: {0}\nOR\nholder_addr2: {1}'.format(addr1, addr2))
 
@@ -224,17 +224,16 @@ def check_election_div_not_null_fields(r):
 def check_election_div_addr_length(r):
     """
     Check to see if address fields have too many characters.
-    For no the db has a 25 character limit.
     """
     phys_addr1 = str(r['phys_addr1'])
     phys_addr2 = str(r['phys_addr2'])
     mail_addr1 = str(r['mail_addr1'])
     mail_addr2 = str(r['mail_addr2'])
     
-    p1_valid = (len(phys_addr1) <= 25)
-    p2_valid = (len(phys_addr2) <= 25)
-    m1_valid = (len(phys_addr1) <= 25)
-    m2_valid = (len(phys_addr2) <= 25)
+    p1_valid = (len(phys_addr1) <= 100)
+    p2_valid = (len(phys_addr2) <= 100)
+    m1_valid = (len(phys_addr1) <= 100)
+    m2_valid = (len(phys_addr2) <= 100)
     
     msg = ''
 
@@ -255,24 +254,36 @@ def import_holder_position_office(name):
     """
     Call the stored procedure to import office holders, positions and offices from a validated csv.
     """
-    try:
-        result = db.engine.execute(text('SELECT bp_import_off_pos_hol_csv_to_staging_tables(:filename);'), filename=name)
-        for row in result:
-            return row['bp_import_off_pos_hol_csv_to_staging_tables']
+    cmd = 'SELECT bp_import_off_pos_hol_csv_to_staging_tables(:filename);'
+    return run_import_cmd(name, cmd, 0)
+
+
+def run_import_cmd(name, cmd, sp):
+    msg = ''
+    conn = db.engine.connect()
+    trans = conn.begin()
+    try: 
+        result = conn.execute(text(cmd), filename=name)
+        row = result.fetchone()
+        if sp == 0:
+            msg = row['bp_import_off_pos_hol_csv_to_staging_tables']
+        else:
+            msg = row['bp_import_dist_elec_div_csv_to_staging_tables']
+        trans.commit()
     except SQLAlchemyError as sqle:
-        return sql_validation_error(str(sqle).split("SQL statement")[0])
+        trans.rollback()
+        conn.close()
+        return validation_error(str(sqle).split("SQL statement")[0])
+    conn.close()
+    return msg
 
 
 def import_election_division_district(name):
     """
     Call the stored procedure to import a validated election division and district csv.
     """
-    try:
-        result = db.engine.execute(text('SELECT bp_import_dist_elec_div_csv_to_staging_tables(:filename);'), filename=name)
-        for row in result:
-            return row['bp_import_dist_elec_div_csv_to_staging_tables']  
-    except SQLAlchemyError as sqle:
-        return sql_validation_error(str(sqle).split("SQL statement")[0])
+    cmd = 'SELECT bp_import_dist_elec_div_csv_to_staging_tables(:filename);'
+    return run_import_cmd(name, cmd, 1)
 
 
 def cleanup(filename):
@@ -287,7 +298,7 @@ def cleanup(filename):
         pass
 
 
-def sql_validation_error(error):
+def validation_error(error):
     """
     Write an error message to a file that can be returned to the client
 
