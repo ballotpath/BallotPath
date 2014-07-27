@@ -41,6 +41,8 @@ jQuery 2d Transform v0.9.3
 	<!-- JavaScript -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/jsonp.js" type="text/javascript"></script>
+    <script src="js/purl.js"></script>
     <script src="js/officeCard.js"></script>
 </head>
 
@@ -115,6 +117,8 @@ jQuery 2d Transform v0.9.3
 
 <script>
 $(document).ready(function(){
+	var hash = getVars();
+
 	$("#hideFederal").click(function() {
 		 $(this).parent().toggleClass("active ");
 		$(".Federal").parent().toggle('show');
@@ -137,15 +141,11 @@ $(document).ready(function(){
 		$(".Local").parent().toggle('show');
 	});
 
-
-
-
-
-
 // Make all the cards
-	var requestURL="http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/positions.json";
+	var requestURL="http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/api/office/" + hash['lat'] + "/" + hash['lng'];
 	var $resultsArea = $('#cards');
-	$.getJSON(requestURL, function(data){
+	$.jsonp(requestURL, function(data){
+		alert(data);
 		console.log(data);		
 		console.log(data.positions);	
 		if (data.positions && data.positions.length > 0) {		

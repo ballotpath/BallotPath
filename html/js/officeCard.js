@@ -1,8 +1,16 @@
 // officeCard function
 // Accepts an object as an argument.
 
-
-
+function getVars() {
+        var query = $.url().attr('query');
+        var args = query.split("&");
+        var hash = {};
+        for (var i = 0; i < args.length; ++i ) {
+                var set = args[i].split("=");
+                hash[set[0]] = set[1];
+        }
+        return hash; 
+}
 
 function officeCard(cardData) {
 	var levelString;

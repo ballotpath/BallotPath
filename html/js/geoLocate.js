@@ -16,8 +16,9 @@ function showAddress(address) {
         }
         else {
           //document.getElementById('geolocation').innerHTML += '<p>Your location: ' + point[0].geometry.location + '</p>';
-          var api_url = "http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/api/office/" + point[0].geometry.location.lat() + "/" + point[0].geometry.location.lng();
-          var url = window.location.protocol + "//" + window.location.host + "/page2.html" + "?lat=" + point[0].geometry.location.lat() + "&lng=" + point[0].geometry.location.lng();
+          //var api_url = "http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/api/office/" + point[0].geometry.location.lat() + "/" + point[0].geometry.location.lng();
+          var url = window.location.protocol + "//" + window.location.host + "/positions.html" + "?lat=" + point[0].geometry.location.lat() + "&lng=" + point[0].geometry.location.lng();
+          window.open(url, "_self");
         }
       }
     );
