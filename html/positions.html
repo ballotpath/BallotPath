@@ -21,6 +21,11 @@ jQuery 2d Transform v0.9.3
  Dual licensed under the MIT or GPL Version 2 licenses.
  http://jquery.org/license
  Date: Sat Dec 4 15:46:09 2010 -0800
+
+Purl (A JavaScript URL parser) v2.3.1
+ Developed and maintanined by Mark Perkins, mark@allmarkedup.com
+ Source repository: https://github.com/allmarkedup/jQuery-URL-Parser
+ Licensed under an MIT-style license. See https://github.com/allmarkedup/jQuery-URL-Parser/blob/master/LICENSE for details.
 -->
 
 <head>
@@ -43,7 +48,7 @@ jQuery 2d Transform v0.9.3
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
-    <script src="js/officeCard.js"></script>
+    <script src="js/positions.js"></script>
 </head>
 
 <body class="bgprimary">
@@ -114,82 +119,6 @@ jQuery 2d Transform v0.9.3
 
 <div class="container-fluid" style="padding-left: 50px; padding-right 50px;">
     <div class="row" id="cards">
-
-<script>
-$(document).ready(function(){
-	var hash = getVars();
-
-	$("#hideFederal").click(function() {
-		 $(this).parent().toggleClass("active ");
-		$(".Federal").parent().toggle('show');
-	});
-
-	$("#federal-check-box").change(function() {
-		 $(this).toggleClass('active');
-		$(".Federal").parent().toggle('show');
-	});
-	$("#state-check-box").change(function() {
-		$(".State").parent().toggle('show');
-	});
-	$("#county-check-box").change(function() {
-		$(".County").parent().toggle('show');
-	});
-	$("#city-check-box").change(function() {
-		$(".Municipal").parent().toggle('show');
-	});
-	$("#local-check-box").change(function() {
-		$(".Local").parent().toggle('show');
-	});
-
-// Make all the cards
-	var requestURL="http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/api/office/" + hash['lat'] + "/" + hash['lng'];
-	var $resultsArea = $('#cards');
-	$.jsonp({
-		url: requestURL,
-		success: function(data) {
-			console.log(data);		
-			console.log(data.positions);	
-			if (data.positions && data.positions.length > 0) {		
-				var positionMatrix = "";
-				$.each(data.positions, function(i, card) {
-					positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell">\n';
-					positionMatrix += officeCard(card);
-					positionMatrix += '</div>\n';
-				});
-				$resultsArea.html(positionMatrix);
-			} else {
-				$resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
-			}
-
-		// Pop-up Effect as mouse hovers over cards:
-		// This has to happen AFTER the cards are loaded because they are bound to this
-		// function.
-		  	var moveLeft = 100;
-		  	var moveDown = 30;
-
-		  	$('.office-card-outside').hover(function(e) {
-		  		var positionInfo = $( this ).data('carddata');
-		  		$('div#popuptext').empty();
-		  		$('div#popuptext').append('<p>Bio: ' + positionInfo.notes + '</p>');
-		    	$('div#pop-up').show()
-		      	.css('top', e.pageY + moveDown)
-		      	.css('left', e.pageX + moveLeft)
-		      	.appendTo('body');
-		  	}, function() {
-		    	$('div#pop-up').hide();
-		  	});
-
-		  	$('.office-card-outside').mousemove(function(e) {
-		    	$("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX - moveLeft);
-		  	});
-		// End of pop-up effect
-		}
-	});
-
-
-
-});
-</script>
 
   	</div> <!-- end row -->
 </div> <!-- End Container -->

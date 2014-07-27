@@ -21,3 +21,10 @@ A web service to help citizens run for public office
  Dual licensed under the MIT or GPL Version 2 licenses.
  http://jquery.org/license
  Date: Sat Dec 4 15:46:09 2010 -0800
+
+### Purl (A JavaScript URL parser) v2.3.1
+ Developed and maintanined by Mark Perkins, mark@allmarkedup.com
+ Source repository: https://github.com/allmarkedup/jQuery-URL-Parser
+ Licensed under an MIT-style license. See https://github.com/allmarkedup/jQuery-URL-Parser/blob/master/LICENSE for details.
+
+ 
