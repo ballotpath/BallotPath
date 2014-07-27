@@ -55,7 +55,7 @@ def parse_office_row(row):
     office_pos['office_holder'] = office_holder
     return office_pos
 # Office:
-@app.route("/office/<latitude>/<longitude>/")
+@app.route("/office/<string:latitude>/<string:longitude>/")
 def get_offices(latitude, longitude, methods = ['GET']):
     office_positions = []
     #result = db.session.query(models.office, models.office_holder, models.office_position).filter(models.office.id == models.office_position.office_id).filter(models.office_holder.id == models.office_position.id).all()
