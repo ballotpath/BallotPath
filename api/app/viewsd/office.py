@@ -17,7 +17,9 @@ def parse_office_row(row):
     office_pos['filing_deadline'] = str(row.filing_deadline)
     office_pos['next_election'] = str(row.next_election)
     office_pos['position_notes'] = row.position_notes
+    office_pos['position_rank'] = row.position_rank
     office_pos['office_title'] = row.office_title
+    office_pos['office_rank'] = row.office_rank
     office_pos['num_positions'] = row.num_positions
     office_pos['term'] = row.term_length_months
     office_pos['office_notes'] = row.office_notes
@@ -43,9 +45,11 @@ SELECT office_position.id as position_id
        , office_position.filing_deadline
        , office_position.next_election
        , office_position.notes as position_notes
+       , office_position.office_rank as position_rank
     --OFFICES
        , office.id as office_id
        , office.title as office_title
+       , office.office_rank
        , office.num_positions
        , office.term_length_months
        , office.notes as office_notes
