@@ -255,17 +255,20 @@ def import_holder_position_office(name):
     Call the stored procedure to import office holders, positions and offices from a validated csv.
     """
     cmd = 'SELECT bp_import_off_pos_hol_csv_to_staging_tables(:filename);'
-    return run_import_cmd(name, cmd)
+    return run_import_cmd(name, cmd, 0)
 
 
-def run_import_cmd(name, cmd):
+def run_import_cmd(name, cmd, sp):
     msg = ''
     conn = db.engine.connect()
     trans = conn.begin()
     try: 
         result = conn.execute(text(cmd), filename=name)
-        for row in result:
+        row = result.fetchone()
+        if sp == 0:
             msg = row['bp_import_off_pos_hol_csv_to_staging_tables']
+        else:
+            msg = row['bp_import_dist_elec_div_csv_to_staging_tables']
         trans.commit()
     except SQLAlchemyError as sqle:
         trans.rollback()
@@ -280,7 +283,7 @@ def import_election_division_district(name):
     Call the stored procedure to import a validated election division and district csv.
     """
     cmd = 'SELECT bp_import_dist_elec_div_csv_to_staging_tables(:filename);'
-    return run_import_cmd(name, cmd)
+    return run_import_cmd(name, cmd, 1)
 
 
 def cleanup(filename):
