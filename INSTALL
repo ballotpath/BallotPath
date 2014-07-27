@@ -14,6 +14,9 @@ Then install the required Python packages:
 	pip install sqlalchemy==0.7.9
 	pip install flask-sqlalchemy==0.16
 	pip install Flask-Psycopg2
+	pip install flask-restful
+	pip install flask-simplerest
+	pip install csvvalidator
 
 ---
 APACHE SETUP:
@@ -22,7 +25,7 @@ Make sure that you have mod_wsgi installed for Apache; this allows you to serve 
 
 	sudo apt-get install libapache2-mod-wsgi
 
-Next, you need to set up your Apache .conf file. Go to /etc/apache2/sites-available/ and change/add the following lines:
+Next, you need to set up your Apache .conf file. Go to /etc/apache2/sites-available/ and change/add the following lines to the default config (e.g. 000-default.conf):
 
 	DocumentRoot /var/www/BallotPath/html
 
@@ -30,11 +33,25 @@ Next, you need to set up your Apache .conf file. Go to /etc/apache2/sites-availa
 	<Directory /var/www/BallotPath/api/app>
 		Order allow,deny
 		Allow from all
+		Require all granted
+		Header always set Access-Control-Allow-Origin "*"
+		Header always set Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+		Header always set Access-Control-Allow-Methods "GET, OPTIONS"
 	</Directory>
 
 You could also use a similar Alias directory to serve the html directory if you already have your DocumentRoot set to somewhere else.
 
-Finally, you need to make the .wsgi file so Apache can serve the directory. Create this file in the api folder:
+Next you'll need to move into the /var/www folder (create them if they don't already exist) and clone the git repo into there. First install git:
+
+	sudo apt-get install git
+
+You'll need to have an account set up at www.github.com as well. Next, from the /var/www directory, clone the BallotPath repo:
+
+	sudo git clone https://github.com/mclyde/BallotPath
+
+Enter the github username and password when prompted. The BallotPath directory should be there containing all of the necessary files and on the master branch. Do not change the branch unless you are working on a non-production server just for testing or development purposes.
+
+Finally, you need to make sure the .wsgi file exists in the repo so Apache can serve the directory. Create this file in the api folder if it doesn't exist or edit it as necessary to contain the following:
 
 	#!/usr/bin/python
 	import sys
