@@ -2,10 +2,17 @@
 var map = null;
 var geocoder = null;
 
+google.maps.event.addDomListener(window, 'load', initialize);
+
 function initialize() {
-  if (GBrowserIsCompatible()) {
+    var map_canvas = document.getElementById('map_canvas');
+    var map_options = {
+        center: new google.maps.LatLng(44.9308, -123.0289),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(map_canvas, map_options);
     geocoder = new google.maps.Geocoder();
-  }
 }
 
 function showAddress(address) {
@@ -15,8 +22,6 @@ function showAddress(address) {
           alert(address + " not found");
         }
         else {
-          //document.getElementById('geolocation').innerHTML += '<p>Your location: ' + point[0].geometry.location + '</p>';
-          //var api_url = "http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/api/office/" + point[0].geometry.location.lat() + "/" + point[0].geometry.location.lng();
           var url = window.location.protocol + "//" + window.location.host + "/positions.html" + "?lat=" + point[0].geometry.location.lat() + "&lng=" + point[0].geometry.location.lng();
           window.open(url, "_self");
         }

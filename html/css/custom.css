@@ -2,23 +2,25 @@
 dt {
 	color: black;
 }
+
 dd {
-	color: grey;
+	color: gray;
 }
-a {
-	display: block;
-}
+
 .panel-primary {
 	color:black;
 }
+
 .inpCenter {
 	margin-left: auto;
 	margin-right: auto;
 	width:400px;
 }
+
 #loader{
    visibility:hidden;
 }
+
 #f1_upload_process{
    visibility:hidden;
 }
@@ -117,6 +119,7 @@ a {
 	overflow:hidden;
 	text-overflow:ellipsis; 
 }
+
 .office-card-title-text {
 	align-items:center;
 	margin-top:0px;
