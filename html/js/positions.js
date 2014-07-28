@@ -150,8 +150,5 @@ $(document).ready(function(){
                 // End of pop-up effect
                 }
         });
-
-
-
 });
 

@@ -2,21 +2,25 @@
 dt {
 	color: black;
 }
+
 dd {
-	color: grey;
+	color: gray;
 }
 
 .panel-primary {
 	color:black;
 }
+
 .inpCenter {
 	margin-left: auto;
 	margin-right: auto;
 	width:400px;
 }
+
 #loader{
    visibility:hidden;
 }
+
 #f1_upload_process{
    visibility:hidden;
 }
@@ -115,6 +119,7 @@ dd {
 	overflow:hidden;
 	text-overflow:ellipsis; 
 }
+
 .office-card-title-text {
 	align-items:center;
 	margin-top:0px;
@@ -171,6 +176,4 @@ div#pop-up {
   opacity: 0.85;
   filter: alpha(opacity=85); /* For IE8 and earlier */
 }
-
-
 
