@@ -33,10 +33,10 @@ function officeCard(cardData) {
 			levelString = "Local";
 			break;
 	}
-if (cardData.imgLink == "") {
-        imgLink = "img/business_user.png";
+if (cardData.photo_link == "") {
+        photo_link = "img/business_user.png";
 } else {
-        imgLink = cardData.imgLink;
+        photo_link = cardData.photo_link;
 }
 var htmlString = '<!-- Begin Card --> \n' +
                  '<div class="office-card-outside animated ' + levelString + '" data-cardData=\'' + jsonString + '\'>\n' +
@@ -44,9 +44,9 @@ var htmlString = '<!-- Begin Card --> \n' +
                  '       <h4 class="office-card-title-text">' + levelString + '</h4> \n' +
                  '    </div>                                                        \n' +
                  '    <div class="office-card-title">                \n' +
-                 '      <p class="office-card-title-text">' + cardData.title + '</p>\n' +
+                 '      <p class="office-card-title-text">' + cardData.position_name + '</p>\n' +
                  '    </div>                                                        \n' +
-                 '    <div class="office-card-picture" style="background-image:url(\'' + imgLink + '\');">\n' +
+                 '    <div class="office-card-picture" style="background-image:url(\'' + photo_link + '\');">\n' +
                  '      <div class="office-card-term transparent">                 \n' +
                  '        <p class="office-card-term-text">' + cardData.term + ' Term</p>\n' +
                  '      </div>                                                        \n' +
@@ -54,7 +54,7 @@ var htmlString = '<!-- Begin Card --> \n' +
                  '        <p class="office-card-term-text">' + cardData.begin + '-' + cardData.end + '</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-name transparent">                                \n' +
-                 '        <h4>' + cardData.name + '</h4>\n' +
+                 '        <h4>' + cardData.first_name + " " + cardData.last_name + '</h4>\n' +
                  '      </div>                                                        \n' +
                  '    </div>\n' +
                  '</div> <!-- End Card --> \n';
@@ -93,10 +93,10 @@ $(document).ready(function(){
                 url: requestURL,
                 success: function(data) {
 		        console.log(data);              
-                        console.log(data.office_positions);    
-                        if (data.office_positions && data.office_positions.length > 0) {              
+                        console.log(data.positions);    
+                        if (data.positions && data.positions.length > 0) {              
                                 var positionMatrix = "";
-                                $.each(data.office_positions, function(i, card) {
+                                $.each(data.positions, function(i, card) {
                                         positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell">\n';
                                         positionMatrix += officeCard(card);
                                         positionMatrix += '</div>\n';
