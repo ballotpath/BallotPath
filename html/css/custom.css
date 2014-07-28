@@ -5,9 +5,7 @@ dt {
 dd {
 	color: grey;
 }
-a {
-	display: block;
-}
+
 .panel-primary {
 	color:black;
 }
@@ -173,4 +171,6 @@ div#pop-up {
   opacity: 0.85;
   filter: alpha(opacity=85); /* For IE8 and earlier */
 }
+
+
 

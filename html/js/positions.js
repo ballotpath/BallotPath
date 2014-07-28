@@ -1,6 +1,21 @@
 // officeCard function
 // Accepts an object as an argument.
 
+var map;
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function initialize() {
+    var hash = getVars();
+    var map_canvas = document.getElementById('map_canvas');
+    var map_options = {
+        center: new google.maps.LatLng(hash['lat'], hash['lng']),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(map_canvas, map_options);
+}
+
 function getVars() {
         var query = $.url().attr('query');
         var args = query.split("&");
@@ -115,7 +130,12 @@ $(document).ready(function(){
                         $('.office-card-outside').hover(function(e) {
                                 var positionInfo = $( this ).data('carddata');
                                 $('div#popuptext').empty();
-                                $('div#popuptext').append('<p>Bio: ' + positionInfo.notes + '</p>');
+				if(positionInfo.office_notes) {
+                                	$('div#popuptext').append('<p>Bio: ' + positionInfo.office_notes + '</p>');
+				}
+				else {
+					$('div#popuptext').append('<p>Bio not available </p>');
+				}
                         $('div#pop-up').show()
                         .css('top', e.pageY + moveDown)
                         .css('left', e.pageX + moveLeft)
