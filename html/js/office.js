@@ -29,7 +29,10 @@ $(document).ready(function() {
     var hash = getVars();
     var requestURL="http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/api/office/" + hash['id'];
     var $resultsArea = $('#position-title');
-    $.getJSON(requestURL, function(data){
+    $.jsonp({
+        url: requestURL,
+        success: function(data) {
+            console.log(data);
             var out = data.office[0].title;
             $resultsArea.html(out);
             
