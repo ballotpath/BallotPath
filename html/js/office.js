@@ -50,7 +50,7 @@ $(document).ready(function() {
             $resultsArea.html(out);
             
             $resultsArea = $('#basDut');
-            out = '<dt>Responsibilities</dt><dd>' + data.office.responsibilities + ' Months</dd>';
+            out = '<dt>Responsibilities</dt><dd>' + data.office.responsibilities + '</dd>';
             out += '<dd>' + data.office.notes + '</dd>';
             $resultsArea.html(out);
             
@@ -58,14 +58,14 @@ $(document).ready(function() {
             out =  '';
             var oDocs = data.office_docs
             for (var i = 0; i < oDocs.length; ++i) {
-                out += '<dt>' + oDocs.name + '</dt><dd>' + oDocs.link + '</dd>';
+                out += '<dt>' + oDocs[i].name + '</dt><dd>' + oDocs[i].link + '</dd>';
             }
             var eDocs = data.office_positions[0].election_div_docs
             for (var i = 0; i < eDocs.length; ++i) {
-                out += '<dt>' + eDocs.name + '</dt><dd>' + eDocs.link + '</dd>';
+                out += '<dt>' + eDocs[i].name + '</dt><dd>' + eDocs[i].link + '</dd>';
             }
             if (out == '') {
-                out = '<dt></dt><dd></dd>';
+                out = '<dt>""</dt><dd>""</dd>';
             }
             $resultsArea.html(out);
             
@@ -75,9 +75,9 @@ $(document).ready(function() {
             out += '<dt>Physical Address</dt><dd>' + data.office_positions[0].election_div.phys_addr_addr1 + '</dd>' ;
             out += '<dd>' + data.office_positions[0].election_div.phys_addr_addr2 + '</dd><dd>' + data.office_positions[0].election_div.phys_addr_city + '</dd>';
             out += '<dd>' + data.office_positions[0].election_div.phys_addr_state + '</dd><dd>' + data.office_positions[0].election_div.phys_addr_zip + '</dd>';
-            out += '<dt>Mailing Address</dt><dd>' + data.office[0].mail_addr_addr1 + '</dd>';
-            out += '<dd>' + data.office_positions[0].election_div.mail_addr_addr2 + '</dd><dd>' + data.office_positions[0].election_div.mail_addr_city + '</dd>';
-            out += '<dd>' + data.office_positions[0].election_div.mail_addr_state + '</dd><dd>' + data.office_positions[0].election_div.mail_addr_zip + '</dd>';
+            out += '<dt>Mailing Address</dt><dd>' + data.office_positions[0].election_div.mail_addr_addr1 + '</dd>';
+            out += '<dd>' + data.office_positions[0].election_div.mail_addr_addr2 + '</dd><dd>' + data.office_positions[0].election_div.mail_addr_city + ', ' + data.office_positions[0].election_div.mail_addr_state + '</dd>';
+            out += '<dd>' + data.office_positions[0].election_div.mail_addr_zip + '</dd>';
             out += '<dt>Phone Number</dt><dd>' + data.office_positions[0].election_div.phone + '</dd>';
             out += '<dt>Website</dt><dd>' + data.office_positions[0].election_div.website + '</dd>';
             out += '<dt>Filling Fee</dt><dd>' + data.office.filing_fee + '</dd>';

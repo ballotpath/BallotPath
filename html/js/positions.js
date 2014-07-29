@@ -112,6 +112,7 @@ $(document).ready(function(){
                 success: function(data) {
                     console.log(data);              
                     console.log(data.positions);
+			var positionMatrix = "";
                     if (data.positions && data.positions.length > 0) {
                         $.each(data.positions, function(i, card) {
                             dyn_id = card.office_id;
