@@ -138,10 +138,10 @@ def check_valid_dates_holder(r):
     f_deadline = str(r['filing_deadline']).strip()
     next_el = str(r['next_election']).strip()
 
-    valid = ((try_parse_date(start, '%b %d, %Y') or try_parse_date(start, '%B %d, %Y')) 
-              and (try_parse_date(end, '%b %d, %Y') or try_parse_date(end, '%B %d, %Y'))
-              and (try_parse_date(f_deadline, '%b %d, %Y') or try_parse_date(f_deadline, '%B %d, %Y'))
-              and (try_parse_date(next_el, '%b %d, %Y') or try_parse_date(next_el, '%B %d, %Y')))
+    valid = ((try_parse_date(start, '%b %d, %Y') or try_parse_date(start, '%B %d, %Y') or not start) 
+              and (try_parse_date(end, '%b %d, %Y') or try_parse_date(end, '%B %d, %Y') or not end)
+              and (try_parse_date(f_deadline, '%b %d, %Y') or try_parse_date(f_deadline, '%B %d, %Y') or not f_deadline)
+              and (try_parse_date(next_el, '%b %d, %Y') or try_parse_date(next_el, '%B %d, %Y') or not next_el))
     if not valid:
         raise RecordError('EX6', 'Incorrect date format in one of the following: {0}, {1}, {2}, {3}\nValid format examples are "Jan 22, 2012" or "January 22, 2012"'.format(start, end, f_deadline, next_el))
 
@@ -273,7 +273,7 @@ def run_import_cmd(name, cmd, sp):
     except SQLAlchemyError as sqle:
         trans.rollback()
         conn.close()
-        return validation_error(str(sqle).split("SQL statement")[0])
+        return validation_error(str(sqle))#.split("CONTEXT:")[0])
     conn.close()
     return msg
 
