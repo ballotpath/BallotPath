@@ -1,5 +1,3 @@
-// officeCard function
-// Accepts an object as an argument.
 
 var map;
 
