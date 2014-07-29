@@ -48,12 +48,12 @@ function officeCard(cardData) {
 			levelString = "Local";
 			break;
 	}
-if (cardData.photo_link == "") {
+    if (cardData.photo_link == "") {
         photo_link = "img/business_user.png";
-} else {
+    } else {
         photo_link = cardData.photo_link;
-}
-var htmlString = '<!-- Begin Card --> \n' +
+    }
+    var htmlString = '<!-- Begin Card --> \n' +
                  '<div class="office-card-outside animated ' + levelString + '" data-cardData=\'' + jsonString + '\'>\n' +
                  '    <div class="office-card-scope ' + levelString + '">           \n' +
                  '       <h4 class="office-card-title-text">' + levelString + '</h4> \n' +
@@ -73,7 +73,7 @@ var htmlString = '<!-- Begin Card --> \n' +
                  '      </div>                                                        \n' +
                  '    </div>\n' +
                  '</div> <!-- End Card --> \n';
-return htmlString;
+    return htmlString;
 };
 
 $(document).ready(function(){
@@ -111,10 +111,12 @@ $(document).ready(function(){
                         console.log(data.positions);    
                         if (data.positions && data.positions.length > 0) {              
                                 var positionMatrix = "";
+                                var dyn_id = "";
                                 $.each(data.positions, function(i, card) {
-                                        positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell">\n';
-                                        positionMatrix += officeCard(card);
-                                        positionMatrix += '</div>\n';
+                                    dyn_id = card.office_id;
+                                    positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + '>\n';
+                                    positionMatrix += officeCard(card);
+                                    positionMatrix += '</div>\n';
                                 });
                                 $resultsArea.html(positionMatrix);
                         } else {
