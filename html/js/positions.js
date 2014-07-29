@@ -110,21 +110,20 @@ $(document).ready(function(){
         $.jsonp({
                 url: requestURL,
                 success: function(data) {
-		        console.log(data);              
-                        console.log(data.positions);    
-                        if (data.positions && data.positions.length > 0) {              
-                                var positionMatrix = "";
-                                var dyn_id = "";
-                                $.each(data.positions, function(i, card) {
-                                    dyn_id = card.office_id;
-                                    positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + ' onclick="openOffice(' + dyn_id + ')" >\n';
-                                    positionMatrix += officeCard(card);
-                                    positionMatrix += '</div>\n';
-                                });
-                                $resultsArea.html(positionMatrix);
-                        } else {
-                                $resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
-                        }
+                    console.log(data);              
+                    console.log(data.positions);
+                    if (data.positions && data.positions.length > 0) {
+                        $.each(data.positions, function(i, card) {
+                            dyn_id = card.office_id;
+                            positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + ' onclick="openOffice(' + dyn_id + ')" >\n';
+                            positionMatrix += officeCard(card);
+                            positionMatrix += '</div>\n';
+                        });
+                        $resultsArea.html(positionMatrix);
+                    }
+                    else {
+                        $resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
+                    }
 
                 // Pop-up Effect as mouse hovers over cards:
                 // This has to happen AFTER the cards are loaded because they are bound to this
