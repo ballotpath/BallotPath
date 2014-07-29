@@ -76,6 +76,11 @@ function officeCard(cardData) {
     return htmlString;
 };
 
+function openOffice(office_id) {
+    var url = window.location.protocol + "//" + window.location.host + "/office.html" + "?id=" + office_id;
+    window.open(url, "_self");
+}
+
 $(document).ready(function(){
         var hash = getVars();
 
@@ -114,7 +119,7 @@ $(document).ready(function(){
                                 var dyn_id = "";
                                 $.each(data.positions, function(i, card) {
                                     dyn_id = card.office_id;
-                                    positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + '>\n';
+                                    positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + ' onclick="openOffice(' + dyn_id + ')" >\n';
                                     positionMatrix += officeCard(card);
                                     positionMatrix += '</div>\n';
                                 });
