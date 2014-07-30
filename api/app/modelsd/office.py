@@ -3,7 +3,7 @@ from sqlalchemy.dialects import postgresql
 
 class office(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
-    title = db.Column(db.VARCHAR(35), nullable = False)
+    title = db.Column(db.VARCHAR(125), nullable = False)
     num_positions = db.Column(db.INTEGER)
     responsibilities = db.Column(db.TEXT)
     term_length_months = db.Column(db.INTEGER)
