@@ -15,6 +15,6 @@ class office_holder(db.Model):
     phone = db.Column(db.VARCHAR(15))
     fax = db.Column(db.VARCHAR(15))
     email_address = db.Column(db.VARCHAR(125))
-    website = db.Column(db.TEXT)
+    website = db.Column(db.VARCHAR(50))
     photo_link = db.Column(db.TEXT)
     notes = db.Column(db.TEXT)
