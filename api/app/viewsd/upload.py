@@ -1,4 +1,4 @@
-from flask import Response, url_for, send_from_directory, render_template, redirect
+from flask import Response, url_for, send_from_directory, render_template, redirect, after_this_request
 from flask_restful import request
 from werkzeug.utils import secure_filename
 from app import app
@@ -29,10 +29,25 @@ def error_file(filename=None):
     if not filename:
 	# return to upload page
         return redirect(url_for('index'))
+    @after_this_request
+    def cleanup(response):
+        """
+        Remove the uploaded file from the system.
+        """
+        rfile = os.path.join(app.config['ERROR_FOLDER'], filename)
+        try:
+            if os.path.exists(rfile):
+                os.remove(rfile)
+        except OSError:
+            pass
+        return response
+
     # file is downloaded to client machine
     return send_from_directory(app.config['ERROR_FOLDER'], filename)
+
 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in 'csv'
+
