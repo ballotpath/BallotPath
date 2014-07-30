@@ -1,5 +1,3 @@
-// officeCard function
-// Accepts an object as an argument.
 
 var map;
 
@@ -48,12 +46,12 @@ function officeCard(cardData) {
 			levelString = "Local";
 			break;
 	}
-if (cardData.photo_link == "") {
+    if (cardData.photo_link == "") {
         photo_link = "img/business_user.png";
-} else {
+    } else {
         photo_link = cardData.photo_link;
-}
-var htmlString = '<!-- Begin Card --> \n' +
+    }
+    var htmlString = '<!-- Begin Card --> \n' +
                  '<div class="office-card-outside animated ' + levelString + '" data-cardData=\'' + jsonString + '\'>\n' +
                  '    <div class="office-card-scope ' + levelString + '">           \n' +
                  '       <h4 class="office-card-title-text">' + levelString + '</h4> \n' +
@@ -73,8 +71,13 @@ var htmlString = '<!-- Begin Card --> \n' +
                  '      </div>                                                        \n' +
                  '    </div>\n' +
                  '</div> <!-- End Card --> \n';
-return htmlString;
+    return htmlString;
 };
+
+function openOffice(office_id) {
+    var url = window.location.protocol + "//" + window.location.host + "/office.html" + "?id=" + office_id;
+    window.open(url, "_self");
+}
 
 $(document).ready(function(){
         var hash = getVars();
@@ -107,19 +110,21 @@ $(document).ready(function(){
         $.jsonp({
                 url: requestURL,
                 success: function(data) {
-		        console.log(data);              
-                        console.log(data.positions);    
-                        if (data.positions && data.positions.length > 0) {              
-                                var positionMatrix = "";
-                                $.each(data.positions, function(i, card) {
-                                        positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell">\n';
-                                        positionMatrix += officeCard(card);
-                                        positionMatrix += '</div>\n';
-                                });
-                                $resultsArea.html(positionMatrix);
-                        } else {
-                                $resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
-                        }
+                    console.log(data);              
+                    console.log(data.positions);
+			var positionMatrix = "";
+                    if (data.positions && data.positions.length > 0) {
+                        $.each(data.positions, function(i, card) {
+                            dyn_id = card.office_id;
+                            positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + ' onclick="openOffice(' + dyn_id + ')" >\n';
+                            positionMatrix += officeCard(card);
+                            positionMatrix += '</div>\n';
+                        });
+                        $resultsArea.html(positionMatrix);
+                    }
+                    else {
+                        $resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
+                    }
 
                 // Pop-up Effect as mouse hovers over cards:
                 // This has to happen AFTER the cards are loaded because they are bound to this

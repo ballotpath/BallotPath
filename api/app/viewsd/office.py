@@ -69,9 +69,9 @@ SELECT office_position.id as position_id
    FROM bp_get_officeids_from_point("""+str(longitude)+", "+str(latitude)+""") sp 
        JOIN office_position ON sp.district_id = office_position.district_id
        JOIN office ON office_position.office_id = office.id
-       JOIN office_holder ON office_position.office_holder_id = office_holder.id
+       LEFT JOIN office_holder ON office_position.office_holder_id = office_holder.id
        JOIN district ON district.id = sp.district_id
-       JOIN level ON level.id = district.level_id
+       LEFT JOIN level ON level.id = district.level_id
    """
     result = db.session.execute(cmd)
     for row in result:

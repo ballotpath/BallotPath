@@ -43,12 +43,15 @@ Purl (A JavaScript URL parser) v2.3.1
     <link href="css/custom.css" rel="stylesheet">
 
     <!-- JavaScript -->
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAJxdXh4epMOUPZ2fcjdEmIoCG5gyuhlG4" type="text/javascript"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="js/officeCard.js"></script>
+    <script src="js/jsonp.js" type="text/javascript"></script>
+    <script src="js/purl.js"></script>
+    <script src="js/office.js"></script>
 </head>
 
-<body class="bgprimary">
+<body onload="initialize()" class="bgprimary">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -86,7 +89,7 @@ Purl (A JavaScript URL parser) v2.3.1
 				<h1 class="alert alert-info">What it takes to become <span id="position-title">title</span></h1>
 	</div>
 	
-	<div class="panel-group col-md-10 col-md-offset-1"" id="accordion">
+	<div class="panel-group col-md-10 col-md-offset-1" id="accordion">
 	<div class="panel panel-primary">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -169,56 +172,9 @@ Purl (A JavaScript URL parser) v2.3.1
   </div>
 </div>
 	</div>
+<div id="map_canvas"></div>
+<div id="google_tos">Users of Google Maps must comply with the <a id="google_ref" href="http://code.google.com/apis/maps/terms.html" target="_blank">Google Maps Terms and Conditions</a></div>
 </div>
-	<script>
-$(document).ready(function(){
-	var requestURL="http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/office.json";
-	var $resultsArea = $('#position-title');
-	$.getJSON(requestURL, function(data){
-			var out = data.office[0].title;
-			$resultsArea.html(out);
-			
-			$resultsArea = $('#reqSal');
-			out = '<dt>Age Requirement</dt><dd>' + data.office[0].age_requirements + '</dd>';
-			out += '<dt>Residency Requirements</dt><dd>' + data.office[0].res_requirements + '</dd>';
-			out += '<dt>Professional Requirements</dt><dd>' + data.office[0].prof_requirements + '</dd>';
-			out += '<dt>Salary</dt><dd>' + data.office[0].salary + '</dd>';
-			out += '<dd>' + data.office[0].office_notes + '</dd>';
-			$resultsArea.html(out);
-			
-			$resultsArea = $('#timeFra');
-			out = '<dt>Duration of Office</dt><dd>' + data.office[0].term_lenght_months + ' Months</dd>';
-			out += '<dt>Next Election</dt><dd>' + data.office[0].next_election + '</dd>';
-			out += '<dt>Filing Deadline</dt><dd>' + data.office[0].filing_deadline + '</dd>';
-			$resultsArea.html(out);
-			
-			$resultsArea = $('#basDut');
-			out = '<dt>Responsibilities</dt><dd>' + data.office[0].responsibilities + ' Months</dd>';
-			out += '<dd>' + data.office[0].position_notes + '</dd>';
-			$resultsArea.html(out);
-			
-			$resultsArea = $('#filDoc');
-			out = '<dt>'  +  data.office[0].office_doc_name + '</dt><dd>' + data.office[0].office_doc_link + '</dd>';
-			out += '<dt>'  +  data.office[0].div_doc_name + '</dt><dd>' + data.office[0].div_doc_link + '</dd>';
-			$resultsArea.html(out);
-			
-			$resultsArea = $('#wheHow');
-			out = '<dt>District</dt><dd>' + data.office[0].district + '</dd>';
-			out += '<dt>Election Division</dt><dd>' + data.office[0].election_division + '</dd>';
-			out += '<dt>Physical Address</dt><dd>' + data.office[0].phys_addr_addr1 + '</dd>' ;
-			out += '<dd>' + data.office[0].phys_addr_addr2 + '</dd><dd>' + data.office[0].phys_addr_city + '</dd>';
-			out += '<dd>' + data.office[0].phys_addr_state + '</dd><dd>' + data.office[0].phys_addr_zip + '</dd>';
-			out += '<dt>Mail Address</dt><dd>' + data.office[0].mail_addr_addr1 + '</dd>';
-			out +='<dd>' + data.office[0].mail_addr_addr2 + '</dd><dd>' + data.office[0].mail_addr_city + '</dd>';
-			out += '<dd>' + data.office[0].mail_addr_state + '</dd><dd>' + data.office[0].mail_addr_zip + '</dd>';
-			out += '<dt>Phone Number</dt><dd>' + data.office[0].phone + '</dd>';
-			out += '<dt>Website</dt><dd>' + data.office[0].website + '</dd>';
-			out += '<dt>Filling Fee</dt><dd>' + data.office[0].filing_fee + '</dd>';
-			$resultsArea.html(out);
-	});
-});
-</script>
-	
 </body>
 </html>
 
