@@ -150,7 +150,12 @@ Purl (A JavaScript URL parser) v2.3.1
 
                         <hr class="intro-divider">
                         <div id="map_canvas"></div>
-                        <div id="google_tos">Users of Google Maps must comply with the <a id="google_ref" href="http://code.google.com/apis/maps/terms.html" target="_blank">Google Maps Terms and Conditions</a></div>
+                        <div id="google_tos">Users of Google Maps must comply with the <a id="google_ref" href="http://code.google.com/apis/maps/terms.html" target="_blank">Google Maps Terms and Conditions</a><p></p>
+			<form id="coordform" class="form-inline" role="form" action="#" onsubmit="submitCoord(this.markerlat.value, this.markerlong.value); return false">
+			<input type="hidden" id="markerlat" size="40">
+			<input type="hidden" id="markerlong" size="40"><br>
+			<button id="go2" type="submit" class="btn btn-lg btn-primary">Search By Map Position!</button>
+			</form></div>
                     </div>
                 </div>
             </div>
