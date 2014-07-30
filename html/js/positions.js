@@ -1,9 +1,10 @@
-
+var geocoder;
 var map;
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
 function initialize() {
+    var geocoder = new google.maps.Geocoder();
     var hash = getVars();
     var map_canvas = document.getElementById('map_canvas');
     var map_options = {
@@ -12,6 +13,26 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(map_canvas, map_options);
+
+    var marker = new google.maps.Marker({
+        position: map_options.center, 
+        map: map, 
+        title: 'Coordinates: ' + map_options.center.toString(), 
+        draggable: false
+    });
+    var infowindow = new google.maps.InfoWindow();
+    geocoder.geocode({'latLng': map_options.center}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          infowindow.setContent('<div id="infowindow" style="color:black">' + results[1].formatted_address + '<br>' + map_options.center  + '</div>');
+          infowindow.open(map, marker);
+        } else {
+          alert('No results found');
+        }
+      } else {
+        alert('Geocoder failed due to: ' + status);
+      }
+    });
 }
 
 function getVars() {
