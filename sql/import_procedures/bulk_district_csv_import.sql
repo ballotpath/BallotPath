@@ -43,7 +43,7 @@ $BODY$
 	  election_div_phone character varying(15),
 	  fax character varying(15),
 	  election_div_website text,
-	  election_div_doc_name character varying(35),
+	  election_div_doc_name character varying(125),
 	  election_div_doc_link text,
 	  district_state character(2),
 	  district_name character varying(50),
