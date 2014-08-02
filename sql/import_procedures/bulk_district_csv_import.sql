@@ -29,7 +29,7 @@ $BODY$
   BEGIN
 
   CREATE TEMPORARY TABLE bulk_staging_districts (
-	  election_div_name character varying(50),
+	  election_div_name character varying(125),
 	  phys_addr1 character varying(100),
 	  phys_addr2 character varying(100),
 	  phys_addr_city character varying(35),
@@ -46,7 +46,7 @@ $BODY$
 	  election_div_doc_name character varying(125),
 	  election_div_doc_link text,
 	  district_state character(2),
-	  district_name character varying(50),
+	  district_name character varying(125),
 	  level_name character varying(12),
 	  bad_insert_flag bit default B'0',					-- 0 := good, 1 := bad
 	  message text

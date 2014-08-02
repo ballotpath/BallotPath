@@ -35,7 +35,7 @@ $BODY$
     holder_state character(2),
     holder_zip character(5),
     holder_phone character varying(15),
-    holder_email character varying(125),
+    holder_email text,
     holder_website text,
     photo_link text,
     position_name character varying(125),
@@ -60,8 +60,8 @@ $BODY$
     office_doc_name character varying(125),
     office_doc_link text,
     district_state character(2),
-    district_name character varying(50),
-    election_div_name character varying(50)
+    district_name character varying(125),
+    election_div_name character varying(125)
   )ON COMMIT DROP;
 
 
@@ -76,8 +76,8 @@ $BODY$
   title character varying(125),
   district_id integer,
   district_state character(2),
-  district_name character varying(50),
-  election_div_name character varying(50)
+  district_name character varying(125),
+  election_div_name character varying(125)
 )ON COMMIT DROP;
 
 
@@ -91,14 +91,14 @@ CREATE TEMPORARY TABLE holder_staging (
   holder_state character(2),
   holder_zip character(5),
   holder_phone character varying(15),
-  holder_email character varying(125),
+  holder_email text,
   holder_website text,
   photo_link text,
   district_id integer,
   position_name character varying(125),
   district_state character(2),
-  district_name character varying(50),
-  election_div_name character varying(50)
+  district_name character varying(125),
+  election_div_name character varying(125)
 )ON COMMIT DROP;
 
 
@@ -117,11 +117,11 @@ CREATE TEMPORARY TABLE office_staging (
     office_rank integer,
     office_doc_name character varying(125),
     office_doc_link text,
-    position_name character varying(25),
+    position_name character varying(125),
     district_id integer,
     district_state character(2),
-    district_name character varying(50),
-    election_div_name character varying(50)
+    district_name character varying(125),
+    election_div_name character varying(125)
 )ON COMMIT DROP;
 
 
@@ -135,8 +135,8 @@ CREATE TEMPORARY TABLE office_staging (
   holder_state character(2),
   holder_zip character(5),
   holder_phone character varying(15),
-  holder_email character varying(30),
-  holder_website character varying(50),
+  holder_email text,
+  holder_website text,
   photo_link text,
   position_name character varying(125),
   term_start date,
@@ -160,8 +160,8 @@ CREATE TEMPORARY TABLE office_staging (
   office_doc_name character varying(125),
   office_doc_link text,
   district_state character(2),
-  district_name character varying(50),
-  election_div_name character varying(50),
+  district_name character varying(125),
+  election_div_name character varying(125),
   message text
   )ON COMMIT DROP;
 
