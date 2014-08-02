@@ -1,0 +1,68 @@
+VIRTUAL ENVIRONMENT SETUP:
+
+First, create the virtual environment directory inside the api/app folder:
+
+	sudo virtualenv venv
+
+Next, activate it so next installation steps will install into the virtual environment:
+
+	source venv/bin/activate
+
+Then install the required Python packages:
+
+	pip install flask==0.9
+	pip install sqlalchemy==0.7.9
+	pip install flask-sqlalchemy==0.16
+	pip install Flask-Psycopg2
+	pip install flask-restful
+	pip install flask-simplerest
+	pip install csvvalidator
+
+---
+APACHE SETUP:
+
+Make sure that you have mod_wsgi installed for Apache; this allows you to serve the Flask site. If you don't, you can get it by performing the following command:
+
+	sudo apt-get install libapache2-mod-wsgi
+
+Next, you need to set up your Apache .conf file. Go to /etc/apache2/sites-available/ and change/add the following lines to the default config (e.g. 000-default.conf):
+
+	DocumentRoot /var/www/BallotPath/html
+
+	WSGIScriptAlias /api "/var/www/BallotPath/api/flaskapp.wsgi"
+	<Directory /var/www/BallotPath/api/app>
+		Order allow,deny
+		Allow from all
+		Require all granted
+		Header always set Access-Control-Allow-Origin "*"
+		Header always set Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+		Header always set Access-Control-Allow-Methods "GET, OPTIONS"
+	</Directory>
+
+You could also use a similar Alias directory to serve the html directory if you already have your DocumentRoot set to somewhere else.
+
+Next you'll need to move into the /var/www folder (create them if they don't already exist) and clone the git repo into there. First install git:
+
+	sudo apt-get install git
+
+You'll need to have an account set up at www.github.com as well. Next, from the /var/www directory, clone the BallotPath repo:
+
+	sudo git clone https://github.com/mclyde/BallotPath
+
+Enter the github username and password when prompted. The BallotPath directory should be there containing all of the necessary files and on the master branch. Do not change the branch unless you are working on a non-production server just for testing or development purposes.
+
+Finally, you need to make sure the .wsgi file exists in the repo so Apache can serve the directory. Create this file in the api folder if it doesn't exist or edit it as necessary to contain the following:
+
+	#!/usr/bin/python
+	import sys
+	import logging
+	logging.basicConfig(stream=sys.stderr)
+	sys.path.insert(0,"/var/www/BallotPath/api/")
+
+	from app import app as application
+
+Once you are done with all this, restart Apache so it loads the new files:
+
+	sudo service apache2 restart
+
+

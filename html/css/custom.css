@@ -1,0 +1,179 @@
+/*Andrew E.*/
+dt {
+	color: black;
+}
+
+dd {
+	color: gray;
+}
+
+.panel-primary {
+	color:black;
+}
+
+.inpCenter {
+	margin-left: auto;
+	margin-right: auto;
+	width:400px;
+}
+
+#loader{
+   visibility:hidden;
+}
+
+#f1_upload_process{
+   visibility:hidden;
+}
+
+/* This is my custom stylesheet. */
+.office-card-outside {
+	width: 200px;
+	height: 300px;
+	z-index:2;
+	background-color: black;
+	color:white;
+	z-index: 1;
+	position: relative;
+	overflow: hidden;
+	border: 3px solid black;
+}
+
+.office-card-outside:hover {
+	border-color: gray;
+	z-index: 10;
+}
+
+.office-card-picture
+{
+    width:100%;
+    height:100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size:cover;
+    background-origin:content-box;
+    background-clip:content-box;
+}
+
+.office-card-term {
+	position: inherit;
+	background-color:black;
+	width: 50px;
+	height: 50px;
+	float: left;
+}
+
+.office-card-name {
+	position: absolute;
+	color:inherit;
+	background-color:black;
+	width:100%;
+	bottom:0px;
+	padding-top:5px;
+	padding-bottom: 5px;
+}
+
+.office-card-dates {
+	position: relative;
+	background-color:black;
+	width: 50px;
+	height: 50px;
+	float: right;
+}
+
+.office-card-scope {
+	position: relative;
+}
+
+.transparent {
+	background-color:rgba(0,0,0,0.5);
+}
+
+.Federal {
+	background-color: #0E53A7;
+}
+
+.State {
+	background-color: #274E7D;
+}
+
+.County {
+	background-color: #04346C;
+}
+
+.Municipal {
+	background-color: #4284D3;
+}
+
+.Local {
+	background-color: #6899D3;
+}
+
+.office-card-title {
+	position: relative;
+	background-color:#74ACEF;
+	color:black;
+	text-align:center;
+	font-weight:bold;
+	margin-top:0px;
+	margin-bottom:0px;
+	overflow:hidden;
+	text-overflow:ellipsis; 
+}
+
+.office-card-title-text {
+	align-items:center;
+	margin-top:0px;
+	margin-bottom:0px;	
+	text-align:center;
+	font-weight:bold;
+	margin-top:0px;
+	margin-bottom:0px
+	overflow:hidden;
+	text-overflow:ellipsis; 
+	color:white;
+	opacity: 1.0;
+}
+
+.office-card-term-text {
+	text-align:center;
+	margin-top:0px;
+	margin-bottom:0px;	
+	color:inherit;
+}
+
+.office-card-image {
+	position: relative;
+	max-height:200px;
+	max-width:180px;
+	margin-left: 0 auto;
+    margin-right: 0 auto;
+}
+
+.card-cell {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: : 0px;
+	margin-right: 0px;
+	margin-top: 20px;
+}
+
+body {
+	background-color:#428bca;
+}
+
+/* HOVER STYLES */
+div#pop-up {
+  display: none;
+  position: absolute;
+  width: 280px;
+  padding: 10px;
+  background: #04346C;
+  color: white;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  font-size: 90%;
+  z-index: 10;
+  opacity: 0.85;
+  filter: alpha(opacity=85); /* For IE8 and earlier */
+}
+
