@@ -3,7 +3,7 @@ from sqlalchemy.dialects import postgresql
 
 class election_div(db.Model):
     id = db.Column(db.INTEGER, primary_key = True)
-    name = db.Column(db.VARCHAR(50), nullable = False)
+    name = db.Column(db.VARCHAR(125), nullable = False)
     phys_addr_addr1 = db.Column(db.VARCHAR(25))
     phys_addr_addr2 = db.Column(db.VARCHAR(25))
     phys_addr_city = db.Column(db.VARCHAR(25))
