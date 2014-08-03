@@ -111,9 +111,13 @@ FOR office IN offices LOOP
             WHERE id = p_id;
             
 	 --Add Office docs
-	 SELECT bp_insert_office_docs(office.office_doc_name, office.office_doc_link, o_id, office.district_id) into tmp;
+	 PERFORM bp_insert_office_docs(office.office_doc_name, office.office_doc_link, o_id, office.district_id);
 	
   ELSE
+    SELECT op.office_id into o_id FROM office_position op where op.id = p_id;
+    
+  	PERFORM bp_insert_office_docs(office.office_doc_name, office.office_doc_link, o_id, office.district_id);
+
     INSERT into bad_inserts_offices (title
 			  , num_positions
 			  , responsibilities
