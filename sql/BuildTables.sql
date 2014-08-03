@@ -28,7 +28,7 @@ CREATE TABLE office_holder (
     zip                     CHAR(5),
     phone                   VARCHAR(15),
     fax                     VARCHAR(15),
-    email_address           VARCHAR(30),
+    email_address           TEXT,
     website                 VARCHAR(50),
     photo_link              TEXT,
     notes                   TEXT
@@ -38,15 +38,15 @@ CREATE TABLE office_holder (
 -- A table to hold information about each voting elections divisioin including maps, name, scope, etc.
 CREATE TABLE election_div (
     id                      SERIAL PRIMARY KEY,
-    name                    VARCHAR(50) NOT NULL,
-    phys_addr_addr1         VARCHAR(25),
-    phys_addr_addr2         VARCHAR(25),
-    phys_addr_city          VARCHAR(25),
+    name                    VARCHAR(125) NOT NULL,
+    phys_addr_addr1         VARCHAR(100),
+    phys_addr_addr2         VARCHAR(100),
+    phys_addr_city          VARCHAR(35),
     phys_addr_state         CHAR(2),
     phys_addr_zip           CHAR(5),
-    mail_addr_addr1         VARCHAR(25),
-    mail_addr_addr2         VARCHAR(25),
-    mail_addr_city          VARCHAR(25),
+    mail_addr_addr1         VARCHAR(100),
+    mail_addr_addr2         VARCHAR(100),
+    mail_addr_city          VARCHAR(35),
     mail_addr_state         CHAR(2),
     mail_addr_zip           CHAR(5),
     phone                   VARCHAR(15),
@@ -69,20 +69,21 @@ CREATE TABLE election_div_docs (
 CREATE TABLE district (
     id                      SERIAL PRIMARY KEY,
     state                   CHAR(2),
-    name                    VARCHAR(50),
+    name                    VARCHAR(125),
     level_id                CHAR(1) REFERENCES level(id),
     election_div_id         INTEGER REFERENCES election_div(id)
 );
 
 CREATE TABLE office (
     id                      SERIAL PRIMARY KEY,
+    election_div_id         INTEGER REFERENCES election_div(id),
     title                   VARCHAR(35) NOT NULL,
     num_positions           INTEGER,
     responsibilities        TEXT,
     term_length_months      INTEGER,
     filing_fee              TEXT,
     partisan                BOOLEAN,
-    age_requirements        INTEGER,
+    age_requirements        VARCHAR(100),
     res_requirements        TEXT,
     prof_requirements       TEXT,
     salary                  MONEY,
