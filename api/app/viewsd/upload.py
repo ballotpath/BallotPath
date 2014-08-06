@@ -1,10 +1,12 @@
 from flask import Response, url_for, send_from_directory, render_template, redirect, after_this_request
 from flask_restful import request
+from flask.ext.httpauth import HTTPBasicAuth
 from werkzeug.utils import secure_filename
-from app import app
+from app import app, db, models
 import bulkimport
 import os
 import uuid
+import hashlib
 
 
 @app.route('/bulkupload')
@@ -14,6 +16,18 @@ def bulkupload():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    # first check for valid user/password
+    username = request.json.get('username')
+    password = request.json.get('password')
+    user = User.query.filter_by(name = username).first()
+    if user == None:
+        abort(404)
+    else:
+        hasher = hashlib.sha512()
+        hasher.update(user.password)
+        if hasher.hexdigest() != user.password:
+            abort(404)
+    # then check the file
     ifile = request.files['file']
     if ifile and allowed_file(ifile.filename): 
         filename = str(uuid.uuid4()) + '_'  + secure_filename(ifile.filename) 
