@@ -17,6 +17,7 @@ Then install the required Python packages:
 	pip install flask-restful
 	pip install flask-simplerest
 	pip install csvvalidator
+	pip install Flask-HTTPAuth
 
 ---
 APACHE SETUP:

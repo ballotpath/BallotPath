@@ -8,6 +8,21 @@ import os
 import uuid
 import hashlib
 
+auth = HTTPBasicAuth()
+
+def hash_password(password):
+    hasher = hashlib.sha512()
+    hasher.update(password)
+    return hasher.hexdigest()
+
+@auth.verify_password
+def verify_password(username, password):
+    user = User.query.filter_by(name = username).first()
+    if user == None:
+        return False
+    if user.password != hash_password(password):
+        return False
+    return True
 
 @app.route('/bulkupload')
 def bulkupload():
@@ -15,18 +30,19 @@ def bulkupload():
 
 
 @app.route('/upload', methods=['POST'])
+@auth.login_required
 def upload_file():
     # first check for valid user/password
-    username = request.json.get('username')
-    password = request.json.get('password')
-    user = User.query.filter_by(name = username).first()
-    if user == None:
-        abort(404)
-    else:
-        hasher = hashlib.sha512()
-        hasher.update(user.password)
-        if hasher.hexdigest() != user.password:
-            abort(404)
+    # username = request.json.get('username')
+    # password = request.json.get('password')
+    # user = User.query.filter_by(name = username).first()
+    # if user == None:
+    #     abort(404)
+    # else:
+    #     hasher = hashlib.sha512()
+    #     hasher.update(user.password)
+    #     if hasher.hexdigest() != user.password:
+    #         abort(404)
     # then check the file
     ifile = request.files['file']
     if ifile and allowed_file(ifile.filename): 
