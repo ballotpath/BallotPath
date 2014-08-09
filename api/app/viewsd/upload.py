@@ -1,11 +1,28 @@
 from flask import Response, url_for, send_from_directory, render_template, redirect, after_this_request
 from flask_restful import request
+from flask.ext.httpauth import HTTPBasicAuth
 from werkzeug.utils import secure_filename
-from app import app
+from app import app, db, models
 import bulkimport
 import os
 import uuid
+import hashlib
 
+auth = HTTPBasicAuth()
+
+def hash_password(password):
+    hasher = hashlib.sha512()
+    hasher.update(password)
+    return hasher.hexdigest()
+
+@auth.verify_password
+def verify_password(username, password):
+    user = models.user.query.filter_by(name = username).first()
+    if user == None:
+        return False
+    if user.password != hash_password(password):
+        abort(401)
+        return False
 
 @app.route('/bulkupload')
 def bulkupload():
@@ -13,6 +30,7 @@ def bulkupload():
 
 
 @app.route('/upload', methods=['POST'])
+@auth.login_required
 def upload_file():
     ifile = request.files['file']
     if ifile and allowed_file(ifile.filename): 

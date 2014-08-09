@@ -6,3 +6,4 @@ from modelsd.office import *
 from modelsd.office_docs import *
 from modelsd.office_holder import *
 from modelsd.office_position import *
+from modelsd.user import *

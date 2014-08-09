@@ -55,6 +55,7 @@ docs/_build/
 # Flask
 flask/
 config.py
+run.py
 
 # Vim temp files
 *~
