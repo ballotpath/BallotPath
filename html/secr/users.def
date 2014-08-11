@@ -1,0 +1,4 @@
+Login,STRING,15
+Password,STRING,15
+Email,STRING,30
+Redirect URL,STRING,40
