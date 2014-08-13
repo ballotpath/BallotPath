@@ -14,11 +14,11 @@
     <?php require($DOCUMENT_ROOT . "/inc/navBar.html"); ?>
 
     <div class="intro-header">
-        <div class="container" style="background: rgba(0,0,0,0.3);">
+        <div class="container">
 
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4">
-				<br><br>
+				<br>
 						<a href="donate.php" class="btn btn-danger btn-lg">Donate to Ballot Path</a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4"></div>
@@ -45,7 +45,7 @@
                 </div>
 				</div>
 
-                <div class="intro-message">
+                <div class="intro-message panel panel-default col-lg-8 col-lg-offset-2">
                     <div class="span12">
                         <div id="bg">
                             <div class="form-group" style="margin:auto;">

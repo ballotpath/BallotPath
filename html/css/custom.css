@@ -1,3 +1,15 @@
+.alert-dangerCus {
+  color: #f2dede;
+  background-color: #a94442;
+  border-color: #ebccd1;
+}
+
+.panel-dangerCus > .panel-heading {
+  color: #f2dede;
+  background-color: #a94442;
+  border-color: #ebccd1;
+}
+
 .form-inline {
 	font-size:14px;
 }
@@ -13,7 +25,11 @@ dd {
 .panel-primary {
 	color:black;
 }
-.panel-default{
+.panel-default {
+	color:black;
+}
+
+.well {
 	color:black;
 }
 
@@ -200,7 +216,7 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .intro-header {
-	padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+	padding-top: 60px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
 	padding-bottom: 50px;
 	color: #f8f8f8;
 	
@@ -209,8 +225,8 @@ body, h1, h2, h3, h4, h5, h6 {
 
 .intro-message {
 	position: relative;
-	padding-top: 10%;
-	padding-bottom: 10%;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .intro-message > h1 {
@@ -346,7 +362,7 @@ p.copyright {
 }
 #bg{
     background:url('../img/BallotPath_logo-lg.png') no-repeat center center;
-    background-size:40% auto;
+    background-size:60% auto;
     height:550px;
 }
 

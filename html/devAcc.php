@@ -20,7 +20,9 @@
 				<a href="/secr/manager.php">User Manager (Administrator)</a><br><br>
 				<a href="/secr/reminder.php">Password Reminder</a><br><br>
 				<a href="/api/upload/">Bulk Upload Page</a><br><br>
-				<a href="/DevDB/">Developer Database</a><br><br>
+				<a href="/BPAdmin/">Developer Database</a><br><br>
+				<a href="shapefileupload.html">Shape File Upload</a><br><br>
+				<a href="relation.php">Relation File Upload</a>
 			</div>
 		</div>
 	</div>

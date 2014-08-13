@@ -18,7 +18,7 @@
 
 <div class="intro-header">
 	<div class="col-md-10 col-md-offset-1">
-	<h1 class="alert alert-info">
+	<h1 class="well well-sm">
 		Your Elected Representatives
 		<form class="form-inline" role="form">
 				  <label>
