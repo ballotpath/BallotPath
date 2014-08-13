@@ -14,11 +14,11 @@
 	<div class="container-fluid">
 	
 	<div class="col-md-10 col-md-offset-1">
-				<h1 class="alert alert-info">What it takes to become <span id="position-title"> </span></h1>
+				<h1 class="alert alert-dangerCus">What it takes to become <span id="position-title"> </span></h1>
 	</div>
 	
 	<div class="panel-group col-md-10 col-md-offset-1" id="accordion">
-	<div class="panel panel-primary">
+	<div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -50,7 +50,7 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-dangerCus">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
@@ -66,7 +66,7 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">

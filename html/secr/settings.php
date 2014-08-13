@@ -6,7 +6,7 @@ define('ADMIN_PASSWORD', 'Democracy!');
 ################ LOGIN FORM SETTINGS ################
 
 // users list file.
-define('USERS_LIST_FILE', 'C:\inetpub\wwwroot\secr\users.php');
+define('USERS_LIST_FILE', 'http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/secr/users.php');
 
 // request login? true - show login and password boxes, false - password box only
 define('USE_USERNAME', true);
