@@ -84,7 +84,7 @@ function officeCard(cardData) {
                  '    </div>                                                        \n' +
                  '    <div class="office-card-picture" style="background-image:url(\'' + photo_link + '\');">\n' +
                  '      <div class="office-card-term transparent">                 \n' +
-                 '        <p class="office-card-term-text">' + cardData.term + ' Term</p>\n' +
+                 '        <p class="office-card-term-text">' + cardData.term + ' Month Term</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-dates transparent">                               \n' +
                  '        <p class="office-card-term-text">' + cardData.begin + '-' + cardData.end + '</p>\n' +
@@ -98,7 +98,7 @@ function officeCard(cardData) {
 };
 
 function openOffice(office_id) {
-    var url = window.location.protocol + "//" + window.location.host + "/office.html" + "?id=" + office_id;
+    var url = window.location.protocol + "//" + window.location.host + "/office.php" + "?id=" + office_id;
     window.open(url, "_self");
 }
 
@@ -136,7 +136,7 @@ $(document).ready(function(){
                     console.log(data);              
                     console.log(data.positions);
 			var positionMatrix = "";
-                    if (data.positions && data.positions.length > 0) {
+                    if ((data.positions && data.positions.length) > 0) {
                         $.each(data.positions, function(i, card) {
                             dyn_id = card.office_id;
                             positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + ' onclick="openOffice(' + dyn_id + ')" >\n';

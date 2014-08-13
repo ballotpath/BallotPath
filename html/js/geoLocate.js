@@ -43,6 +43,6 @@ function showAddress(address) {
   }
 }
 function submitCoord(latitude, longitude) {
-	var url = window.location.protocol + "//" + window.location.host + "/positions.html" + "?lat=" + latitude + "&lng=" + longitude;
+	var url = window.location.protocol + "//" + window.location.host + "/positions.php" + "?lat=" + latitude + "&lng=" + longitude;
 	window.open(url, "_self");
 }
