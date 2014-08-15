@@ -51,29 +51,43 @@ function getVars() {
 function officeCard(cardData) {
 	var levelString;
         var jsonString = JSON.stringify(cardData);
+	var name;
+
         console.log(jsonString);
-	switch (cardData.level.toUpperCase()[0]) {
-		case "F":
-			levelString = "Federal";
-			break;
-		case "S":
-			levelString = "State";
-			break;
-		case "C":
-			levelString = "County";
-			break;
-		case "M":
-			levelString = "Municipal";
-			break;
-		case "L":
-			levelString = "Local";
-			break;
+	if(cardData.level != null) {
+		switch (cardData.level.toUpperCase()[0]) {
+			case "F":
+				levelString = "Federal";
+				break;
+			case "S":
+				levelString = "State";
+				break;
+			case "C":
+				levelString = "County";
+				break;
+			case "M":
+				levelString = "Municipal";
+				break;
+			case "L":
+				levelString = "Local";
+				break;
+		}
 	}
-    if (cardData.photo_link == "") {
+	else{
+		levelString = "";
+	}
+
+    if (cardData.photo_link == null || cardData.photo_link == "") {
         photo_link = "img/business_user.png";
     } else {
         photo_link = cardData.photo_link;
     }
+
+   if(cardData.first_name == null || cardData.first_name == "") {
+	name = "Vacant";
+   } else {
+	name = cardData.first_name + " " + (cardData.last_name == null ? "" : cardData.last_name);	
+   }
     var htmlString = '<!-- Begin Card --> \n' +
                  '<div class="office-card-outside animated ' + levelString + '" data-cardData=\'' + jsonString + '\'>\n' +
                  '    <div class="office-card-scope ' + levelString + '">           \n' +
@@ -90,7 +104,7 @@ function officeCard(cardData) {
                  '        <p class="office-card-term-text">' + cardData.begin + '-' + cardData.end + '</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-name transparent">                                \n' +
-                 '        <h4>' + cardData.first_name + " " + cardData.last_name + '</h4>\n' +
+                 '        <h4>' + name + '</h4>\n' +
                  '      </div>                                                        \n' +
                  '    </div>\n' +
                  '</div> <!-- End Card --> \n';

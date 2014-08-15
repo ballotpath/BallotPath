@@ -1,4 +1,4 @@
-<?php require($DOCUMENT_ROOT . "/inc/header.html"); ?>
+<?php require($DOCUMENT_ROOT . "inc/header.html"); ?>
 
 	<!-- Custom Google Web Font -->
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
@@ -11,7 +11,7 @@
 
 <body onload="initialize()" onunload="GUnload()">
 
-    <?php require($DOCUMENT_ROOT . "/inc/navBar.html"); ?>
+    <?php require($DOCUMENT_ROOT . "inc/navBar.html"); ?>
 
     <div class="intro-header">
         <div class="container">

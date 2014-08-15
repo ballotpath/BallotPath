@@ -1,11 +1,11 @@
-<?php require($DOCUMENT_ROOT . "/inc/header.html"); ?>
+<?php require($DOCUMENT_ROOT . "inc/header.html"); ?>
 
 	<title>Ballot Path - Donate</title>
 </head>
 
 <body>
 
-    <?php require($DOCUMENT_ROOT . "/inc/navBar.html"); ?>
+    <?php require($DOCUMENT_ROOT . "inc/navBar.html"); ?>
 
     <div class="intro-header">
         <div class="container">

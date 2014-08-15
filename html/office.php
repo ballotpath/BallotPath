@@ -1,4 +1,4 @@
-<?php require($DOCUMENT_ROOT . "/inc/header.html"); ?>
+<?php require($DOCUMENT_ROOT . "inc/header.html"); ?>
 
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
@@ -8,7 +8,7 @@
 
 <body onload="initialize()" class="bgprimary">
 
-    <?php require($DOCUMENT_ROOT . "/inc/navBar.html"); ?>
+    <?php require($DOCUMENT_ROOT . "inc/navBar.html"); ?>
 
 <div class="intro-header">
 	<div class="container-fluid">
