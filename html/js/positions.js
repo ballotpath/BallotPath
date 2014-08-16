@@ -94,7 +94,7 @@ function officeCard(cardData) {
                  '       <h4 class="office-card-title-text">' + levelString + '</h4> \n' +
                  '    </div>                                                        \n' +
                  '    <div class="office-card-title">                \n' +
-                 '      <p class="office-card-title-text">' + cardData.position_name + '</p>\n' +
+                 '      <p class="office-card-title-text">' + cardData.office_title + '</p>\n' +
                  '    </div>                                                        \n' +
                  '    <div class="office-card-picture" style="background-image:url(\'' + photo_link + '\');">\n' +
                  '      <div class="office-card-term transparent">                 \n' +

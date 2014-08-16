@@ -33,7 +33,7 @@ $(document).ready(function() {
         url: requestURL,
         success: function(data) {
             console.log(data);
-            var out = data.office_positions[0].position_name;
+            var out = data.office.title;
             $resultsArea.html(out);
             
             $resultsArea = $('#reqSal');
