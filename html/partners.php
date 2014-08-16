@@ -37,6 +37,13 @@
 			Andrew Erland<br><br>
 
 			<h4>Election Analyst Team-</h4>
+			Michael Trujillo<br>
+			Laura Hansen<br>
+			Kyle Rush<br>
+			Will Bourget<br>
+			Nicholas Kusanto<br>
+			Thomas Dal Pino<br><br>
+			
 			</div>
 			</div>
         </div>
