@@ -23,7 +23,7 @@ function initialize() {
     });
 
     document.getElementById('markerlat').value = marker.getPosition().lat();
-	document.getElementById('markerlong').value = marker.getPosition().lng();
+    document.getElementById('markerlong').value = marker.getPosition().lng();
 	
     google.maps.event.addListener(marker, 'mouseup', function()  {
         marker.setTitle('Coordinates: ' + marker.getPosition().toString());
@@ -31,7 +31,7 @@ function initialize() {
 	document.getElementById('markerlong').value = marker.getPosition().lng();
     });
     document.getElementById('markerlat').value = marker.getPosition().lat();
-    document.getElementById('markerlog').value = marker.getPosition().lng();
+    document.getElementById('markerlong').value = marker.getPosition().lng();
 }
 
 function showAddress(address) {

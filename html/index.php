@@ -9,7 +9,7 @@
 	<title>Ballot Path - Your Path to Political Office</title>
 </head>
 
-<body onload="initialize()" onunload="GUnload()">
+<body onload="initialize()">
 
     <?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html"); ?>
 
