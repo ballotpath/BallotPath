@@ -78,11 +78,11 @@ $(document).ready(function() {
             out =  '';
             var oDocs = data.office_docs
             for (var i = 0; i < oDocs.length; ++i) {
-                out += '<a href="' + oDocs[i].link + '">' + oDocs[i].name + '</a>';
+                out += '<a href="' + oDocs[i].link + '" target="_blank" >' + oDocs[i].name + '</a>';
             }
             var eDocs = data.office_positions[0].election_div_docs
             for (var i = 0; i < eDocs.length; ++i) {
-                out += '<a href="' + eDocs[i].link + '">' + eDocs[i].name + '</a>';
+                out += '<a href="' + eDocs[i].link + '"  target="_blank">' + eDocs[i].name + '</a>';
             }
             if (out == '') {
                 out = '<dt>""</dt><dd>""</dd>';
