@@ -30,6 +30,16 @@ Make sure that you have mod_wsgi installed for Apache; this allows you to serve 
 Next, you need to set up your Apache .conf file. Go to /etc/apache2/sites-available/ and change/add the following lines to the default config (e.g. 000-default.conf):
 
 	DocumentRoot /var/www/BallotPath/html
+	
+	Alias /bpadmin "/var/www/admin"
+	<Directory /var/www/admin>
+		Order allow,deny
+		Allow from all
+		Require all granted
+		Header always set Access-Control-Allow-Origin "*"
+		Header always set Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+		Header always set Access-Control-Allow-Methods "GET, OPTIONS"
+	</Directory>
 
 	WSGIScriptAlias /api "/var/www/BallotPath/api/flaskapp.wsgi"
 	<Directory /var/www/BallotPath/api/app>
