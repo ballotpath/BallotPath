@@ -163,7 +163,7 @@ if(($upload["shp"] == 0) || ($upload["shx"] == 0) || ($upload["dbf"] == 0) || ($
     echo $tablesed;
 
     //perform database insertion and print status
-	putenv('PGPASSWORD=Democracy!');
+    putenv("PGPASSWORD=Democracy!");
     $dbload = shell_exec('psql -U BallotPath BallotPath < /tmp/insert' . substr($_FILES["shp"]["name"], 0, -4) . '.sql 2>&1');
     if (substr_count($dbload, 'ERROR') > 0) {
       //print error message
@@ -175,12 +175,16 @@ if(($upload["shp"] == 0) || ($upload["shx"] == 0) || ($upload["dbf"] == 0) || ($
       echo $dbload;
       echo "<br>" . substr_count($dbload, 'INSERT 0 1') . " records inserted successfully!.";
     }
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     $dbenvrem = shell_exec('env --unset=PGPASSWORD');
     echo $dbenvrem;
 =======
 	putenv('PGPASSWORD');
 >>>>>>> ac993de40a8fce9b331dc65ff956bfb79a03a9d7
+=======
+    putenv("PGPASSWORD");
+>>>>>>> Stashed changes
     cleanup();
   }
 }
