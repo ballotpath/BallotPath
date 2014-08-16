@@ -163,8 +163,9 @@ if(($upload["shp"] == 0) || ($upload["shx"] == 0) || ($upload["dbf"] == 0) || ($
     echo $tablesed;
 
     //perform database insertion and print status
-	$dbenv = shell_exec('export PGPASSWORD=Democracy!');
-    $dbload = shell_exec('psql -U ballotpath BallotPath < /tmp/insert' . substr($_FILES["shp"]["name"], 0, -4) . '.sql 2>&1');
+    $dbenv = shell_exec('export PGPASSWORD=Democracy!');
+    echo $dbenv;
+    $dbload = shell_exec('echo Democracy! | psql -U BallotPath BallotPath < /tmp/insert' . substr($_FILES["shp"]["name"], 0, -4) . '.sql 2>&1');
     if (substr_count($dbload, 'ERROR') > 0) {
       //print error message
       echo "Errors were encountered!";
@@ -172,9 +173,11 @@ if(($upload["shp"] == 0) || ($upload["shx"] == 0) || ($upload["dbf"] == 0) || ($
       echo $dbload;
     } else {
       //count number of successful insertions and display message
+      echo $dbload;
       echo "<br>" . substr_count($dbload, 'INSERT 0 1') . " records inserted successfully!.";
     }
-	$dbenvrem = shell_exec('export PGPASSWORD=');
+    $dbenvrem = shell_exec('env --unset=PGPASSWORD');
+    echo $dbenvrem;
     cleanup();
   }
 }
