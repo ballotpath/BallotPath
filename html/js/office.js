@@ -78,11 +78,11 @@ $(document).ready(function() {
             out =  '';
             var oDocs = data.office_docs
             for (var i = 0; i < oDocs.length; ++i) {
-                out += '<a href="' + oDocs[i].link + '" target="_blank" >' + oDocs[i].name + '</a>';
+                out += '<a href="' + oDocs[i].link + '" target="_blank" >' + oDocs[i].name + '</a><br>';
             }
             var eDocs = data.office_positions[0].election_div_docs
             for (var i = 0; i < eDocs.length; ++i) {
-                out += '<a href="' + eDocs[i].link + '"  target="_blank">' + eDocs[i].name + '</a>';
+                out += '<a href="' + eDocs[i].link + '"  target="_blank">' + eDocs[i].name + '</a><br>';
             }
             if (out == '') {
                 out = '<dt>""</dt><dd>""</dd>';
@@ -94,18 +94,21 @@ $(document).ready(function() {
             out += '<dt>Election Division</dt><dd>' + data.office_positions[0].election_div.name + '</dd>';
 			
             out += '<dt>Physical Address</dt><dd>';
-			if(data.office_positions[0].election_div.phys_addr_addr1) out += data.office_positions[0].election_div.phys_addr_addr1; 
-            out += '</dd><dd>';
-			if(data.office_positions[0].election_div.phys_addr_addr2) out += data.office_positions[0].election_div.phys_addr_addr2; 
-			out += '</dd><dd>' ;
-			if(data.office_positions[0].election_div.phys_addr_city) out += data.office_positions[0].election_div.phys_addr_city; 
-            out += '</dd><dd>';
-			if(data.office_positions[0].election_div.phys_addr_state) out += data.office_positions[0].election_div.phys_addr_state; 
-			out += '</dd><dd>';
-			if(data.office_positions[0].election_div.phys_addr_zip) out += data.office_positions[0].election_div.phys_addr_zip; 
-			
+	    physaddr = '';
+			if(data.office_positions[0].election_div.phys_addr_addr1) physaddr += data.office_positions[0].election_div.phys_addr_addr1; 
+            physaddr += '</dd><dd>';
+			if(data.office_positions[0].election_div.phys_addr_addr2) physaddr += data.office_positions[0].election_div.phys_addr_addr2; 
+	    physaddr += '</dd><dd>' ;
+			if(data.office_positions[0].election_div.phys_addr_city) physaddr += data.office_positions[0].election_div.phys_addr_city; 
+            physaddr += '</dd><dd>';
+			if(data.office_positions[0].election_div.phys_addr_state) physaddr += data.office_positions[0].election_div.phys_addr_state; 
+	    physaddr += '</dd><dd>';
+			if(data.office_positions[0].election_div.phys_addr_zip) physaddr += data.office_positions[0].election_div.phys_addr_zip; 
+	    out += physaddr;			
+
             out += '</dd><dt>Mailing Address</dt><dd>'; 
-			if(data.office_positions[0].election_div.mail_addr_addr1) out += data.office_positions[0].election_div.mail_addr_addr1; 
+			if(data.office_positions[0].election_div.mail_addr_addr1) out += data.office_positions[0].election_div.mail_addr_addr1;
+			else out += physaddr;
             out += '</dd><dd>';
 			if(data.office_positions[0].election_div.mail_addr_addr2) out += data.office_positions[0].election_div.mail_addr_addr2; 
 			out += '</dd><dd>' ;
