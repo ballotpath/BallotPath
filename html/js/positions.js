@@ -160,7 +160,7 @@ $(document).ready(function(){
                         $resultsArea.html(positionMatrix);
                     }
                     else {
-                        $resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
+                        $resultsArea.html('<div class="col-md-4 col-md-offset-4 well well-sm">No positions found for this distict. Please try again.</div>');
                     }
 
                 // Pop-up Effect as mouse hovers over cards:
