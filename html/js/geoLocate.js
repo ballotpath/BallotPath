@@ -21,7 +21,10 @@ function initialize() {
         title: 'Coordinates: ' + map_options.center.toString(), 
         draggable: true
     });
-        
+
+    document.getElementById('markerlat').value = marker.getPosition().lat();
+	document.getElementById('markerlong').value = marker.getPosition().lng();
+	
     google.maps.event.addListener(marker, 'mouseup', function()  {
         marker.setTitle('Coordinates: ' + marker.getPosition().toString());
 	document.getElementById('markerlat').value = marker.getPosition().lat();
