@@ -48,8 +48,9 @@
 
 <div class="container-fluid" style="padding-left: 50px; padding-right 50px;">
     <div class="row" id="cards">
-
-  	</div> <!-- end row -->
+  	
+    </div> <!-- end row -->
+    <div id="nocards"></div>
 </div> <!-- End Container -->
 <div id="map_canvas"></div>
 <div class="col-md-6 col-md-offset-3 well well-sm" id="google_tos">Users of Google Maps must comply with the <a id="google_ref" href="http://code.google.com/apis/maps/terms.html" target="_blank">Google Maps Terms and Conditions</a></div>

@@ -30,6 +30,8 @@ function initialize() {
 	document.getElementById('markerlat').value = marker.getPosition().lat();
 	document.getElementById('markerlong').value = marker.getPosition().lng();
     });
+    document.getElementById('markerlat').value = marker.getPosition().lat();
+    document.getElementById('markerlog').value = marker.getPosition().lng();
 }
 
 function showAddress(address) {
