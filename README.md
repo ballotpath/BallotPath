@@ -27,4 +27,8 @@ A web service to help citizens run for public office
  Source repository: https://github.com/allmarkedup/jQuery-URL-Parser
  Licensed under an MIT-style license. See https://github.com/allmarkedup/jQuery-URL-Parser/blob/master/LICENSE for details.
 
+----------------------------------------
+ Copyright BallotPath 2014
+ Developed by Matt Clyde, Andrew Erland, Shawn Forgie, Andrew Hobbs, Kevin Mark, Darrell Sam, Blake Clough
+ Open source under GPL v3 license (https://github.com/mclyde/BallotPath/blob/v0.3/LICENSE)
  
