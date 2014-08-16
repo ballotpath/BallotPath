@@ -18,6 +18,7 @@ Then install the required Python packages:
 	pip install flask-simplerest
 	pip install csvvalidator
 	pip install Flask-HTTPAuth
+	pip install simplejson
 
 ---
 APACHE SETUP:
