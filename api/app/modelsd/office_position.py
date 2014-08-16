@@ -12,3 +12,4 @@ class office_position(db.Model):
     filing_deadline = db.Column(db.DATE)
     next_election = db.Column(db.DATE)
     notes = db.Column(db.TEXT)
+    office_rank = db.Column(db.INTEGER)

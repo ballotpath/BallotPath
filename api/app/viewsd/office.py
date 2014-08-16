@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for, jsonify, Response
 from app import app, db, models
-import json
+#import json
+import simplejson as json
 
 # Utility function for get_offices to parse a single row of the
 # database and convert it a representation using Python built-ins
@@ -110,12 +111,13 @@ def get_office_positions(office_id):
         office_position_dict['filing_deadline'] = str(office_position_dict['filing_deadline'])
         office_position_dict['next_election'] = str(office_position_dict['next_election'])
         # Get the office holder for this position
-        office_holder = models.office_holder.query.get(office_position.office_holder_id)
-        office_holder_dict = dict(office_holder.__dict__)
-        del office_holder_dict['_sa_instance_state']
-        office_position_dict['office_holder'] = office_holder_dict
+        if office_position.office_holder_id:
+            office_holder = models.office_holder.query.get(office_position.office_holder_id)
+            office_holder_dict = dict(office_holder.__dict__)
+            del office_holder_dict['_sa_instance_state']
+            office_position_dict['office_holder'] = office_holder_dict
         # Get the district for this position
-        if office_position.district_id != None:
+        if office_position.district_id:
             district = models.district.query.get(office_position.district_id)
         else:
             district = models.district.query.get(1)
@@ -151,7 +153,7 @@ def get_office(office_id):
         ret['office_positions'] = get_office_positions(office.id)
         # Then use Flask's Response class to make an HTML response with
         # the JSON in it
-        return Response(json.dumps(ret), status=200, mimetype='application/json')
+        return Response(json.dumps(ret, use_decimal=True), status=200, mimetype='application/json')
 
 @app.route("/office/<int:office_id>/", methods = ['POST'])
 def post_office(office_id):
