@@ -6,7 +6,7 @@ define('ADMIN_PASSWORD', 'Democracy!');
 ################ LOGIN FORM SETTINGS ################
 
 // users list file.
-define('USERS_LIST_FILE', 'secr/users.php');
+define('USERS_LIST_FILE', '/var/www/BallotPath/html/secr/users.php');
 
 // request login? true - show login and password boxes, false - password box only
 define('USE_USERNAME', true);
