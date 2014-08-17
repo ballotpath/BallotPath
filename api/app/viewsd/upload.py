@@ -1,3 +1,9 @@
+#***********************************************************************************************************
+# Copyright BallotPath 2014
+# Developed by Matt Clyde, Andrew Erland, Shawn Forgie, Andrew Hobbs, Kevin Mark, Darrell Sam, Blake Clough
+# Open source under GPL v3 license (https://github.com/mclyde/BallotPath/blob/v0.3/LICENSE)
+#***********************************************************************************************************
+
 from flask import Response, url_for, send_from_directory, render_template, redirect, after_this_request, abort
 from flask_restful import request
 from werkzeug.utils import secure_filename
