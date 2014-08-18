@@ -12,7 +12,7 @@ define('USERS_LIST_FILE', '/var/www/BallotPath/html/secr/users.php');
 define('USE_USERNAME', true);
 
 // User will be redirected to this page after logout
-define('LOGOUT_URL', 'http://www.BallotPath.com/');
+define('LOGOUT_URL', '/');
 
 // time out after NN minutes of inactivity. Set to 0 to not timeout
 define('TIMEOUT_MINUTES', 10);
@@ -38,7 +38,7 @@ define('USE_EMAIL', true);
 define('LOGIN_AS_EMAIL', false);
 
 // User will be redirected to this page after sign up
-define('SIGNUP_THANKS_URL', 'http://www.BallotPath.com/');
+define('SIGNUP_THANKS_URL', '/');
 
 
 ################ REMINDER FORM SETTINGS ################
@@ -47,7 +47,7 @@ define('SIGNUP_THANKS_URL', 'http://www.BallotPath.com/');
 define('REMINDER_EMAIL', 'noreply@BallotPath.com');
 
 // Subject for reminder email
-define('REMINDER_SUBJECT', 'BallotPath.com - password reminder');
+define('REMINDER_SUBJECT', 'BallotPath - password reminder');
 
 // User will be redirected to this page after submit
 define('REMINDER_THANKS_URL', 'http://www.BallotPath.com/');
