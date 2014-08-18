@@ -20,6 +20,10 @@ Then install the required Python packages:
 	pip install Flask-HTTPAuth
 	pip install simplejson
 
+Finally, install sendmail for the password recovery systems:
+
+	sudo apt-get install sendmail-bin
+
 ---
 APACHE SETUP:
 
