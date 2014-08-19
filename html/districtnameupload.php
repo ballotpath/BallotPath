@@ -114,7 +114,7 @@ function printUploadError($errcode) {
 }
 
 function cleanup() {
-  $cleartmp = shell_exec('rm /tmp/' . $_FILES["shp"]["name"]);
+  $cleartmp = shell_exec('rm /tmp/' . $_FILES["csv"]["name"]);
   echo $cleartmp;
 }
 
@@ -133,7 +133,34 @@ if(($upload["csv"] == 0)) {
   echo "Error during CSV file upload!  CSV database insertion halted.";
   cleanup();
 } else {
-  
+  //open file for reading
+  $file = fopen("/tmp/" . $_FILES["csv"]["name"], "r");
+  if ($file) {
+    echo "File opened successfully.<br>";
+    //create db connection
+    $dbconn = pg_connect("host=localhost port=5432 dbname=ShawnDB user=postgres password=postgres")
+	or die ("Could not connect to server\n");
+    while (($line = fgets($file)) !== false) {
+      //echo $line;
+      $lineary = explode(";", $line);
+      $qryupdate = "UPDATE district SET name = '" . pg_escape_string($lineary[1]) . "' WHERE name = '" . pg_escape_string($lineary[0]) . "';";
+      $rs = pg_query($dbconn, $qryupdate);
+      if ($rs == FALSE) {
+        echo pg_last_error($dbconn);
+      } else {
+        $rows = pg_affected_rows($rs);
+        if ( $rows == 0 ) {
+          echo "No matching record found for '" . $lineary[0] . "'.<br>";
+        } else {
+          echo "District name '" . $lineary[0] . "' changed to '" . $lineary[1] . "'.<br/>" . $rows . " row(s) changed.<br>";
+        }
+      }
+    }
+    pg_close($dbconn);
+  } else {
+    echo "There was an issue opening the file.";
+  }
+  fclose($file);
   cleanup();
 }
 
