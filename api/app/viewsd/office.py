@@ -27,6 +27,7 @@ def parse_office_row(row):
     office_pos['position_rank'] = row.position_rank
     office_pos['office_title'] = row.office_title
     office_pos['office_rank'] = row.office_rank
+    office_pos['responsibilities'] = row.responsibilities
     office_pos['num_positions'] = row.num_positions
     office_pos['term'] = row.term_length_months
     office_pos['office_notes'] = row.office_notes
@@ -70,6 +71,7 @@ SELECT office_position.id as position_id
        , office.num_positions
        , office.term_length_months
        , office.notes as office_notes
+       , office.responsibilities
     --OFFICEHOLDER
        , office_holder.id as holder_id
        , office_holder.first_name
