@@ -1,4 +1,29 @@
-<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html"); ?>
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html"); 
+
+$officeid=$_GET['id'];
+$dbconn = pg_connect("host=localhost port=5432 dbname=ShawnTests user=BallotPath password=Democracy!")
+	or die ("Could not connect to server\n");
+
+$qrygeom = "SELECT ST_asKML(geom) FROM splits 
+INNER JOIN split_district_rel ON splits.gid = split_district_rel.splits_gid 
+INNER JOIN office_position ON split_district_rel.district_id = office_position.district_id 
+WHERE office_position.office_id = " . $officeid . ";";
+$rs = pg_query($dbconn, $qrygeom);
+if ($rs == FALSE) {
+  echo pg_last_error($dbconn);
+} else {
+  $kmlStr='';
+  while ($row = pg_fetch_array($result)) {
+    $kmlStr .= $row[0];
+  }
+  $kmlStr = str_replace("</MultiGeometry><MultiGeometry>", "", $kmlStr);
+  echo $kmlStr;
+  
+}
+
+pg_close($dbconn);
+
+?>
 
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
