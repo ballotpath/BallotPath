@@ -172,11 +172,11 @@ $(document).ready(function(){
                         $('.office-card-outside').hover(function(e) {
                                 var positionInfo = $( this ).data('carddata');
                                 $('div#popuptext').empty();
-				if(positionInfo.office_notes) {
-                                	$('div#popuptext').append('<p>Bio: ' + positionInfo.office_notes + '</p>');
+				if(positionInfo.responsibilities) {
+                                	$('div#popuptext').append('<p>Responsibilities: ' + positionInfo.responsibilities + '</p>');
 				}
 				else {
-					$('div#popuptext').append('<p>Bio not available </p>');
+					$('div#popuptext').append('<p>Information not available </p>');
 				}
                         $('div#pop-up').show()
                         .css('top', e.pageY + moveDown)

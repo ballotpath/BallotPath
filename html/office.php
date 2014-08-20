@@ -100,6 +100,8 @@
   </div>
 </div>
 	</div>
+
+	<span class="col-md-6 col-md-offset-3 well well-sm" id="warningmessage">Disclaimer: Geographic data is an approximation. Ballot Path does not guarantee the accuracy of search results.</span>
 <div id="map_canvas"></div>
 <br>
 <div class="col-md-6 col-md-offset-3 well well-sm" id="google_tos">Users of Google Maps must comply with the <a id="google_ref" href="http://code.google.com/apis/maps/terms.html" target="_blank">Google Maps Terms and Conditions</a></div>

@@ -12,7 +12,7 @@
 
 <!-- HIDDEN / POP-UP DIV -->
 <div id="pop-up">
-  <h3>Additional Info</h3>
+  <h3>Office Information</h3>
   <div id="popuptext"></div>
 </div>
 
