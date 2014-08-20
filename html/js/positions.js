@@ -98,10 +98,10 @@ function officeCard(cardData) {
                  '    </div>                                                        \n' +
                  '    <div class="office-card-picture" style="background-image:url(\'' + photo_link + '\');">\n' +
                  '      <div class="office-card-term transparent">                 \n' +
-                 '        <p class="office-card-term-text">' + cardData.term + ' Month Term</p>\n' +
+                 '        <p class="office-card-term-text">' + cardData.term + ' Month</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-dates transparent">                               \n' +
-                 '        <p class="office-card-term-text">' + cardData.begin + '-' + cardData.end + '</p>\n' +
+                 '        <p class="office-card-term-text">' + cardData.begin.substring(0, 4) + '-' + cardData.end.substring(0, 4) + '</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-name transparent">                                \n' +
                  '        <h4>' + name + '</h4>\n' +

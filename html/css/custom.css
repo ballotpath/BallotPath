@@ -123,23 +123,23 @@ dd {
 }
 
 .Federal {
-	background-color: #0E53A7;
+	background-color: #84D20C;
 }
 
 .State {
-	background-color: #274E7D;
+	background-color: #681098;
 }
 
 .County {
-	background-color: #04346C;
+	background-color: #E4A10D;
 }
 
 .Municipal {
-	background-color: #4284D3;
+	background-color: #1A339B;
 }
 
 .Local {
-	background-color: #6899D3;
+	background-color: #BE0A5F;
 }
 
 .office-card-title {
@@ -173,7 +173,7 @@ dd {
 	margin-top:0px;
 	margin-bottom:0px;	
 	color:inherit;
-	font-size:12px;
+	font-size:16px;
 }
 
 .office-card-image {
