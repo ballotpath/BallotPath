@@ -31,11 +31,18 @@ Make sure that you have mod_wsgi installed for Apache; this allows you to serve 
 
 	sudo apt-get install libapache2-mod-wsgi
 
+Also enable mod_speling:
+	
+	sudo a2moden speling
+
 Next, you need to set up your Apache .conf file. Go to /etc/apache2/sites-available/ and change/add the following lines to the default config (e.g. 000-default.conf):
+
+	CheckSpelling on
+	CheckCaseOnly on
 
 	DocumentRoot /var/www/BallotPath/html
 	
-	Alias /bpadmin "/var/www/admin"
+	Alias /BPAdmin "/var/www/admin"
 	<Directory /var/www/admin>
 		Order allow,deny
 		Allow from all
