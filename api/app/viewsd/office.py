@@ -91,7 +91,8 @@ SELECT office_position.id as position_id
        LEFT JOIN office_holder ON office_position.office_holder_id = office_holder.id
        JOIN district ON district.id = sp
        LEFT JOIN level ON level.id = district.level_id
-       ORDER BY office_rank
+       ORDER BY level.rank, office.office_rank, office_position.office_rank
+
    """
     result = db.session.execute(cmd)
     for row in result:

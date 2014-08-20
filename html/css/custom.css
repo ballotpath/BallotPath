@@ -91,7 +91,7 @@ dd {
 .office-card-term {
 	position: inherit;
 	background-color:black;
-	width: 50px;
+	width: 60px;
 	height: 50px;
 	float: left;
 }
@@ -109,7 +109,7 @@ dd {
 .office-card-dates {
 	position: relative;
 	background-color:black;
-	width: 50px;
+	width: 60px;
 	height: 50px;
 	float: right;
 }
