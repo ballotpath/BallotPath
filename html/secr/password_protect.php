@@ -72,8 +72,10 @@ function showLoginPasswordProtect($error_msg) {
   <title>Please enter password to access this page</title>
   <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
   <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html"); ?>
 </head>
 <body>
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html"); ?>
   <style>
     input { border: 1px solid black; }
   </style>

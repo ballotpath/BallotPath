@@ -19,6 +19,9 @@ $skip_lines = 1;
 //////////////////  END OF SETTINGS
 /////////////////////////////////////////////////////////////////////////
 
+require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html");
+require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html");
+
 // logout link
 echo '<a href="manager.php?logout=1">Logout</a>';
 echo '<hr />';

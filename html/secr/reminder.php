@@ -25,7 +25,10 @@ class zubrag_reminder_form {
   }
 
   function showReminderPasswordProtect() { 
-    include('reminder_header.php');
+		require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html");
+		require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html");
+		
+		include('reminder_header.php');
     include('reminder_form.php');
     include('reminder_footer.php');
   }

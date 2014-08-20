@@ -43,7 +43,10 @@ if(!function_exists('showLoginPasswordProtect')) {
 
 // show login form
 function showLoginPasswordProtect($error_msg) {
-  include('login_header.php');
+	require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html");
+	require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html");	
+	
+	include('login_header.php');
   include('login_form.php');
   include('login_footer.php');
 
