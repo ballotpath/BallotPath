@@ -4,7 +4,7 @@
 # Open source under GPL v3 license (https://github.com/mclyde/BallotPath/blob/v0.3/LICENSE)
 #***********************************************************************************************************
 
-from flask import render_template, flash, redirect, url_for, jsonify, Response
+from flask import render_template, flash, redirect, url_for, jsonify, abort, Response
 from app import app, db, models
 #import json
 import simplejson as json
@@ -39,9 +39,19 @@ def parse_office_row(row):
     office_pos['district_name'] = row.district_name
     office_pos['level'] = row.level_name
     return office_pos
+
+def isFloat(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
 # Office:
 @app.route("/office/<string:latitude>/<string:longitude>/")
 def get_offices(latitude, longitude, methods = ['GET']):
+    if (not isFloat(latitude)) or (not isFloat(longitude)):
+        abort(400)
     office_positions = []
     #result = db.session.query(models.office, models.office_holder, models.office_position).filter(models.office.id == models.office_position.office_id).filter(models.office_holder.id == models.office_position.id).all()
     cmd = """
@@ -79,6 +89,7 @@ SELECT office_position.id as position_id
        LEFT JOIN office_holder ON office_position.office_holder_id = office_holder.id
        JOIN district ON district.id = sp
        LEFT JOIN level ON level.id = district.level_id
+       ORDER BY office_rank
    """
     result = db.session.execute(cmd)
     for row in result:

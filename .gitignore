@@ -57,5 +57,8 @@ flask/
 config.py
 run.py
 
+# Security
+users.php
+
 # Vim temp files
 *~

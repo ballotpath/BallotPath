@@ -19,7 +19,7 @@
 			<div class="inpCenter panel-body">
 				<a href="secr/manager.php">User Manager (Administrator)</a><br><br>
 				<a href="../api/bulkupload">Bulk Upload Page</a><br><br>
-				<a href="BPAdmin/">Developer Database</a><br><br>
+				<a href="bpadmin/">Developer Database</a><br><br>
 				<a href="shapefileupload.html">Shape File Upload</a><br><br>
 				<a href="relation.php">Relation File Upload</a><br><br>
 				<a href="devAcc.php?logout=1">Logout</a>
