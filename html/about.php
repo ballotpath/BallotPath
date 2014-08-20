@@ -19,7 +19,7 @@
 		1) Understand who all of their publicly elected representatives are<br>
 		2) Have the basic information available about each office<br>
 		3) Understand how they can run for office themselves and participate in our democracy as candidates<br><br>
-
+		
 		Ballot Path’s goal is to expand the background of our elected officials, which would mean helping more people understand the steps needed to run for office. <br><br>
 		
 		One cool by-product of Ballot Path is that we have created GIS data for the political offices that we have examined. Our data is available for free so that users can utilize it to develop their own websites and possibly to run their own campaigns.<br><br>

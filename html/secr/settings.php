@@ -50,7 +50,7 @@ define('REMINDER_EMAIL', 'noreply@BallotPath.com');
 define('REMINDER_SUBJECT', 'BallotPath - password reminder');
 
 // User will be redirected to this page after submit
-define('REMINDER_THANKS_URL', 'http://www.BallotPath.com/');
+define('REMINDER_THANKS_URL', '/');
 
 define('REMINDER_MESSAGE', '
 Hello!

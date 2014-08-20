@@ -21,7 +21,9 @@
 				<a href="../api/bulkupload">Bulk Upload Page</a><br><br>
 				<a href="BPAdmin/">Developer Database</a><br><br>
 				<a href="shapefileupload.html">Shape File Upload</a><br><br>
-				<a href="relation.php">Relation File Upload</a>
+				<a href="relation.php">Relation File Upload</a><br><br>
+				<a href="devAcc.php?logout=1">Logout</a>
+				<br>
 			</div>
 		</div>
 	</div>
