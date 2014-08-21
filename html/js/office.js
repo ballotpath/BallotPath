@@ -5,7 +5,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 function initialize() {
     var hash = getVars();
-    var kml = "<?php echo json_encode($filename) ?>";
     var map_canvas = document.getElementById('map_canvas');
     var map_options = {
         center: new google.maps.LatLng( 45, -122), //hash['lat'], hash['lng']),
@@ -14,7 +13,10 @@ function initialize() {
     }
     map = new google.maps.Map(map_canvas, map_options);
 
-    var ctaLayer = new google.maps.KmlLayer(kml);
+    var ctaLayer = new google.maps.KmlLayer({
+      url: kml,
+      suppressInfoWindows: true
+    });
 
     ctaLayer.setMap(map);
 
