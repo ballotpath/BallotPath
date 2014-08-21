@@ -56,7 +56,7 @@
 
 <div class="intro-header">
 	<div class="container-fluid col-md-10 col-md-offset-1">
-		<div class="panel panel-primary ">
+		<div class="panel panel-default ">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					Split <-> District Relation Creation

@@ -40,7 +40,7 @@ def is_cookie_valid(cookie):
 def bulkupload():
     if is_cookie_valid(request.cookies.get('verify')):
         return render_template('upload.html')
-    abort(401)
+    return redirect('/devAcc.php')
 
 
 @app.route('/upload', methods=['POST'])
@@ -53,7 +53,7 @@ def upload_file():
             result = bulkimport.begin(filename) 
             return redirect(url_for('error_file', filename=result))
         return redirect(url_for('bulkupload'))
-    abort(401)
+    return redirect('/devAcc.php')
 
 
 @app.route('/errors/')

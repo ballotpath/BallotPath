@@ -1,4 +1,4 @@
-<?php require($DOCUMENT_ROOT . "inc/header.html"); ?>
+<?php require($_SERVER["DOCUMENT_ROOT"] . "/inc/header.html"); ?>
 
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
@@ -8,11 +8,11 @@
 
 <body onload="initialize()" class="bgprimary">
 
-<?php require($DOCUMENT_ROOT . "inc/navBar.html"); ?>
+<?php require($_SERVER["DOCUMENT_ROOT"] . "/inc/navBar.html"); ?>
 
 <!-- HIDDEN / POP-UP DIV -->
 <div id="pop-up">
-  <h3>Additional Info</h3>
+  <h3>Office Information</h3>
   <div id="popuptext"></div>
 </div>
 

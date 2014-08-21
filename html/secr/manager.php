@@ -21,16 +21,27 @@ $skip_lines = 1;
 
 require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html");
 require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html");
-
-// logout link
-echo '<a href="manager.php?logout=1">Logout</a>';
-echo '<hr />';
+?>
+<div class="intro-header">
+        <div class="container">
+		<div	class="panel panel-default" >
+			<div class="panel-heading">
+				<h3 class="panel-title"> Adminstrator Control</h3>
+			</div>
+			<div  class="panel-body" >
+<?php
 
 // protection string
-echo 'Include following code into every page you would like to protect, at the very beginning (first line):<br><b>&lt;?php include("' . str_replace('\\','\\\\',str_replace(basename(__FILE__),'login.php',__FILE__)) . '"); ?&gt;</b>';
-
+echo 'Include following code into every page you would like to protect, at the very beginning (first line):<br><b>&lt;?php include("' . str_replace('\\','\\\\',str_replace(basename(__FILE__),'login.php',__FILE__)) . '"); ?&gt;</b>'; 
 
 // run flatfile manager
 include ('flatfile.inc.php');
-
 ?>
+
+				<hr />
+				<!--logout link-->
+				<a href="manager.php?logout=1">Logout</a>
+			</div>
+		</div>
+	</div>
+</div> 

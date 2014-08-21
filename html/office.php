@@ -1,4 +1,4 @@
-<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html"); 
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html");
 
 $officeid=$_GET['id'];
 $dbconn = pg_connect("host=localhost port=5432 dbname=ShawnTests user=BallotPath password=Democracy!")
@@ -29,19 +29,19 @@ if ($rs == FALSE) {
 pg_close($dbconn);
 
 ?>
+<head>
     <script type="text/javascript">
     var kml = "<?php echo 'http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/' . $filename ?>";
     </script>
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
     <script src="js/office.js"></script>
-	<title>Ballot Path - Office</title>
+	  <title>Ballot Path - Office</title>
 </head>
 
 <body onload="initialize()" class="bgprimary">
 
     <?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html"); ?>
-
 <div class="intro-header">
 	<div class="container-fluid">
 	
@@ -132,6 +132,8 @@ pg_close($dbconn);
   </div>
 </div>
 	</div>
+
+	<span class="col-md-6 col-md-offset-3 well well-sm" id="warningmessage">Disclaimer: Geographic data is an approximation. Ballot Path does not guarantee the accuracy of search results.</span>
 <div id="map_canvas"></div>
 <br>
 <div class="col-md-6 col-md-offset-3 well well-sm" id="google_tos">Users of Google Maps must comply with the <a id="google_ref" href="http://code.google.com/apis/maps/terms.html" target="_blank">Google Maps Terms and Conditions</a></div>
