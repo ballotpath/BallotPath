@@ -12,6 +12,14 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(map_canvas, map_options);
+
+    var ctaLayer = new google.maps.KmlLayer({
+      url: kml,
+      suppressInfoWindows: true
+    });
+
+    ctaLayer.setMap(map);
+
 }
 
 function getVars() {

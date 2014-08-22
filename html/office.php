@@ -12,23 +12,31 @@ $rs = pg_query($dbconn, $qrygeom);
 if ($rs == FALSE) {
   echo pg_last_error($dbconn);
 } else {
-  $kmlStr='';
-  while ($row = pg_fetch_array($rs)) {
+  $kmlStr="";
+  while ($row = pg_fetch_row($rs)) {
     $kmlStr .= $row[0];
   }
-  $kmlStr = str_replace("</MultiGeometry><MultiGeometry>", "", $kmlStr);
-  file_put_contents("/tmp/kmltest.kml",$kmlStr);
-  
+  $kmlStr = str_replace("</MultiGeometry><MultiGeometry>", "\n", $kmlStr);
+  $filename = substr(tempnam("kml", "kml"), -13) . ".kml";
+  file_put_contents($filename,'<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document><Placemark>
+  <name>District</name>' . $kmlStr . '</Placemark>  </Document>
+</kml>');
+  chmod($filename, 0766);
 }
 
 pg_close($dbconn);
 
 ?>
-
+<head>
+    <script type="text/javascript">
+    var kml = "<?php echo 'http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/' . $filename ?>";
+    </script>
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
     <script src="js/office.js"></script>
-	<title>Ballot Path - Office</title>
+	  <title>Ballot Path - Office</title>
 </head>
 
 <body onload="initialize()" class="bgprimary">
@@ -133,4 +141,3 @@ pg_close($dbconn);
 </div>
 </body>
 </html>
-
