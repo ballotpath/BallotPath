@@ -1,4 +1,5 @@
 <?php
+include('../html/secr/login.php');
 
 //  define('SHOW_VARIABLES', 1);
 //  define('DEBUG_LEVEL', 1);

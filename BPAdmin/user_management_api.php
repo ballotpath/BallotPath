@@ -1,5 +1,5 @@
 <?php
-
+include('../html/secr/login.php');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
