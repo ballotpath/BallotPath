@@ -10,7 +10,8 @@ CREATE TABLE state (
 -- Level of this position, such as federal, state, county, etc.
 CREATE TABLE level (
     id                      CHAR(1) PRIMARY KEY,
-    name                    VARCHAR(12)
+    name                    VARCHAR(12),
+    rank                    INTEGER
 );
 
 -- OFFICE HOLDER
@@ -76,7 +77,6 @@ CREATE TABLE district (
 
 CREATE TABLE office (
     id                      SERIAL PRIMARY KEY,
-    election_div_id         INTEGER REFERENCES election_div(id),
     title                   VARCHAR(35) NOT NULL,
     num_positions           INTEGER,
     responsibilities        TEXT,
@@ -86,7 +86,7 @@ CREATE TABLE office (
     age_requirements        VARCHAR(100),
     res_requirements        TEXT,
     prof_requirements       TEXT,
-    salary                  MONEY,
+    salary                  INTEGER,
     notes                   TEXT
 );
 
