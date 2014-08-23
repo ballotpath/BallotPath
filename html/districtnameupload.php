@@ -1,3 +1,4 @@
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,7 @@
 					Database name change request
 				</h4>
 			</div>
-			<div class="inpCenter panel-body">
+			<div class="inpAdmin panel-body">
 
 <?php
 
@@ -138,7 +139,7 @@ if(($upload["csv"] == 0)) {
   if ($file) {
     echo "File opened successfully.<br>";
     //create db connection
-    $dbconn = pg_connect("host=localhost port=5432 dbname=ShawnDB user=postgres password=postgres")
+    $dbconn = pg_connect("host=" . $dbhost . " port=" . $dbport . " dbname=" . $dbname . " user=" . $dbuser . " password=" . $dbpassword)
 	or die ("Could not connect to server\n");
     while (($line = fgets($file)) !== false) {
       //echo $line;
@@ -146,13 +147,13 @@ if(($upload["csv"] == 0)) {
       $qryupdate = "UPDATE district SET name = '" . pg_escape_string($lineary[1]) . "' WHERE name = '" . pg_escape_string($lineary[0]) . "';";
       $rs = pg_query($dbconn, $qryupdate);
       if ($rs == FALSE) {
-        echo pg_last_error($dbconn);
+        echo '<p class"hangingindent">' . pg_last_error($dbconn);
       } else {
         $rows = pg_affected_rows($rs);
         if ( $rows == 0 ) {
           echo "No matching record found for '" . $lineary[0] . "'.<br>";
         } else {
-          echo "District name '" . $lineary[0] . "' changed to '" . $lineary[1] . "'.<br/>" . $rows . " row(s) changed.<br>";
+          echo "<p>District name '" . $lineary[0] . "' changed to '" . $lineary[1] . "'.<br/>" . $rows . " row(s) changed.";
         }
       }
     }

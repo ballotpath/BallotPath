@@ -1,3 +1,4 @@
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,7 @@
 					Shapefile Upload Database Insertion
 				</h4>
 			</div>
-			<div class="inpCenter panel-body">
+			<div class="inpAdmin panel-body">
 
 <?php
 
@@ -163,28 +164,19 @@ if(($upload["shp"] == 0) || ($upload["shx"] == 0) || ($upload["dbf"] == 0) || ($
     echo $tablesed;
 
     //perform database insertion and print status
-    putenv("PGPASSWORD=Democracy!");
-    $dbload = shell_exec('psql -U BallotPath BallotPath < /tmp/insert' . substr($_FILES["shp"]["name"], 0, -4) . '.sql 2>&1');
+    putenv("PGPASSWORD=" . $dbpassword);
+    $dbload = shell_exec('psql -U ' . $dbuser . ' ' . $dbname . ' < /tmp/insert' . substr($_FILES["shp"]["name"], 0, -4) . '.sql 2>&1');
     if (substr_count($dbload, 'ERROR') > 0) {
       //print error message
       echo "Errors were encountered!";
-      $dbload = str_replace('ERROR', '<br>ERROR', $dbload);
+      $dbload = str_replace('ERROR', '<p class="hangingindent">ERROR', $dbload);
       echo $dbload;
     } else {
       //count number of successful insertions and display message
       echo $dbload;
       echo "<br>" . substr_count($dbload, 'INSERT 0 1') . " records inserted successfully!.";
     }
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-    $dbenvrem = shell_exec('env --unset=PGPASSWORD');
-    echo $dbenvrem;
-=======
-	putenv('PGPASSWORD');
->>>>>>> ac993de40a8fce9b331dc65ff956bfb79a03a9d7
-=======
     putenv("PGPASSWORD");
->>>>>>> Stashed changes
     cleanup();
   }
 }

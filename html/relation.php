@@ -1,3 +1,4 @@
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,7 @@
 					Split <-> District Relation Creation
 				</h4>
 			</div>
-			<div class="inpCenter panel-body">
+			<div class="inpAdmin panel-body">
 
 
 				<form name="buildrel" method="post" action="submitrel.php">
@@ -71,24 +72,23 @@
 						<option value="">Select A Split</option>
 <?php
 
-$dbconn = pg_connect("host=ec2-54-213-36-220.us-west-2.compute.amazonaws.com port=5432 dbname=BallotPath user=BallotPath password=Democracy!")
+$dbconn = pg_connect("host=" . $dbhost . " port=" . $dbport . " dbname=" . $dbname . " user=" . $dbuser . " password=" . $dbpassword)
 	or die ("</select><p>Could not connect to server\n");
 $query = "SELECT gid, state, county, precinct, split FROM splits ORDER BY state, county, precinct, split;";
-$rs = pg_query($dbconn, $query) or die("Cannot execute query: $query\n");
+$rs = pg_query($dbconn, $query) or die('</select><p class="hangingindent">Cannot execute Split query: ' . $query);
 while ($row = pg_fetch_row($rs)) {
   echo "						<option value=" . $row[0] . "> " . $row[1] . "-" . $row[2] . "-" . $row[3] . "-" . $row[4] . "</option>\n";
 }
-pg_close($dbconn);
+
 ?>
 					</select><br>
 					<label for="district">District:</label><br>
 					<select name="district">
 						<option value="">Select A District</option>
 <?php
-$dbconn = pg_connect("host=ec2-54-213-36-220.us-west-2.compute.amazonaws.com port=5432 dbname=BallotPath user=BallotPath password=Democracy!")
-	or die ("</select><p>Could not connect to server\n");
+
 $query2 = "SELECT district.id, district.name, election_div.name FROM district INNER JOIN election_div ON district.election_div_id = election_div.id ORDER BY district.name, election_div.name;";
-$rs2 = pg_query($dbconn, $query2) or die("Cannot execute query: $query2\n");
+$rs2 = pg_query($dbconn, $query2) or die('</select><p class="hangingindent">Cannot execute District query: ' . $query2);
 while ($row2 = pg_fetch_row($rs2)) {
   echo "						<option value=" . $row2[0] . " > " . $row2[1] . " - " . $row2[2] . "</option>\n";
 }

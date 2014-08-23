@@ -9,7 +9,8 @@ function initialize() {
     var map_options = {
         center: new google.maps.LatLng( 45, -122), //hash['lat'], hash['lng']),
         zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+	scrollwheel: false
     }
     map = new google.maps.Map(map_canvas, map_options);
 

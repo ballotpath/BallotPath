@@ -39,6 +39,17 @@ dd {
 	width:230px;
 }
 
+.inpAdmin {
+	margin-left: auto;
+        margin-right: auto;
+}
+
+.hangingindent {
+	text-align: left;
+	padding-left: 22px;
+	text-indent: -22px;
+}
+
 #loader{
    visibility:hidden;
 }

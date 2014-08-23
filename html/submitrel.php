@@ -1,3 +1,4 @@
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,7 @@
 					Split <-> District Relation Creation
 				</h4>
 			</div>
-			<div class="inpCenter panel-body">
+			<div class="inpAdmin panel-body">
 
 <?php
 
@@ -72,7 +73,7 @@ $district=$_POST['district'];
 if (($split == "") || ($district == "")) {
   echo "Invalid selection made, please select a valid Split and District.";
 } else {
-  $dbconn = pg_connect("host=localhost port=5432 dbname=BallotPath user=BallotPath password=Democracy!")
+  $dbconn = pg_connect("host=" . $dbhost . " port=" . $dbport . " dbname=" . $dbname . " user=" . $dbuser . " password=" . $dbpassword)
 	or die ("Could not connect to server\n");
 
   $qryinsert = "INSERT INTO split_district_rel(
@@ -80,15 +81,15 @@ if (($split == "") || ($district == "")) {
 	    VALUES ($split, $district);";
   $rs = pg_query($dbconn, $qryinsert);
   if ($rs == FALSE) {
-    echo pg_last_error($dbconn);
+    echo '<p class="hangingindent">' . pg_last_error($dbconn);
   } else {
 
     $qrysplit = "SELECT state, county, precinct, split FROM splits where gid = $split;";
-    $rs = pg_query($dbconn, $qrysplit) or die("Cannot execute query: $querysplit\n");
+    $rs = pg_query($dbconn, $qrysplit) or die('<p class="hangingindent">Cannot execute query: ' . $querysplit);
     $row = pg_fetch_row($rs);
 
     $qrydist = "SELECT district.name, election_div.name FROM district INNER JOIN election_div ON district.election_div_id = election_div.id WHERE district.id = $district;";
-    $rs2 = pg_query($dbconn, $qrydist) or die("Cannot execute query: $qrydist\n");
+    $rs2 = pg_query($dbconn, $qrydist) or die('<p class="hangingindent">Cannot execute query: ' . $querydist);
     $row2 = pg_fetch_row($rs2);
 
     echo "Relationship " . $row[0] . " - " . $row[1] . " - " . $row[2] . " - " . $row[3] . " <-> " . $row2[0] . " - " . $row2[1] . " created!<br/>";
