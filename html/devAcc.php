@@ -20,8 +20,9 @@
 				<a href="secr/manager.php">User Manager (Administrator)</a><br><br>
 				<a href="../api/bulkupload">Bulk Upload Page</a><br><br>
 				<a href="bpadmin/">Developer Database</a><br><br>
-				<a href="shapefileupload.html">Shape File Upload</a><br><br>
+				<a href="shapefilesubmit.php">Shape File Upload</a><br><br>
 				<a href="relation.php">Relation File Upload</a><br><br>
+				<a href="districtnamefix.php">Bulk District Name Change Upload</a><br><br>
 				<a href="devAcc.php?logout=1">Logout</a>
 				<br>
 			</div>
