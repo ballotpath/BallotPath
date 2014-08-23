@@ -59,6 +59,7 @@ run.py
 
 # Security
 users.php
+BPWebConfig.php
 
 # Vim temp files
 *~
