@@ -1,4 +1,5 @@
-<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php"); ?>
+<?php include('../html/secr/login.php');
+require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
