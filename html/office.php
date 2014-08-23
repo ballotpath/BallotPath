@@ -1,37 +1,57 @@
 <?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html");
+require($_SERVER['DOCUMENT_ROOT'] . "/inc/BPWebConfig.php");
 
 $officeid=$_GET['id'];
-$dbconn = pg_connect("host=localhost port=5432 dbname=ShawnTests user=BallotPath password=Democracy!")
+$dbconn = pg_connect("host=" . $dbhost . " port=" . $dbport . " dbname=" . $dbname . " user=" . $dbuser . " password=" . $dbpassword)
 	or die ("Could not connect to server\n");
 
-$qrygeom = "SELECT ST_asKML(geom) FROM splits 
+$qrylvl = "SELECT district.level_id FROM district
+INNER JOIN office_position ON district.id = office_position.district_id
+WHERE office_position.office_id = $officeid;";
+
+$rez = pg_query($dbconn, $qrylvl);
+if ($rez == FALSE) {
+  echo '<p class="hangingindent">' . pg_last_error($dbconn);
+} else {
+  $val = pg_fetch_row($rez);
+  if (($val[0] == "F") || ($val[0] == "S")) {
+    if ($officeid == 1755 ) {
+      $filename="usa.kml";
+    } else {
+      $filename="oregon.kml";
+    }
+  } else {
+
+    $qrygeom = "SELECT ST_asKML(ST_Union(ARRAY(SELECT geom FROM splits 
 INNER JOIN split_district_rel ON splits.gid = split_district_rel.splits_gid 
 INNER JOIN office_position ON split_district_rel.district_id = office_position.district_id 
-WHERE office_position.office_id = $officeid;";
-$rs = pg_query($dbconn, $qrygeom);
-if ($rs == FALSE) {
-  echo pg_last_error($dbconn);
-} else {
-  $kmlStr="";
-  while ($row = pg_fetch_row($rs)) {
-    $kmlStr .= $row[0];
-  }
-  $kmlStr = str_replace("</MultiGeometry><MultiGeometry>", "\n", $kmlStr);
-  $filename = substr(tempnam("kml", "kml"), -13) . ".kml";
-  file_put_contents($filename,'<?xml version="1.0" encoding="UTF-8"?>
+WHERE office_position.office_id = $officeid)));";
+    $rs = pg_query($dbconn, $qrygeom);
+    if ($rs == FALSE) {
+      echo '<p class="hangingindent">' . pg_last_error($dbconn);
+    } else {
+      $kmlStr="";
+      while ($row = pg_fetch_row($rs)) {
+        $kmlStr .= $row[0];
+      }
+      $kmlStr = str_replace("</MultiGeometry><MultiGeometry>", "\n", $kmlStr);
+      $filename = substr(tempnam("kml", "kml"), -13) . ".kml";
+      file_put_contents($filename,'<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document><Placemark>
   <name>District</name>' . $kmlStr . '</Placemark>  </Document>
 </kml>');
-  chmod($filename, 0766);
+      chmod($filename, 0766);
+    }
+  }
 }
-
 pg_close($dbconn);
 
-?>
+ ?>
 <head>
     <script type="text/javascript">
-    var kml = "<?php echo 'http://ec2-54-213-36-220.us-west-2.compute.amazonaws.com/' . $filename ?>";
+    var urlbase = "<?php echo $webaddr ?>";
+    var kml = urlbase + "<?php echo $filename ?>";
     </script>
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
@@ -141,3 +161,4 @@ pg_close($dbconn);
 </div>
 </body>
 </html>
+
