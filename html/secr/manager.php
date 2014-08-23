@@ -39,6 +39,31 @@ include ('flatfile.inc.php');
 ?>
 
 				<hr />
+				
+				<form action="manager.php" method="post">
+				New Administrator Password: <input type="password" name="adminPass"><br>
+				<input type="submit">
+				</form>
+				
+				<?php
+				$word = $_POST["adminPass"];
+				
+				if($word != null) {
+					$lines = file('settings.php');
+					$result = '';
+				
+					foreach($lines as $line) {
+						if(substr($line, 0, 26) == "define('ADMIN_PASSWORD', '") {
+							$result .= "define('ADMIN_PASSWORD', '".$word."');\n";
+						} else {
+							$result .= $line;
+						}
+					}
+					file_put_contents('settings.php', $result);
+				}
+				?>
+				
+				<hr />
 				<!--logout link-->
 				<a href="manager.php?logout=1">Logout</a>
 			</div>
