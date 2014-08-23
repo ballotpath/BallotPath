@@ -98,7 +98,7 @@ function officeCard(cardData) {
                  '    </div>                                                        \n' +
                  '    <div class="office-card-picture" style="background-image:url(\'' + photo_link + '\');">\n' +
                  '      <div class="office-card-term transparent">                 \n' +
-                 '        <p class="office-card-term-text">' + cardData.term + ' Month</p>\n' +
+                 '        <p class="office-card-term-text">' + cardData.term + ' Months</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-dates transparent">                               \n' +
                  '        <p class="office-card-term-text">' + cardData.begin.substring(0, 4) + '-' + cardData.end.substring(0, 4) + '</p>\n' +
@@ -172,11 +172,13 @@ $(document).ready(function(){
                         $('.office-card-outside').hover(function(e) {
                                 var positionInfo = $( this ).data('carddata');
                                 $('div#popuptext').empty();
-				if(positionInfo.office_notes) {
-                                	$('div#popuptext').append('<p>Bio: ' + positionInfo.office_notes + '</p>');
+				if(positionInfo.responsibilities) {
+					var responsibilities = positionInfo.responsibilities;
+					var fixed_responsibilities = responsibilities.replace(/\u00a0/g," ");
+                                	$('div#popuptext').append('<p>Responsibilities: ' + fixed_responsibilities + '</p>');
 				}
 				else {
-					$('div#popuptext').append('<p>Bio not available </p>');
+					$('div#popuptext').append('<p>Information not available </p>');
 				}
                         $('div#pop-up').show()
                         .css('top', e.pageY + moveDown)

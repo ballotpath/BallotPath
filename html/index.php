@@ -61,6 +61,8 @@
                             </div>
                         </div>
                         <h3>A Real World Path to Politics</h3>
+			<br>
+			<span id="disclaimer">Geographic data is an approximation</span>
                         <hr class="intro-divider">
                         <div id="geolocation"></div>
                     </div>

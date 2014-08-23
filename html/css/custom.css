@@ -25,6 +25,7 @@ dd {
 .panel-primary {
 	color:black;
 }
+
 .panel-default {
 	color:black;
 }
@@ -48,6 +49,17 @@ dd {
 	text-align: left;
 	padding-left: 22px;
 	text-indent: -22px;
+}
+
+#disclaimer {
+	font-size: 16px;
+	color: #FCA9B7;
+	font-style: italic;
+}
+
+#warningmessage {
+	color: red;
+	font-style: italic;
 }
 
 #loader{
@@ -90,7 +102,7 @@ dd {
 .office-card-term {
 	position: inherit;
 	background-color:black;
-	width: 50px;
+	width: 60px;
 	height: 50px;
 	float: left;
 }
@@ -108,7 +120,7 @@ dd {
 .office-card-dates {
 	position: relative;
 	background-color:black;
-	width: 50px;
+	width: 60px;
 	height: 50px;
 	float: right;
 }

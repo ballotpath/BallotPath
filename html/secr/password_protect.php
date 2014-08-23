@@ -67,26 +67,36 @@ if(!function_exists('showLoginPasswordProtect')) {
 // show login form
 function showLoginPasswordProtect($error_msg) {
 ?>
-<html>
-<head>
+<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html"); ?>
   <title>Please enter password to access this page</title>
   <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
   <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
-<?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/header.html"); ?>
 </head>
 <body>
 <?php require($_SERVER['DOCUMENT_ROOT'] . "/inc/navBar.html"); ?>
   <style>
     input { border: 1px solid black; }
   </style>
-  <form method="post">
-    <h3>Please enter password to access this page</h3>
-    <font color="red"><?php echo $error_msg; ?></font><br />
-<?php if (USE_USERNAME_ADMIN) echo 'Login:<br /><input type="input" name="access_login" /><br />Password:<br />'; ?>
-    <input type="password" name="access_password" /><p></p><input type="submit" name="Submit" value="Submit" />
-  </form>
-  <br />
-  <a style="font-size:9px" href="http://www.zubrag.com/scripts/password-protect.php" title="Download Webpage Password Protect">Powered by Webpage Password Protect</a>
+  
+   <form method="post">
+		<div class="intro-header">
+			<div class="container">
+				<div	class="panel panel-default" >
+					<div class="panel-heading">
+						<h3 class="panel-title">Please enter administrator password to access this page</h3>
+					</div>
+					<div  class="panel-body" >
+						<font color="red"><?php echo $error_msg; ?></font><br />
+						<?php if (USE_USERNAME_ADMIN) echo 'Login:<br /><input type="input" name="access_login" /><br />Password:<br />'; ?>
+						<input type="password" name="access_password" /><p></p><input type="submit" name="Submit" value="Submit" />
+	</form>
+	<br />
+	<a style="font-size:9px" href="http://www.zubrag.com/scripts/password-protect.php" title="Download Webpage Password Protect">Powered by Webpage Password Protect</a>
+  
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
 </html>
 

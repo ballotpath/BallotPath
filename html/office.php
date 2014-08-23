@@ -48,6 +48,7 @@ WHERE office_position.office_id = $officeid)));";
 pg_close($dbconn);
 
  ?>
+<head>
     <script type="text/javascript">
     var urlbase = "<?php echo $webaddr ?>";
     var kml = urlbase + "<?php echo $filename ?>";
@@ -55,7 +56,7 @@ pg_close($dbconn);
     <script src="js/jsonp.js" type="text/javascript"></script>
     <script src="js/purl.js"></script>
     <script src="js/office.js"></script>
-	<title>Ballot Path - Office</title>
+	  <title>Ballot Path - Office</title>
 </head>
 
 <body onload="initialize()" class="bgprimary">
