@@ -19,7 +19,7 @@
 --------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION bp_insert_office_holders()
-  RETURNS void AS 
+  RETURNS void AS
 $BODY$
   DECLARE 
     holders CURSOR FOR SELECT * FROM holder_staging;
@@ -145,4 +145,5 @@ END LOOP;
 
 END;
 $BODY$
-  LANGUAGE plpgsql VOLATILE;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;

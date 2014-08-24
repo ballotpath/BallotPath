@@ -20,7 +20,7 @@
 -----------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION bp_insert_offices()
-  RETURNS void AS 
+  RETURNS void AS
 $BODY$
   DECLARE 
     offices CURSOR FOR SELECT * FROM office_staging;
@@ -111,7 +111,7 @@ FOR office IN offices LOOP
             WHERE id = p_id;
             
 	 --Add Office docs
-	 PERFORM bp_insert_office_docs(office.office_doc_name, office.office_doc_link, o_id, office.district_id);
+	 PERFORM bp_insert_office_docs(office.office_doc_name, office.office_doc_link, (SELECT * FROM o_id LIMIT 1), office.district_id);
 	
   ELSE
     SELECT op.office_id into o_id FROM office_position op where op.id = p_id;
@@ -155,11 +155,12 @@ FOR office IN offices LOOP
 			, office.district_name
 			, office.district_state
 			, office.election_div_name
-			, 'Updates are not allowed in bulk inserts!');
+			, 'Office updates are not allowed in bulk inserts!');
   END IF;
 
 END LOOP;
 
 END;
 $BODY$
-  LANGUAGE plpgsql VOLATILE;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
