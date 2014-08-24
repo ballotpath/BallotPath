@@ -65,7 +65,7 @@ $BODY$
   ) ON COMMIT DROP;
 
 
-  CREATE TABLE position_staging (
+  CREATE TEMPORARY TABLE position_staging (
   position_name character varying(125),
   term_start date,
   term_end date,
@@ -78,7 +78,7 @@ $BODY$
   district_state character(2),
   district_name character varying(125),
   election_div_name character varying(125)
-);
+)ON COMMIT DROP;
 
 CREATE TEMPORARY TABLE holder_staging (
   first_name character varying(25),
