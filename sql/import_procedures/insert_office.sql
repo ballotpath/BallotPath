@@ -1,3 +1,24 @@
+-----------------------------------------------------------
+-- Bulk import procedure for offices intended to be      --
+-- called by bp_import_off_pos_hol_csv_to_staging_tables --
+--                                                       --
+-- Validates and imports offices residing in the         --
+-- office_staging table.							     --
+--                                                       --
+-- On import this procedure does validation and error    --
+-- reporting. Any errors are saved to an error table,    --
+-- once import has been processed errors will be saved   --
+-- to a csv that can be found in /tmp/import/errors/     --
+--                                                       --
+-- Potential improvements (at least on readability) make --
+-- inserts into bad_inserts_offices another procedure    --
+-- call with message and the row of data to insert.      --
+--                                                       --
+-- Authored by: Shawn Forgie                             --
+-- For: BallotPath                                       --
+-- Date: July 8, 2014                                    --
+-----------------------------------------------------------
+
 CREATE OR REPLACE FUNCTION bp_insert_offices()
   RETURNS void AS
 $BODY$
