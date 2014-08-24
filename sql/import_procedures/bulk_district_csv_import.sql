@@ -173,7 +173,7 @@ END LOOP;
   		TO %L
   		WITH
 		    DELIMITER ''|''
-		    NULL ''''
+		    NULL ''--''
 		    CSV HEADER', output_file);
 	RETURN outname;
   END IF;
