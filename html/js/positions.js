@@ -10,7 +10,9 @@ function initialize() {
     var map_options = {
         center: new google.maps.LatLng(hash['lat'], hash['lng']),
         zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+	scrollwheel: false,
+	draggable: false
     }
     map = new google.maps.Map(map_canvas, map_options);
 
@@ -49,46 +51,60 @@ function getVars() {
 function officeCard(cardData) {
 	var levelString;
         var jsonString = JSON.stringify(cardData);
+	var name;
+
         console.log(jsonString);
-	switch (cardData.level.toUpperCase()[0]) {
-		case "F":
-			levelString = "Federal";
-			break;
-		case "S":
-			levelString = "State";
-			break;
-		case "C":
-			levelString = "County";
-			break;
-		case "M":
-			levelString = "Municipal";
-			break;
-		case "L":
-			levelString = "Local";
-			break;
+	if(cardData.level != null) {
+		switch (cardData.level.toUpperCase()[0]) {
+			case "F":
+				levelString = "Federal";
+				break;
+			case "S":
+				levelString = "State";
+				break;
+			case "C":
+				levelString = "County";
+				break;
+			case "M":
+				levelString = "Municipal";
+				break;
+			case "L":
+				levelString = "Local";
+				break;
+		}
 	}
-    if (cardData.photo_link == "") {
+	else{
+		levelString = "";
+	}
+
+    if (cardData.photo_link == null || cardData.photo_link == "") {
         photo_link = "img/business_user.png";
     } else {
         photo_link = cardData.photo_link;
     }
+
+   if(cardData.first_name == null || cardData.first_name == "") {
+	name = "Vacant";
+   } else {
+	name = cardData.first_name + " " + (cardData.last_name == null ? "" : cardData.last_name);	
+   }
     var htmlString = '<!-- Begin Card --> \n' +
                  '<div class="office-card-outside animated ' + levelString + '" data-cardData=\'' + jsonString + '\'>\n' +
                  '    <div class="office-card-scope ' + levelString + '">           \n' +
                  '       <h4 class="office-card-title-text">' + levelString + '</h4> \n' +
                  '    </div>                                                        \n' +
                  '    <div class="office-card-title">                \n' +
-                 '      <p class="office-card-title-text">' + cardData.position_name + '</p>\n' +
+                 '      <p class="office-card-title-text">' + cardData.office_title + '</p>\n' +
                  '    </div>                                                        \n' +
                  '    <div class="office-card-picture" style="background-image:url(\'' + photo_link + '\');">\n' +
                  '      <div class="office-card-term transparent">                 \n' +
-                 '        <p class="office-card-term-text">' + cardData.term + ' Term</p>\n' +
+                 '        <p class="office-card-term-text">' + cardData.term + ' Months</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-dates transparent">                               \n' +
-                 '        <p class="office-card-term-text">' + cardData.begin + '-' + cardData.end + '</p>\n' +
+                 '        <p class="office-card-term-text">' + cardData.begin.substring(0, 4) + '-' + cardData.end.substring(0, 4) + '</p>\n' +
                  '      </div>                                                        \n' +
                  '      <div class="office-card-name transparent">                                \n' +
-                 '        <h4>' + cardData.first_name + " " + cardData.last_name + '</h4>\n' +
+                 '        <h4>' + name + '</h4>\n' +
                  '      </div>                                                        \n' +
                  '    </div>\n' +
                  '</div> <!-- End Card --> \n';
@@ -96,7 +112,7 @@ function officeCard(cardData) {
 };
 
 function openOffice(office_id) {
-    var url = window.location.protocol + "//" + window.location.host + "/office.html" + "?id=" + office_id;
+    var url = window.location.protocol + "//" + window.location.host + "/office.php" + "?id=" + office_id;
     window.open(url, "_self");
 }
 
@@ -134,7 +150,7 @@ $(document).ready(function(){
                     console.log(data);              
                     console.log(data.positions);
 			var positionMatrix = "";
-                    if (data.positions && data.positions.length > 0) {
+                    if ((data.positions && data.positions.length) > 0) {
                         $.each(data.positions, function(i, card) {
                             dyn_id = card.office_id;
                             positionMatrix += '<div class="col-lg-2 col-md-3 col-sm-4 card-cell" id=' + dyn_id + ' onclick="openOffice(' + dyn_id + ')" >\n';
@@ -144,7 +160,7 @@ $(document).ready(function(){
                         $resultsArea.html(positionMatrix);
                     }
                     else {
-                        $resultsArea.html('<p>No positions found for this distict. Please try again.</p>');
+                        $resultsArea.html('<div class="col-md-4 col-md-offset-4 well well-sm">No positions found for this distict. Please try again.</div>');
                     }
 
                 // Pop-up Effect as mouse hovers over cards:
@@ -156,11 +172,13 @@ $(document).ready(function(){
                         $('.office-card-outside').hover(function(e) {
                                 var positionInfo = $( this ).data('carddata');
                                 $('div#popuptext').empty();
-				if(positionInfo.office_notes) {
-                                	$('div#popuptext').append('<p>Bio: ' + positionInfo.office_notes + '</p>');
+				if(positionInfo.responsibilities) {
+					var responsibilities = positionInfo.responsibilities;
+					var fixed_responsibilities = responsibilities.replace(/\u00a0/g," ");
+                                	$('div#popuptext').append('<p>Responsibilities: ' + fixed_responsibilities + '</p>');
 				}
 				else {
-					$('div#popuptext').append('<p>Bio not available </p>');
+					$('div#popuptext').append('<p>Information not available </p>');
 				}
                         $('div#pop-up').show()
                         .css('top', e.pageY + moveDown)

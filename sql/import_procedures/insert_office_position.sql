@@ -19,14 +19,22 @@
 --------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION bp_insert_office_positions()
-  RETURNS void AS 
+  RETURNS void AS
 $BODY$
+  DECLARE 
+    positions CURSOR FOR (SELECT position_name, title, district_id, district_state, district_name, election_div_name
+        FROM position_staging
+        GROUP by position_name, title, district_id, district_state, district_name, election_div_name
+        EXCEPT
+
+        SELECT op.position_name, o.title, d.id, d.state, d.name, ed.name
+        FROM office_position op join office o on op.office_id = o.id
+          join district d on op.district_id = d.id
+          join election_div ed on d.election_div_id = ed.id);
 BEGIN
 
-  --TODO: Save duplicates to error table?
-  -- currently just not inserted and no updating
+FOR position IN positions LOOP
 
-  --Add Office positions
   INSERT into office_position ( district_id
                               , position_name
                               , term_start
@@ -35,7 +43,7 @@ BEGIN
                               , next_election
                               , notes
                               , office_rank)
-      ((SELECT DISTINCT ps.district_id
+      (SELECT  ps.district_id
               , ps.position_name
               , ps.term_start
               , ps.term_end
@@ -44,21 +52,16 @@ BEGIN
               , ps.notes
               , ps.position_rank
       FROM position_staging ps
-      WHERE ps.title <> '' and ps.district_id IS NOT NUll)
+      WHERE ps.title <> '' and ps.district_id IS NOT NUll
+    and ps.position_name = position.position_name
+    and ps.title = position.title
+    and ps.district_id = position.district_id
+    and ps.district_name = position.district_name
+    and ps.election_div_name = position.election_div_name
+     ORDER by ps.term_start, ps.term_end, ps.filing_deadline, ps.next_election, ps.notes, ps.position_rank
+     LIMIT 1);
 
-          EXCEPT
-
-          (SELECT ps.district_id
-                  , ps.position_name
-                  , ps.term_start
-                  , ps.term_end
-                  , ps.filing_deadline
-                  , ps.next_election
-                  , ps.notes
-                  , ps.position_rank
-            FROM position_staging ps inner JOIN office_position op
-                      on ps.district_id = op.district_id
-                      and ps.position_name = op.position_name));
+END LOOP;
 
 
 INSERT into bad_inserts_offices(position_name
@@ -116,4 +119,5 @@ INSERT into bad_inserts_offices(position_name
 
 END;
 $BODY$
-  LANGUAGE plpgsql VOLATILE;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;

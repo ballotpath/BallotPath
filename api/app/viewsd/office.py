@@ -1,6 +1,13 @@
-from flask import render_template, flash, redirect, url_for, jsonify, Response
+#***********************************************************************************************************
+# Copyright BallotPath 2014
+# Developed by Matt Clyde, Andrew Erland, Shawn Forgie, Andrew Hobbs, Kevin Mark, Darrell Sam, Blake Clough
+# Open source under GPL v3 license (https://github.com/mclyde/BallotPath/blob/v0.3/LICENSE)
+#***********************************************************************************************************
+
+from flask import render_template, flash, redirect, url_for, jsonify, abort, Response
 from app import app, db, models
-import json
+#import json
+import simplejson as json
 
 # Utility function for get_offices to parse a single row of the
 # database and convert it a representation using Python built-ins
@@ -20,6 +27,7 @@ def parse_office_row(row):
     office_pos['position_rank'] = row.position_rank
     office_pos['office_title'] = row.office_title
     office_pos['office_rank'] = row.office_rank
+    office_pos['responsibilities'] = row.responsibilities
     office_pos['num_positions'] = row.num_positions
     office_pos['term'] = row.term_length_months
     office_pos['office_notes'] = row.office_notes
@@ -32,9 +40,19 @@ def parse_office_row(row):
     office_pos['district_name'] = row.district_name
     office_pos['level'] = row.level_name
     return office_pos
+
+def isFloat(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
 # Office:
 @app.route("/office/<string:latitude>/<string:longitude>/")
 def get_offices(latitude, longitude, methods = ['GET']):
+    if (not isFloat(latitude)) or (not isFloat(longitude)):
+        abort(400)
     office_positions = []
     #result = db.session.query(models.office, models.office_holder, models.office_position).filter(models.office.id == models.office_position.office_id).filter(models.office_holder.id == models.office_position.id).all()
     cmd = """
@@ -53,6 +71,7 @@ SELECT office_position.id as position_id
        , office.num_positions
        , office.term_length_months
        , office.notes as office_notes
+       , office.responsibilities
     --OFFICEHOLDER
        , office_holder.id as holder_id
        , office_holder.first_name
@@ -67,11 +86,13 @@ SELECT office_position.id as position_id
     --LEVEL
        , level.name as level_name
    FROM bp_get_officeids_from_point("""+str(longitude)+", "+str(latitude)+""") sp 
-       JOIN office_position ON sp.district_id = office_position.district_id
+       JOIN office_position ON sp = office_position.district_id
        JOIN office ON office_position.office_id = office.id
        LEFT JOIN office_holder ON office_position.office_holder_id = office_holder.id
-       JOIN district ON district.id = sp.district_id
+       JOIN district ON district.id = sp
        LEFT JOIN level ON level.id = district.level_id
+       ORDER BY level.rank, office.office_rank, office_position.office_rank
+
    """
     result = db.session.execute(cmd)
     for row in result:
@@ -110,12 +131,13 @@ def get_office_positions(office_id):
         office_position_dict['filing_deadline'] = str(office_position_dict['filing_deadline'])
         office_position_dict['next_election'] = str(office_position_dict['next_election'])
         # Get the office holder for this position
-        office_holder = models.office_holder.query.get(office_position.office_holder_id)
-        office_holder_dict = dict(office_holder.__dict__)
-        del office_holder_dict['_sa_instance_state']
-        office_position_dict['office_holder'] = office_holder_dict
+        if office_position.office_holder_id:
+            office_holder = models.office_holder.query.get(office_position.office_holder_id)
+            office_holder_dict = dict(office_holder.__dict__)
+            del office_holder_dict['_sa_instance_state']
+            office_position_dict['office_holder'] = office_holder_dict
         # Get the district for this position
-        if office_position.district_id != None:
+        if office_position.district_id:
             district = models.district.query.get(office_position.district_id)
         else:
             district = models.district.query.get(1)
@@ -151,7 +173,7 @@ def get_office(office_id):
         ret['office_positions'] = get_office_positions(office.id)
         # Then use Flask's Response class to make an HTML response with
         # the JSON in it
-        return Response(json.dumps(ret), status=200, mimetype='application/json')
+        return Response(json.dumps(ret, use_decimal=True), status=200, mimetype='application/json')
 
 @app.route("/office/<int:office_id>/", methods = ['POST'])
 def post_office(office_id):

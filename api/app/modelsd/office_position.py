@@ -1,3 +1,9 @@
+#***********************************************************************************************************
+# Copyright BallotPath 2014
+# Developed by Matt Clyde, Andrew Erland, Shawn Forgie, Andrew Hobbs, Kevin Mark, Darrell Sam, Blake Clough
+# Open source under GPL v3 license (https://github.com/mclyde/BallotPath/blob/v0.3/LICENSE)
+#***********************************************************************************************************
+
 from app import db
 from sqlalchemy.dialects import postgresql
 
@@ -12,3 +18,4 @@ class office_position(db.Model):
     filing_deadline = db.Column(db.DATE)
     next_election = db.Column(db.DATE)
     notes = db.Column(db.TEXT)
+    office_rank = db.Column(db.INTEGER)

@@ -1,3 +1,9 @@
+#***********************************************************************************************************
+# Copyright BallotPath 2014
+# Developed by Matt Clyde, Andrew Erland, Shawn Forgie, Andrew Hobbs, Kevin Mark, Darrell Sam, Blake Clough
+# Open source under GPL v3 license (https://github.com/mclyde/BallotPath/blob/v0.3/LICENSE)
+#***********************************************************************************************************
+
 from app import app, db
 from flask import Response, url_for
 from sqlalchemy import text
@@ -61,9 +67,8 @@ def validate_holder_position_office(filename):
     """
     validator = CSVValidator(hol_pos_off_header)
     validator.add_header_check('EX1', 'bad header')
-    validator.add_value_check('term_length_months', int, 'EX2', 'term_length_months must be an integer')
+    validator.add_record_check(check_term_length_salary_int_fields)
     validator.add_record_check(check_partisan_boolean)
-    validator.add_value_check('salary', int, 'EX4', 'salary must be an integer')
     validator.add_record_check(check_holder_addr_string_length)
     validator.add_record_check(check_valid_dates_holder)
     validator.add_record_check(check_holder_not_null_fields)
@@ -80,6 +85,35 @@ def validate_holder_position_office(filename):
     return import_holder_position_office(filename)
 
 
+def check_term_length_salary_int_fields(r):
+    """
+    Check that term_length and salary fields are ints and accept ''
+    """
+    msg = ''
+    term_length = str(r['term_length_months'])
+    salary = str(r['salary'])
+    
+    term_int = try_parse(term_length)
+    salary_int = try_parse(salary)
+    
+    if term_int is None:
+        msg = 'term_length_months value recieved: {0}\n'.format(term_length)
+    if salary_int is None:
+        msg += 'salary value recieved: {0}\n'.format(salary)
+
+    if msg:
+        raise RecordError('EX2', 'Expected integer for {0}\n'.format(msg))
+
+
+def try_parse(string, fail=None):
+    try:
+        if string:
+            return float(string)
+        return 0
+    except Exception:
+        return fail
+
+
 def check_holder_not_null_fields(r):
     """
     Check that required holder_position_office.csv fields are not empty
@@ -87,10 +121,14 @@ def check_holder_not_null_fields(r):
     dist_name = str(r['district_name'])
     dist_state = str(r['district_state'])
     el_name = str(r['election_div_name'])   
+    pos_name = str(r['position_name'])
+    title = str(r['title'])
 
     dname_valid = (dist_name.strip())
     dstate_valid = (dist_state.strip())
-    ename_valid = (el_name.strip()) 
+    ename_valid = (el_name.strip())
+    pos_valid = (pos_name.strip())
+    title_valid = (title.strip())
 
     msg = ''
     if not dname_valid:
@@ -99,6 +137,12 @@ def check_holder_not_null_fields(r):
         msg += 'district_state: {0}\n'.format(dist_state)
     if not ename_valid:
         msg += 'election_div_name: {0}\n'.format(el_name)
+
+    if (pos_valid and not title_valid) or (not pos_valid and title_valid):
+        if pos_valid:
+            msg += 'title: {0}\n'.format(title)
+        else:
+            msg += 'position_name: {0}\n'.format(pos_name)
 
     if msg:
        raise RecordError('EX7', 'Expected non-empty string:\n{0}'.format(msg))
@@ -110,7 +154,7 @@ def check_partisan_boolean(r):
     """
     partisan = str(r['partisan']).strip()
     
-    valid = partisan in ['TRUE', 'True', 't', 'true', 'y', 'yes', 'on', '1', 'FALSE', 'False', 'f', 'false', 'n', 'no', 'off', '0']
+    valid = partisan in ['TRUE', 'True', 't', 'true', 'y', 'yes', 'on', '1', 'FALSE', 'False', 'f', 'false', 'n', 'no', 'off', '0', '']
     if not valid:
         raise RecordError('EX3', 'partisan must be True or False. Encountered: {0}'.format(partisan))
 

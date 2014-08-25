@@ -9,7 +9,8 @@ function initialize() {
     var map_options = {
         center: new google.maps.LatLng(44.9308, -123.0289),
         zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+	scrollwheel: false
     }
     map = new google.maps.Map(map_canvas, map_options);
     geocoder = new google.maps.Geocoder();
@@ -20,12 +21,17 @@ function initialize() {
         title: 'Coordinates: ' + map_options.center.toString(), 
         draggable: true
     });
-        
+
+    document.getElementById('markerlat').value = marker.getPosition().lat();
+    document.getElementById('markerlong').value = marker.getPosition().lng();
+	
     google.maps.event.addListener(marker, 'mouseup', function()  {
         marker.setTitle('Coordinates: ' + marker.getPosition().toString());
 	document.getElementById('markerlat').value = marker.getPosition().lat();
 	document.getElementById('markerlong').value = marker.getPosition().lng();
     });
+    document.getElementById('markerlat').value = marker.getPosition().lat();
+    document.getElementById('markerlong').value = marker.getPosition().lng();
 }
 
 function showAddress(address) {
@@ -42,6 +48,6 @@ function showAddress(address) {
   }
 }
 function submitCoord(latitude, longitude) {
-	var url = window.location.protocol + "//" + window.location.host + "/positions.html" + "?lat=" + latitude + "&lng=" + longitude;
+	var url = window.location.protocol + "//" + window.location.host + "/positions.php" + "?lat=" + latitude + "&lng=" + longitude;
 	window.open(url, "_self");
 }

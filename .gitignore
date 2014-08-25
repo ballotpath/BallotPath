@@ -55,6 +55,11 @@ docs/_build/
 # Flask
 flask/
 config.py
+run.py
+
+# Security
+users.php
+BPWebConfig.php
 
 # Vim temp files
 *~
